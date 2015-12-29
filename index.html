@@ -55,10 +55,10 @@
 <div class=container>
 <h1>Abstract</h1>
 
-Recent technical progress allows neuroexperimentalists to collect ever more detailed and informative anatomical and physiological data from brains of all sizes.  These datasets span experimentally accessible spatiotemporal scales, ranging from nanometer to meter, and millisecond to monthly sampling rates.  In classical neuroscientific experimental paradigms, it was feasible for neuroscientists to draw their results on paper. In contrast, many modern neuroscientific experimental paradigms break the classic data analysis workflow.  In particular, these large datasets create significant challenges for our community at every step of the data analysis pipeline: (i) store, (ii) explore, (iii) pre-process, (iv) parse, (v) analyze, all of which needs to happen in a petascale infrastructure.
+Recent technical progress allows neuroexperimentalists to collect ever more detailed and informative anatomical and physiological data from brains of all sizes.  These datasets span experimentally accessible spatiotemporal scales, ranging from nanometer to meter, and millisecond to monthly sampling rates.  In classical neuroscientific experimental paradigms, it was feasible for neuroscientists to draw their results on paper. In contrast, many modern neuroscientific experimental paradigms break the classic data analysis workflow.  In particular, these large datasets create significant challenges for our community at every step of the data analysis pipeline: (0) infrastructure, (1) storage, (2) exploration, (3) pre-processing, (4) parsing, and (5) analyzing.
 
 
-*NeuroData* has been developed to lower the barrier to entry into big data neuroscience. We have designed and built a computational infrastructure to enable petascale neuroscience.  This includes our flagship project, the *Open Connectome Project*. Our infrastructure enables anyone in the world with internet access to visualize, download, analyze, upload, or otherwise interact with a large number public datasets.  We demonstrate the utility of these tools via two serial electron microscopy use cases.  First, we have reproduced a previous finding, that neurons do not strictly adhere to Peter's Rule. Second, we have tested a novel hypothesis about the distribution of synapse locations in cortex.  Via the *NeuroData* infrastructure, the answers to these tools are both fully reproducible, and extensible to any other datasets that hold the answers to these questions. Moreover, anybody else can now also do neuroscience at scale, regardless of their background, computational resources, and expertise.
+*NeuroData* has been developed to lower the barrier to entry into big data neuroscience. We have designed and built a computational infrastructure to enable petascale neuroscience.  This includes our flagship project, the *Open Connectome Project*. Our infrastructure enables anyone in the world with internet access to visualize, download, analyze, upload, or otherwise interact with a large number public datasets.  Moreover, all the results obtained using the NeuroData infrastructure are fundamentally reproducible and extensible.  We demonstrate the utility of these tools via two serial electron microscopy case studies.  First, we have reproduced all of the quantitative results from a recent landmark EM paper that included a saturated annotation of all objects. Second, we have tested a novel hypothesis about the distribution of synapse locations in cortex on a complementary dataset.  Via the *NeuroData* infrastructure, the answers to these tools are both fully reproducible, and extensible to any other datasets that hold the answers to these questions. Moreover, anybody else can now also do neuroscience at scale, regardless of their background, computational resources, and expertise.
 
 </div>
 
@@ -67,7 +67,7 @@ Recent technical progress allows neuroexperimentalists to collect ever more deta
 
 <h1>Introduction</h1>
 
-<h2>Opportunity</h2>
+<h3>Opportunity</h3>
 
 <p>Data from experimental neuroscientists can now be collected at astonishing rates across a wide variety of experimental paradigms, ranging from serial electron microscopy to calcium imaging to multimodal magnetic resonance imaging.  In each of the different paradigms, the raw data are typically collections of relatively small (e.g., 4 megabyte, MB) two-dimensional (2D) images.  These 2D images can be montaged into large 2D planes, or larger 3D volumes, 3D+time movies, and/or 3D+color multispectral data.  These data have troves of information about brains lurking within, waiting to be extracted by the community.  </p>
 
@@ -77,59 +77,48 @@ And with the new IARPA program dubbed MICrONS, a 4-10 petabyte (PB) dataset is p
 Moreover, because it is single channel (one color) and single time step (anatomical), addressing big data analysis on these datasets will be a crucial first step prior to addressing big data analysis on multispectral and temporal data.  </p>
 
 
-<h2>Challenge</h2>
+<h3>Challenge</h3>
 
 
-*Unfortunately, existing computational ecosystems for data analysis are ill equipped to meet the challenges that arise with even terascale data.* Specifically, we divide the data analysis requirements into six components, each of which faces unique challenges:
+*Unfortunately, existing computational ecosystems for data analysis are ill equipped to meet the challenges that arise with conducting science on terascale data.* Specifically, we divide the data analysis requirements into six components, each of which faces unique challenges:
 1. Infrastructure: standard laboratory workstations or even supercomputers cannot manage and manipulate many terabytes of data.  
 2. Storage: data cannot be read and written at scale even locally, much less remotely.  
 3. Exploration: tools to interactively visualize the data require the whole volume fit into RAM, which is not possible.  
 4. Pre-Processing: software requires manual intervention, which becomes a significant bottleneck when there are literally millions of images. 
-5. Parsing: manually parsing the scene can be even more time consuming due to the massive number of  voxels (for example, 10<sup>15</sup>. 
+5. Parsing: manually parsing the scene can be even more time consuming due to the massive number of  voxels (for example, 10<sup>15</sup>). 
 6. Analyzing: Analyzing the resulting data derivatives, be they shapes or graphs or both, benefits from tools that natively operate on those data types, with statistical guarantees.
 
 
 
+Further, if one group does manage to overcome those barriers, reproducing and extending their results  is typically impossible without collecting a new dataset; an unacceptably costly endeavor.  Science is fundamentally a collective endeavor, where each result builds upon the previous works by "standing on the shoulders of giants" [@Turnbull59].  With small data, the full analysis can easily be reproducible: deposit the digital data in a data repository (like FigShare) and the code in a code repository (like GitHub).  When the data are large, and the analyses are complicated however, neither of those actions are sufficient.  In terms of data, FigShare and related data repositories typically cannot accept many terabytes of data per project.  Even if they did, each researcher would have to make a number of decisions that would impact the utility of the data: in what format would the data be deposited? what metadata to include?   And even then, how would other researchers access it? Would they have to download the whole dataset, or would there be some search mechanism?
+
+Sharing the code can be similarly complicated for big data, as the computations often involve clusters, which are not yet "turn-key"; rather, remain they remain highly specialized.  Therefore, reproducible ones analysis from the code requires access either to the original author's computing environment, or a replica of it.
+
+Finally, science proceeds not merely be reproducing previous results, but by extending them.  Therefore, to the extent that one can make relatively minor changes to a previous analysis, re-using as much infrastructure as possible, the barrier to extend previous results to novel findings can be significantly lowered.
 
 
 
 
-Further, if one group does manage to overcome those barriers, reproducing and extending their results  is typically impossible without collecting a new dataset; an unacceptably costly endeavor.
+<h3>Action</h3>
 
 
-more than just reproducibility, inferences depend on analytical assumptions, 
-and results should be robust to reasonable choices, 
-others should be able to validate, and then extend/improve
+We have built the *NeuroData* computational ecosystem to address the above described problems,  therefore enabling reproducible and extensible neuroscience regardless of scale. In particular, we have made a large number of big neuroscience datasets open access.  By storing all of the datasets, regardless of scale and modality, in a common framework, a single infrastructure is sufficient for analysis on each of the datasets.  This includes each of the above five "analysis" steps (storage, exploration, pre-processing, parsing, and analyzing).  Moreover, all of the code we have developed is open source, and divided into two different components: backend and frontend. The backend code is deployed on our Web-accessible data cluster.  This means that anybody can store and explore existing datasets, or contribute new ones.  For the frontend code, we have configured an Amazon Machine Instance (AMI) that can run any of the remaining steps (pre-processing, parsing, and analyzing).  This means that anybody can create an Amazon account, boot this system, and run any of our analyses, and get the same results.  
 
 
-XXX
-
+We have used this infrastructure in two different case studies.  In the first, we have reproduced all of the ~50 quantitative claims made by a  recent landmark EM paper [@Kasthuri15], including a claim about the probability of synapsing given spatial proximity.  Second, we used a significantly larger dataset (~10 TB) from another recent landmark EM paper [@Bock11].  From that data, we characterize the three dimensional distribution of ~10 million synapses in mammalian cortex.  While the scale of the data introduces certain computational complexities, it also enables us to achieve unprecedented clarity in the results.  Crucially, for both of these case studies, all analysis are 100% reproducible and extensible for anybody with internet access.
 
 
 
 
-
-<h2>Action</h2>
-
-
-We have built the *NeuroData* computational ecosystem to address each of the six components mentioned above, therefore enabling reproducible and extensible neuroscience regardless of scale. All of our code is open source, and all of the data from which we discover scientific answers is open access.  Moreover, we have deployed a prototype system on our web-accessible data cluster, which means that anybody can use any of the services we have built, free of charge.
-
-For each component of the system, our design was based on achieving sufficient scalability and automation to answer neuroanatomical questions.  Our resulting decisions inevitably led to trade-offs with respect to quality and capabilities.  The results, however, enabled us to answer certain questions much more efficiently and reproducibly than would have otherwise been possible. In particular, we reproduced a recent result regarding Peter's Rule in rodent somatosensory cortex [@Kasthuri15], and assessed, for the first time, the three-dimensional distribution of synapses in visual cortex from a different dataset [@Bock11]. 
-
-
-
-<h2>Resolution</h2>
+<h3>Resolution</h3>
 
 <p>
-Our infrastructure has therefore enabled  reproducing previous anatomical results on big data.  Moreover, we have produced quantitative answers to a fundamental neuroanatomical question with a sufficient sample size to leave little room for doubt about the veridicality of this summary statistic, at least on these data.  
-</p>
-
-<p>
-Perhaps more important than the particular questions we have address in this work, is the capability we have enabled for the greater neuroscience community.  Because all of our infrastructure is open source, and deployed as Web-services, anybody---professional or citizen scientists---can use our services to learn about the brain.  Power users can modify our scripts to answer different questions, and developers could add additional capabilities for the community.  
+Our infrastructure has therefore enabled  reproducing previous anatomical results on big data, as well as  produced quantitative answers to a fundamental neuroanatomical question with a sufficient sample size to leave little room for doubt about the veridicality of this summary statistic, at least on these data.  
+Perhaps more important than the particular questions we have address in this work, is the capability we have enabled for the greater neuroscience community.  Anybody---professional or citizen scientists alike---can use our services to learn about the brain.  Power users can modify our scripts to answer different questions, and developers could add additional capabilities for the community.  We therefore hope to contribute to ushering in a new standard for big data neuroscience.
 </p>
 
 
-# Results
+<h1>Results</h1>
 
 All of the results presented herein are fundamentally reproducible; the data used to generate each table and figure panel can be reproduced by running a single Python script located in http://paper.neurodata.io.  Figures are made using R's ggplot2; each R script for generating the figures is also available from the above URL.  We have designed all of our supports to support three different types of data: images, annotations, and graphs.  Because the focus of this manuscript is on electron microscopy data, for which scant graphs are currently available, we focus the results on images and annotations.  However, see http://neurodata.io/graphs for more details about graph processing and analytics.
 
@@ -160,7 +149,9 @@ Figure 1: Reading and writing to the database must be sufficiently fast to not b
 
 ## Databases
 
-We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations.  Table~\ref{tab:images}(A) lists the  public EM datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django data model, the remaining properties are stored in our custom Laboratory Information Management System called ndlims.  The image data in Table~\ref{tab:images}(A) comprise approximately 100 terabytes (TB) of image data .TODO[@j6: make jupyter notebook that builds latex compliant table to include, and sums up total storage].  By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.  
+We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations.  Table~\ref{tab:images}(A) lists the  public EM datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django data model, the remaining properties are stored in our custom Laboratory Information Management System called ndlims.  The image data in Table~\ref{tab:images}(A) comprise approximately 100 terabytes (TB) of image data .TODO[@j6: make python function that builds html/md/css compliant table to include, and sums up total storage].  By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.  
+
+
 
 To complement the image databases, we also created an annotation database management system called RAMON \cite{GrayRoncal15b}.  We have used this infrastructure to store multiple manually and automatically generated dense volumetric annotations, listed in Table~\ref{tab:anno}(B).  
 
@@ -220,8 +211,9 @@ A parsed scene is the data derivative upon which neuroscientific questions can b
 # Captions
 
 
+<div class="container" >
 Supplementary Figure 1: Infrastructure supporting all components of the OCP data analysis pipeline.  (A) The OCP Data Cluster. (B) Software running on the backend. (C) Software running on the frontend. 
-
+</div>
 
 
 
