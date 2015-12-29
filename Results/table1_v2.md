@@ -5,7 +5,7 @@
 | acardona_0111_8|||acardona_0111_8||32768 x 32768 x 4840| |
 | acardona_abd1_5|||acardona_abd1_5||24576 x 24576 x 461| |
 | ara_test|||||456 x 320 x 528| |
-| bock11|EM|Mouse|bock11|4 4 45 nm|135424 x 119808 x 4156|http://www.nature.com/nature/journal/v471/n7337/full/nature09802.html |
+| bock11|EM|Mouse|bock11|4 4 45 nm|135424 x 119808 x 4156|[nature.com/nature/journal/v47...](http://www.nature.com/nature/journal/v471/n7337/full/nature09802.html) |
 | cajal_demo|||kasthuri11cc||21504 x 26624 x 1850| |
 | cv_ac3_membrane_2014|||kasthuri11cc||21504 x 26624 x 1850| |
 | cv_ac3_vesicle_2014|||kasthuri11cc||21504 x 26624 x 1850| |
@@ -26,7 +26,7 @@
 | flycol|||flycol||2000 x 2000 x 6240| |
 | flyemanno|||takemura13||12000 x 12000 x 1460| |
 | freeman14|||freeman14||2048 x 1172 x 30| |
-| kasthuri11|EM|Mouse|kasthuri11|3 3 30 nm|21504 x 26624 x 1850|http://www.sciencedirect.com/science/article/pii/S0092867415008247 |
+| kasthuri11|EM|Mouse|kasthuri11|3 3 30 nm|21504 x 26624 x 1850|[sciencedirect.com/science/art...](http://www.sciencedirect.com/science/article/pii/S0092867415008247) |
 | kasthuri11cc_ac3_vesicles|||kasthuri11cc||21504 x 26624 x 1850| |
 | kasthuri14Maine|||kasthuri14Maine||6144 x 6144 x 2042| |
 | kasthuri14s1colANNO|||kasthuri14s1colEM||49152 x 32768 x 254| |
@@ -72,10 +72,10 @@
 | kharris15spine_synapse_catmaid|||kharris15spine||9000 x 9000 x 89| |
 | mniatlas|||The MNI152 template atlas space||182 x 218 x 182| |
 | ndio_demos|||kasthuri11||21504 x 26624 x 1850| |
-| ritaN2|EM|Worm|ritaN2|? ? 50 nm|13101 x 14378 x 1199|http://www.wormatlas.org/ver1/MoW_built0.92/toc.html |
-| ritaN2_5|EM|Worm|ritaN2_5|? ? 50 nm|37379 x 25986 x 743|http://www.wormatlas.org/ver1/MoW_built0.92/toc.html |
-| ritaN2_four|EM|Worm|ritaN2_four|? ? 50 nm|28381 x 24234 x 322|http://www.wormatlas.org/ver1/MoW_built0.92/toc.html |
-| takemura13|EM|Drosophila|takemura13||12000 x 12000 x 1460|http://www.nature.com/nature/journal/v500/n7461/full/nature12450.html#/semi-automated-connectome-reconstruction |
+| ritaN2|EM|Worm|ritaN2|? ? 50 nm|13101 x 14378 x 1199|[wormatlas.org/ver1/MoW_built0...](http://www.wormatlas.org/ver1/MoW_built0.92/toc.html) |
+| ritaN2_5|EM|Worm|ritaN2_5|? ? 50 nm|37379 x 25986 x 743|[wormatlas.org/ver1/MoW_built0...](http://www.wormatlas.org/ver1/MoW_built0.92/toc.html) |
+| ritaN2_four|EM|Worm|ritaN2_four|? ? 50 nm|28381 x 24234 x 322|[wormatlas.org/ver1/MoW_built0...](http://www.wormatlas.org/ver1/MoW_built0.92/toc.html) |
+| takemura13|EM|Drosophila|takemura13||12000 x 12000 x 1460|[nature.com/nature/journal/v50...](http://www.nature.com/nature/journal/v500/n7461/full/nature12450.html#/semi-automated-connectome-reconstruction) |
 | test_ramonify_public|||kasthuri11cc||21504 x 26624 x 1850| |
 | unittest|||Unit test||1000 x 1000 x 128| |
 | vesiclerf_example|||kasthuri11cc||21504 x 26624 x 1850| |
