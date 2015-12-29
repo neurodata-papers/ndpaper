@@ -69,7 +69,11 @@ Recent technical progress allows neuroexperimentalists to collect ever more deta
 
 <h3>Opportunity</h3>
 
-<p>Data from experimental neuroscientists can now be collected at astonishing rates across a wide variety of experimental paradigms, ranging from serial electron microscopy to calcium imaging to multimodal magnetic resonance imaging.  In each of the different paradigms, the raw data are typically collections of relatively small (e.g., 4 megabyte, MB) two-dimensional (2D) images.  These 2D images can be montaged into large 2D planes, or larger 3D volumes, 3D+time movies, and/or 3D+color multispectral data.  These data have troves of information about brains lurking within, waiting to be extracted by the community.  </p>
+<p>Data from experimental neuroscientists can now be collected at astonishing rates across a wide variety of experimental paradigms, ranging from serial electron microscopy to calcium imaging to multimodal magnetic resonance imaging.  In each of the different paradigms, the raw data are typically collections of relatively small (e.g., 4 megabyte, MB) two-dimensional (2D) images.  These 2D images can be montaged into large 2D planes, or larger 3D volumes, 3D+time movies, and/or 3D+color multispectral data.  These data have troves of information about brains lurking within, 
+
+XXX something about principles XXX
+waiting to be extracted by the community. 
+ </p>
 
 
 <p>The focus of this work is serial electron microscopy (EM) data, a relatively novel yet important experimental modality, as it is unique in its ability to reveal nanoscale anatomical structure [@Denk04,etc.].  Such datasets can obtain terabytes (TB) a day; multiple such datasets already exist with ~100 TB (personal communication, Josh Morgan and Wei-Chung Allen Lee).  
@@ -81,28 +85,56 @@ Moreover, because it is single channel (one color) and single time step (anatomi
 
 
 *Unfortunately, existing computational ecosystems for data analysis are ill equipped to meet the challenges that arise with conducting science on terascale data.* Specifically, we divide the data analysis requirements into six components, each of which faces unique challenges:
+
+XXX introduce a specific case study XXX
+
 1. Infrastructure: standard laboratory workstations or even supercomputers cannot manage and manipulate many terabytes of data.  
-2. Storage: data cannot be read and written at scale even locally, much less remotely.  
-3. Exploration: tools to interactively visualize the data require the whole volume fit into RAM, which is not possible.  
+2. Storing: data cannot be read and written at scale even locally, much less remotely.  
+3. Exploring: tools to interactively visualize the data require the whole volume fit into RAM, which is not possible.  
 4. Pre-Processing: software requires manual intervention, which becomes a significant bottleneck when there are literally millions of images. 
 5. Parsing: manually parsing the scene can be even more time consuming due to the massive number of  voxels (for example, 10<sup>15</sup>). 
-6. Analyzing: Analyzing the resulting data derivatives, be they shapes or graphs or both, benefits from tools that natively operate on those data types, with statistical guarantees.
+6. Infering: Analyzing the resulting data derivatives, be they shapes or graphs or both, benefits from tools that natively operate on those data types, with statistical guarantees.
 
 
 
-Further, if one group does manage to overcome those barriers, reproducing and extending their results  is typically impossible without collecting a new dataset; an unacceptably costly endeavor.  Science is fundamentally a collective endeavor, where each result builds upon the previous works by "standing on the shoulders of giants" [@Turnbull59].  With small data, the full analysis can easily be reproducible: deposit the digital data in a data repository (like FigShare) and the code in a code repository (like GitHub).  When the data are large, and the analyses are complicated however, neither of those actions are sufficient.  In terms of data, FigShare and related data repositories typically cannot accept many terabytes of data per project.  Even if they did, each researcher would have to make a number of decisions that would impact the utility of the data: in what format would the data be deposited? what metadata to include?   And even then, how would other researchers access it? Would they have to download the whole dataset, or would there be some search mechanism?
+Further, if one group does manage to overcome those barriers, reproducing and extending their results  is typically impossible without collecting a new dataset; an unacceptably costly endeavor. 
 
-Sharing the code can be similarly complicated for big data, as the computations often involve clusters, which are not yet "turn-key"; rather, remain they remain highly specialized.  Therefore, reproducible ones analysis from the code requires access either to the original author's computing environment, or a replica of it.
+XXX explain why this is the case.
+end up to the conclusion: therefore, you'd have to collect a new dataset and build up analysis from scratch.  XXX
+
+
+ Science is fundamentally a collective endeavor, where each result builds upon the previous works by "standing on the shoulders of giants" .  With small data, the full analysis can easily be reproducible: deposit the digital data in a data repository (like FigShare) and the code in a code repository (like GitHub). 
+
+XXX start with small data.  end with "THis prevents...." XXX
+
+When the data are large, and the analyses are complicated however, neither of those actions are sufficient.  In terms of data, FigShare and related data repositories typically cannot accept many terabytes of data per project.  Even if they did, each researcher would have to make a number of decisions that would impact the utility of the data: in what format would the data be deposited? what metadata to include?   And even then, how would other researchers access it? Would they have to download the whole dataset, or would there be some search mechanism?
+
+Sharing the code can be similarly complicated for big data, as the computations often involve clusters, which are not yet "turn-key"; rather,  they remain highly specialized.  Therefore, reproducible ones analysis from the code requires access either to the original author's computing environment, or a replica of it.
 
 Finally, science proceeds not merely be reproducing previous results, but by extending them.  Therefore, to the extent that one can make relatively minor changes to a previous analysis, re-using as much infrastructure as possible, the barrier to extend previous results to novel findings can be significantly lowered.
 
+XXX in general be super concrete.  
+this creates the following problems....
+
+add "this includes testing the robustness of assumptions, and conditionality on the species, etc."
+XXX
 
 
 
 <h3>Action</h3>
 
 
-We have built the *NeuroData* computational ecosystem to address the above described problems,  therefore enabling reproducible and extensible neuroscience regardless of scale. In particular, we have made a large number of big neuroscience datasets open access.  By storing all of the datasets, regardless of scale and modality, in a common framework, a single infrastructure is sufficient for analysis on each of the datasets.  This includes each of the above five "analysis" steps (storage, exploration, pre-processing, parsing, and analyzing).  Moreover, all of the code we have developed is open source, and divided into two different components: backend and frontend. The backend code is deployed on our Web-accessible data cluster.  This means that anybody can store and explore existing datasets, or contribute new ones.  For the frontend code, we have configured an Amazon Machine Instance (AMI) that can run any of the remaining steps (pre-processing, parsing, and analyzing).  This means that anybody can create an Amazon account, boot this system, and run any of our analyses, and get the same results.  
+We have built the *NeuroData* computational ecosystem to address the above described problems,  therefore enabling reproducible and extensible neuroscience regardless of scale. In particular, we have made a large number of big neuroscience datasets open access.  By storing all of the datasets, regardless of scale and modality, in a common framework, a single infrastructure is sufficient for analysis on each of the datasets.  This includes each of the above five "analysis" steps (storage, exploration, pre-processing, parsing, and analyzing).
+
+XXX post data acquisition, infrastructure and experimental protocols developed in parallel. 
+
+2 categories, pre & post acquisition.  
+
+maybe give 5, and say: just like to collect the data you need all this stuff, to analyze the data you need all this stuff.
+XXX
+
+
+Moreover, all of the code we have developed is open source, and divided into two different components: backend and frontend. The backend code is deployed on our Web-accessible data cluster.  This means that anybody can store and explore existing datasets, or contribute new ones.  For the frontend code, we have configured an Amazon Machine Instance (AMI) that can run any of the remaining steps (pre-processing, parsing, and analyzing).  This means that anybody can create an Amazon account, boot this system, and run any of our analyses, and get the same results.  
 
 
 We have used this infrastructure in two different case studies.  In the first, we have reproduced all of the ~50 quantitative claims made by a  recent landmark EM paper [@Kasthuri15], including a claim about the probability of synapsing given spatial proximity.  Second, we used a significantly larger dataset (~10 TB) from another recent landmark EM paper [@Bock11].  From that data, we characterize the three dimensional distribution of ~10 million synapses in mammalian cortex.  While the scale of the data introduces certain computational complexities, it also enables us to achieve unprecedented clarity in the results.  Crucially, for both of these case studies, all analysis are 100% reproducible and extensible for anybody with internet access.
@@ -116,6 +148,11 @@ We have used this infrastructure in two different case studies.  In the first, w
 Our infrastructure has therefore enabled  reproducing previous anatomical results on big data, as well as  produced quantitative answers to a fundamental neuroanatomical question with a sufficient sample size to leave little room for doubt about the veridicality of this summary statistic, at least on these data.  
 Perhaps more important than the particular questions we have address in this work, is the capability we have enabled for the greater neuroscience community.  Anybody---professional or citizen scientists alike---can use our services to learn about the brain.  Power users can modify our scripts to answer different questions, and developers could add additional capabilities for the community.  We therefore hope to contribute to ushering in a new standard for big data neuroscience.
 </p>
+
+
+XXX better last sentence. 
+talk about how we want to facilitate and share this resource to let everybody use it, more community, less braggy
+XXX
 
 
 <h1>Results</h1>
