@@ -1,6 +1,5 @@
 | modality|species|dataset|token|resolution|image_size|reference |
 | -----|-----|-----|-----|-----|-----|----- |
-| |||`ara_test`||456 x 320 x 528| |
 | ||acardona_0111_8|`acardona_0111_8`||32768 x 32768 x 4840| |
 | ||acardona_abd1_5|`acardona_abd1_5`||24576 x 24576 x 461| |
 | EM|Mouse|bock11|`bock11`|4 4 45 nm|135424 x 119808 x 4156|[nature.com/nature/journal/v47...](http://www.nature.com/nature/journal/v471/n7337/full/nature09802.html) |
@@ -18,9 +17,7 @@
 | AT|Mouse|Ex6R15C2|`Ex6R15C2`|100 100 70 nm|3233 x 3636 x 30|[nature.com/articles/sdata2014...](http://www.nature.com/articles/sdata201446) |
 | EM|Drosophila|flycol|`flycol`|4 4 45 nm|2000 x 2000 x 6240| |
 | EM|Mouse|kasthuri11|`kasthuri11`|3 3 30 nm|21504 x 26624 x 1850|[sciencedirect.com/science/art...](http://www.sciencedirect.com/science/article/pii/S0092867415008247) |
-| ||kasthuri11|`ndio_demos`||21504 x 26624 x 1850| |
 | EM|Mouse|kasthuri11cc|`cv_ac3_membrane_2014`|3 3 30 nm|21504 x 26624 x 1850|[sciencedirect.com/science/art...](http://www.sciencedirect.com/science/article/pii/S0092867415008247) |
-| EM|Mouse|kasthuri11cc|`cv_kasthuri11_membrane_2014`|3 3 30 nm|21504 x 26624 x 1850|[sciencedirect.com/science/art...](http://www.sciencedirect.com/science/article/pii/S0092867415008247) |
 | ||kasthuri14Maine|`kasthuri14Maine`||6144 x 6144 x 2042| |
 | ||kasthuri14s1colEM|`kasthuri14s1colEM`||49152 x 32768 x 254| |
 | EM|Rat|kharris15apical|`kharris15apical`|2 2 ~50 nm|8192 x 8192 x 194|[ncbi.nlm.nih.gov/pubmed/26347...](http://www.ncbi.nlm.nih.gov/pubmed/26347348) |

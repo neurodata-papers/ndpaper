@@ -9,17 +9,21 @@ This is what we're generating:
 Modality | Species | Dataset | Token | XYZT Resolution | Total Size | Reference |
 """
 
+IGNORE_TOKENS = ['ara_test', 'ndio_demos', 'cv_kasthuri11_membrane_2014']
+
 cache_path = "../../../Data/metadata/projinfo_cache"
 public_token_files = glob.glob('{}/*.json'.format(cache_path))
 
 # Trim the path from the left and .json from the right:
-public_tokens = [i[len(cache_path)+1:-5] for i in public_token_files]
+# public_tokens = [i[len(cache_path)+1:-5] for i in public_token_files]
 # print public_tokens
 
 token_info = []
 sizes = []
 
 for path in public_token_files:
+    if path[len(cache_path)+1:-5] in IGNORE_TOKENS:
+        continue
     with open(path, 'r') as infile:
         info = json.loads(infile.read())
         if 'image' not in info['channels'].keys():
