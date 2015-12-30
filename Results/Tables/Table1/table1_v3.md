@@ -1,7 +1,7 @@
 | modality|species|dataset|resolution (nm)|Image Size (voxels)|Number of Channels|Time|reference |
 | -----|-----|-----|-----|-----|-----|-----|----- |
-| EM|Drosophila|acardona_0111_8||32768 x 32768 x 4840|1|1|[nature.com/nature/journal/v52...](http://www.nature.com/nature/journal/v520/n7549/abs/nature14297.html) |
-| EM|Drosophila|acardona_abd1_5||24576 x 24576 x 461|1|1|[nature.com/nature/journal/v52...](http://www.nature.com/nature/journal/v520/n7549/abs/nature14297.html) |
+| EM|Drosophila|acardona_0111_8|4 x 4 x 45|32768 x 32768 x 4840|1|1|[nature.com/nature/journal/v52...](http://www.nature.com/nature/journal/v520/n7549/abs/nature14297.html) |
+| EM|Drosophila|acardona_abd1_5|4 x 4 x 45|24576 x 24576 x 461|1|1|[nature.com/nature/journal/v52...](http://www.nature.com/nature/journal/v520/n7549/abs/nature14297.html) |
 | EM|Mouse|bock11|4 x 4 x 45|135424 x 119808 x 4156|1|1|[nature.com/nature/journal/v47...](http://www.nature.com/nature/journal/v471/n7337/full/nature09802.html) |
 | AT|Mouse|Ex10R55|100 x 100 x 70|3409 x 3337 x 70|29|1|[nature.com/articles/sdata2014...](http://www.nature.com/articles/sdata201446) |
 | AT|Mouse|Ex12R75|100 x 100 x 70|5491 x 4749 x 35|21|1|[nature.com/articles/sdata2014...](http://www.nature.com/articles/sdata201446) |
