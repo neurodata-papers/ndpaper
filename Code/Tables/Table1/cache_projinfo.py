@@ -5,7 +5,7 @@ oo = OCP()
 import ndio.remote.OCPMeta as ndlims
 ndl = ndlims()
 
-path = "../../Data/metadata"
+path = "../../../Data/metadata"
 
 tokens = oo.get_public_tokens()
 for t in tokens:
