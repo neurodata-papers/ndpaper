@@ -16,16 +16,16 @@
 | AT|Mouse|Ex3R43C3|`Ex3R43C3`|100 100 70 nm|1989 x 3252 x 69|[nature.com/articles/sdata2014...](http://www.nature.com/articles/sdata201446) |
 | AT|Mouse|Ex6R15C1|`Ex6R15C1`|100 100 70 nm|3208 x 3581 x 30|[nature.com/articles/sdata2014...](http://www.nature.com/articles/sdata201446) |
 | AT|Mouse|Ex6R15C2|`Ex6R15C2`|100 100 70 nm|3233 x 3636 x 30|[nature.com/articles/sdata2014...](http://www.nature.com/articles/sdata201446) |
-| ||flycol|`flycol`||2000 x 2000 x 6240| |
+| EM|Drosophila|flycol|`flycol`|4 4 45 nm|2000 x 2000 x 6240| |
 | EM|Mouse|kasthuri11|`kasthuri11`|3 3 30 nm|21504 x 26624 x 1850|[sciencedirect.com/science/art...](http://www.sciencedirect.com/science/article/pii/S0092867415008247) |
 | ||kasthuri11|`ndio_demos`||21504 x 26624 x 1850| |
 | EM|Mouse|kasthuri11cc|`cv_ac3_membrane_2014`|3 3 30 nm|21504 x 26624 x 1850|[sciencedirect.com/science/art...](http://www.sciencedirect.com/science/article/pii/S0092867415008247) |
 | EM|Mouse|kasthuri11cc|`cv_kasthuri11_membrane_2014`|3 3 30 nm|21504 x 26624 x 1850|[sciencedirect.com/science/art...](http://www.sciencedirect.com/science/article/pii/S0092867415008247) |
 | ||kasthuri14Maine|`kasthuri14Maine`||6144 x 6144 x 2042| |
 | ||kasthuri14s1colEM|`kasthuri14s1colEM`||49152 x 32768 x 254| |
-| ||kharris15apical|`kharris15apical`||8192 x 8192 x 194| |
-| ||kharris15oblique|`kharris15oblique`||8192 x 8192 x 91| |
-| ||kharris15spine|`kharris15spine`||9000 x 9000 x 89| |
+| EM|Rat|kharris15apical|`kharris15apical`|2 2 ~50 nm|8192 x 8192 x 194|[ncbi.nlm.nih.gov/pubmed/26347...](http://www.ncbi.nlm.nih.gov/pubmed/26347348) |
+| EM|Rat|kharris15oblique|`kharris15oblique`|2 2 ~50 nm|8192 x 8192 x 91|[ncbi.nlm.nih.gov/pubmed/26347...](http://www.ncbi.nlm.nih.gov/pubmed/26347348) |
+| EM|Rat|kharris15spine|`kharris15spine`|2 2 ~50 nm|9000 x 9000 x 89|[ncbi.nlm.nih.gov/pubmed/26347...](http://www.ncbi.nlm.nih.gov/pubmed/26347348) |
 | EM|Worm|ritaN2|`ritaN2`|5 5 60 nm|13101 x 14378 x 1199|[wormatlas.org/ver1/MoW_built0...](http://www.wormatlas.org/ver1/MoW_built0.92/toc.html) |
 | EM|Worm|ritaN2_5|`ritaN2_5`|5 5 60 nm|37379 x 25986 x 743|[wormatlas.org/ver1/MoW_built0...](http://www.wormatlas.org/ver1/MoW_built0.92/toc.html) |
 | EM|Worm|ritaN2_four|`ritaN2_four`|5 5 60 nm|28381 x 24234 x 322|[wormatlas.org/ver1/MoW_built0...](http://www.wormatlas.org/ver1/MoW_built0.92/toc.html) |
