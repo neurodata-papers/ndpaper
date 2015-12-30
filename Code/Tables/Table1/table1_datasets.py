@@ -21,7 +21,12 @@ for path in public_token_files:
     with open(path, 'r') as infile:
         info = json.loads(infile.read())
         if 'image' not in info['channels'].keys():
-            continue
+            skip = True
+            for channel, channel_info in info['channels'].iteritems():
+                if channel_info['channel_type'] == 'oldchannel':
+                    skip = False
+            if skip:
+                continue
         metadata = info['metadata']
         if 'reference' in metadata:
             link = metadata['reference']
@@ -32,7 +37,7 @@ for path in public_token_files:
             "modality": metadata['type'] if 'type' in metadata else "",
             "species": metadata['species'] if 'species' in metadata else "",
             "dataset": "`{}`".format(info['dataset']['description']),
-            "token/channel": "`{}/image`".format(path[len(cache_path)+1:-5]),
+            "token": "`{}`".format(path[len(cache_path)+1:-5]),
             "resolution": metadata['resolution'] if 'resolution' in metadata else "",
             "image_size": ' x '.join([str(d) for d in info['dataset']['imagesize']['0']]),
             "reference": link
@@ -40,7 +45,7 @@ for path in public_token_files:
         }
         token_info.append(insert)
 
-pt = TablePrinter(token_info, col_order=['modality', 'species', 'dataset', 'token/channel', 'resolution', 'image_size', 'reference'])
+pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()), col_order=['modality', 'species', 'dataset', 'token', 'resolution', 'image_size', 'reference'])
 print pt.to_markdown()
 
 #
