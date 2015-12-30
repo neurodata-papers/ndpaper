@@ -1,4 +1,4 @@
-| modality|species|dataset|resolution (nm)|Image Size (voxels)|Number of Channels|Time|reference |
+| modality|species|dataset|Resolution (nm nm nm, Hz)|Image Size (voxels)|#channels|#timesteps|reference |
 | -----|-----|-----|-----|-----|-----|-----|----- |
 | EM|Drosophila|acardona_0111_8|4 x 4 x 45|32768 x 32768 x 4840|1|1|[nature.com/nature/journal/v52...](http://www.nature.com/nature/journal/v520/n7549/abs/nature14297.html) |
 | EM|Drosophila|acardona_abd1_5|4 x 4 x 45|24576 x 24576 x 461|1|1|[nature.com/nature/journal/v52...](http://www.nature.com/nature/journal/v520/n7549/abs/nature14297.html) |
@@ -16,7 +16,7 @@
 | AT|Mouse|Ex6R15C1|100 x 100 x 70|3208 x 3581 x 30|21|1|[nature.com/articles/sdata2014...](http://www.nature.com/articles/sdata201446) |
 | AT|Mouse|Ex6R15C2|100 x 100 x 70|3233 x 3636 x 30|21|1|[nature.com/articles/sdata2014...](http://www.nature.com/articles/sdata201446) |
 | EM|Drosophila|flycol|4 x 4 x 45|2000 x 2000 x 6240|1|1| |
-| |Zebrafish|freeman14|650 x 650 x 5000, 0.8 Hz|2048 x 1172 x 30|1|100|[nature.com/nmeth/journal/v10/...](http://www.nature.com/nmeth/journal/v10/n5/full/nmeth.2434.html) |
+| Ophys|Zebrafish|freeman14|650 x 650 x 5000, 0.8|2048 x 1172 x 30|1|100|[nature.com/nmeth/journal/v10/...](http://www.nature.com/nmeth/journal/v10/n5/full/nmeth.2434.html) |
 | EM|Mouse|kasthuri11|3 x 3 x 30|21504 x 26624 x 1850|1|1|[sciencedirect.com/science/art...](http://www.sciencedirect.com/science/article/pii/S0092867415008247) |
 | EM|Mouse|kasthuri11cc|3 x 3 x 30|21504 x 26624 x 1850|1|1|[sciencedirect.com/science/art...](http://www.sciencedirect.com/science/article/pii/S0092867415008247) |
 | EM|Mouse|kasthuri14Maine||6144 x 6144 x 2042|1|1|[sciencedirect.com/science/art...](http://www.sciencedirect.com/science/article/pii/S0092867415008247) |

@@ -48,7 +48,7 @@ for path in public_token_files:
 
             "token": "`{}`".format(path[len(cache_path)+1:-5]),
 
-            "resolution": (" x ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "") + (", {} Hz".format(metadata['frequency']) if 'frequency' in metadata else ""),
+            "resolution": (" x ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "") + (", {}".format(metadata['frequency']) if 'frequency' in metadata else ""),
 
             "image_size": ' x '.join([str(d) for d in info['dataset']['imagesize']['0']]),
 
@@ -70,9 +70,9 @@ pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()),
                   col_order=['modality',
                              'species',
                              'dataset',
-                             ('resolution', "resolution (nm)"),
+                             ('resolution', "Resolution (nm nm nm, Hz)"),
                              ('image_size', "Image Size (voxels)"),
-                             ('channels', 'Number of Channels'),
-                             ('time', 'Time'),
+                             ('channels', '#channels'),
+                             ('time', '#timesteps'),
                              'reference'])
 print pt.to_markdown()
