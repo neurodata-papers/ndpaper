@@ -41,13 +41,21 @@ for path in public_token_files:
             link = ""
         insert = {
             "modality": metadata['type'] if 'type' in metadata else "",
+
             "species": metadata['species'] if 'species' in metadata else "",
+
             "dataset": "{}".format(info['dataset']['description']),
+
             "token": "`{}`".format(path[len(cache_path)+1:-5]),
-            "resolution": " x ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "",
+
+            "resolution": (" x ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "") + (", {} Hz".format(metadata['frequency']) if 'frequency' in metadata else ""),
+
             "image_size": ' x '.join([str(d) for d in info['dataset']['imagesize']['0']]),
+
             "channels": len(info['channels']),
-            "time": info['dataset']['timerange'][1] - info['dataset']['timerange'][0],
+
+            "time": (info['dataset']['timerange'][1] - info['dataset']['timerange'][0]) + 1,
+
             "reference": link
         }
         sizes.append(info['dataset']['imagesize']['0'])
@@ -58,5 +66,13 @@ for path in public_token_files:
 # print ss
 # print sum(ss)
 
-pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()), col_order=['modality', 'species', 'dataset', ('resolution', "resolution (nm)"), ('image_size', "Image Size (voxels)"), ('channels', 'Number of Channels'), ('time', 'Time'), 'reference'])
+pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()),
+                  col_order=['modality',
+                             'species',
+                             'dataset',
+                             ('resolution', "resolution (nm)"),
+                             ('image_size', "Image Size (voxels)"),
+                             ('channels', 'Number of Channels'),
+                             ('time', 'Time'),
+                             'reference'])
 print pt.to_markdown()
