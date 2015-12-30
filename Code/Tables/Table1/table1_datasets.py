@@ -9,7 +9,7 @@ This is what we're generating:
 Modality | Species | Dataset | Token | XYZT Resolution | Total Size | Reference |
 """
 
-IGNORE_TOKENS = ['ara_test', 'ndio_demos', 'cv_kasthuri11_membrane_2014']
+IGNORE_TOKENS = ['ara_test', 'ndio_demos', 'cv_kasthuri11_membrane_2014', 'mniatlas']
 
 cache_path = "../../../Data/metadata/projinfo_cache"
 public_token_files = glob.glob('{}/*.json'.format(cache_path))
@@ -44,7 +44,7 @@ for path in public_token_files:
             "species": metadata['species'] if 'species' in metadata else "",
             "dataset": "{}".format(info['dataset']['description']),
             "token": "`{}`".format(path[len(cache_path)+1:-5]),
-            "resolution": metadata['resolution'] if 'resolution' in metadata else "",
+            "resolution": " x ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "",
             "image_size": ' x '.join([str(d) for d in info['dataset']['imagesize']['0']]),
             "reference": link
         }
@@ -56,5 +56,5 @@ for path in public_token_files:
 # print ss
 # print sum(ss)
 
-pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()), col_order=['modality', 'species', 'dataset', 'token', 'resolution', 'image_size', 'reference'])
+pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()), col_order=['modality', 'species', 'dataset', ('resolution', "resolution (nm)"), ('image_size', "Image Size (voxels)"), 'reference'])
 print pt.to_markdown()
