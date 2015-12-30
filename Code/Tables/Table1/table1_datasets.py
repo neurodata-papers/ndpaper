@@ -1,6 +1,7 @@
 from PyTablePrinter.tableprinter import TablePrinter
 import glob
 import json
+from operator import mul
 
 """
 This is what we're generating:
@@ -16,6 +17,7 @@ public_tokens = [i[len(cache_path)+1:-5] for i in public_token_files]
 # print public_tokens
 
 token_info = []
+sizes = []
 
 for path in public_token_files:
     with open(path, 'r') as infile:
@@ -41,26 +43,14 @@ for path in public_token_files:
             "resolution": metadata['resolution'] if 'resolution' in metadata else "",
             "image_size": ' x '.join([str(d) for d in info['dataset']['imagesize']['0']]),
             "reference": link
-
         }
+        sizes.append(info['dataset']['imagesize']['0'])
         token_info.append(insert)
+
+# print sizes
+# ss = [reduce(mul, d, 1) for d in sizes]
+# print ss
+# print sum(ss)
 
 pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()), col_order=['modality', 'species', 'dataset', 'token', 'resolution', 'image_size', 'reference'])
 print pt.to_markdown()
-
-#
-# info = oo.get_token_info(t)
-# metadata = ndl.get_metadata(t)
-# if 'reference' in metadata:
-#     link = metadata['reference']
-#     link = "[{}]({})".format(link[11:40] + "...", link)
-# else:
-#     link = ""
-# data.append({
-#     "token": t,
-#     "modality": metadata['type'] if 'type' in metadata else "",
-#     "species": metadata['species'] if 'species' in metadata else "",
-#     "dataset": info['dataset']['description'],
-#     "resolution": metadata['resolution'] if 'resolution' in metadata else "",
-#     "image_size": ' x '.join([str(d) for d in info['dataset']['imagesize']['0']]),
-#     "reference": link
