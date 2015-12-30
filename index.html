@@ -97,35 +97,18 @@ If one group did manage to overcome all of those barriers, then they could answe
 2. Even if they did, how would other researchers access the data? Would they have to download the whole dataset, or could they specify a subset.  If they have to download the whole dataset, then they will need to build their own infrastructure to support it.
 3. Code to analyze terascale data is not yet "turn-key", that is, it is not as simple as running a MATLAB script.  Running the code often means having installed a number of libraries, some of which may only be compatible with certain operating systems.  Running and debugging other people's code often takes weeks per tool, and in the above, we have described many different tools.
 
-Thus, in practice, the effort of simply reproducing a previous result might require many months or years of work, often work that is distant from neuroscience core competencies.  Moreover, science proceeds not merely be reproducing previous results, but by extending them.  Therefore, to the extent that one can make relatively minor changes to a previous analysis, re-using as much infrastructure as possible, the barrier to extend previous results to novel findings can be significantly lowered.
+Thus, in practice, the effort of simply reproducing a previous result might require many months or years of work, often work that is distant from neuroscience core competencies.  Moreover, science proceeds not merely be reproducing previous results, but by extending them.  Therefore, to the extent that one can make relatively minor changes to a previous analysis, re-using as much infrastructure as possible, the barrier to extend previous results to novel findings can be significantly lowered. This includes simple modifications such as checking the robustness of previous analyses by modifying some of the assumptions, tests, or the data on which the results rely.
 
-
-
-XXX in general be super concrete.  
-
-add "this includes testing the robustness of assumptions, and conditionality on the species, etc."
-XXX
 
 
 
 <h3>Action</h3>
 
 
-We have built the *NeuroData* computational ecosystem to address the above described problems,  therefore enabling reproducible and extensible neuroscience regardless of scale. In particular, we have made a large number of big neuroscience datasets open access.  By storing all of the datasets, regardless of scale and modality, in a common framework, a single infrastructure is sufficient for analysis on each of the datasets.  This includes each of the above five "analysis" steps (storage, exploration, pre-processing, parsing, and analyzing).
-
-XXX post data acquisition, infrastructure and experimental protocols developed in parallel. 
-
-2 categories, pre & post acquisition.  
-
-maybe give 5, and say: just like to collect the data you need all this stuff, to analyze the data you need all this stuff.
-XXX
+We have built the *NeuroData* computational ecosystem to address the above described problems,  therefore enabling *reproducible* and *extensible* neuroscience regardless of scale. In particular, we have made a large number of big neuroscience datasets open access.  By storing all of the datasets, regardless of scale and modality, in a common framework, a single infrastructure is sufficient for analysis on each of the datasets.  This includes each of the above five "analysis" steps (store, explore, pre-process, parse, and infer).  Moreover, all of the code we have developed is open source, and divided into two different components: backend and frontend. The backend code is deployed on our Web-accessible data cluster.  This means that anybody can store and explore existing datasets, or contribute new ones.  For the frontend code, we have configured an Amazon Machine Instance (AMI) that can run any of the remaining steps (pre-process, parse, and infer).  This means that anybody can create an Amazon account, boot this system, and run any of our analyses, and get the exact same results, without ever installing any software or learning anything about big data analytics.  
 
 
-Moreover, all of the code we have developed is open source, and divided into two different components: backend and frontend. The backend code is deployed on our Web-accessible data cluster.  This means that anybody can store and explore existing datasets, or contribute new ones.  For the frontend code, we have configured an Amazon Machine Instance (AMI) that can run any of the remaining steps (pre-processing, parsing, and analyzing).  This means that anybody can create an Amazon account, boot this system, and run any of our analyses, and get the same results.  
-
-
-We have used this infrastructure in two different case studies.  In the first, we have reproduced all of the ~50 quantitative claims made by a  recent landmark EM paper [@Kasthuri15], including a claim about the probability of synapsing given spatial proximity.  Second, we used a significantly larger dataset (~10 TB) from another recent landmark EM paper [@Bock11].  From that data, we characterize the three dimensional distribution of ~10 million synapses in mammalian cortex.  While the scale of the data introduces certain computational complexities, it also enables us to achieve unprecedented clarity in the results.  Crucially, for both of these case studies, all analysis are 100% reproducible and extensible for anybody with internet access.
-
+We have used this infrastructure in two different case studies.  In the first, we have reproduced all of the ~50 quantitative claims made by a  recent landmark EM paper [@Kasthuri15], including a claim about the probability of synapsing given spatial proximity.  Second, we used a significantly larger dataset (~10 TB) from another recent landmark EM paper [@Bock11] to address the exemplar use case mentioned above.  From that data, we characterize the three dimensional distribution of ~10 million synapses in mammalian cortex, to discover significant clustering and layering that was previously unknown.  
 
 
 
@@ -133,18 +116,15 @@ We have used this infrastructure in two different case studies.  In the first, w
 
 <p>
 Our infrastructure has therefore enabled  reproducing previous anatomical results on big data, as well as  produced quantitative answers to a fundamental neuroanatomical question with a sufficient sample size to leave little room for doubt about the veridicality of this summary statistic, at least on these data.  
-Perhaps more important than the particular questions we have address in this work, is the capability we have enabled for the greater neuroscience community.  Anybody---professional or citizen scientists alike---can use our services to learn about the brain.  Power users can modify our scripts to answer different questions, and developers could add additional capabilities for the community.  We therefore hope to contribute to ushering in a new standard for big data neuroscience.
+Perhaps more important than the particular questions we have address in this work, is the capability we have enabled for the greater neuroscience community.  Anybody---professional or citizen scientists alike---can use our services to learn about the brain.  Power users can modify our scripts to answer different questions, and developers could add additional capabilities for the community.  As the community moves more and more towards collecting massive datasets, we hope these tools can be useful to address a wide range of scientific questions.
 </p>
 
 
-XXX better last sentence. 
-talk about how we want to facilitate and share this resource to let everybody use it, more community, less braggy
-XXX
 
 
-<h1>Results</h1>
+<h1>Results</h1> 
 
-All of the results presented herein are fundamentally reproducible; the data used to generate each table and figure panel can be reproduced by running a single Python script located in http://paper.neurodata.io.  Figures are made using R's ggplot2; each R script for generating the figures is also available from the above URL.  We have designed all of our supports to support three different types of data: images, annotations, and graphs.  Because the focus of this manuscript is on electron microscopy data, for which scant graphs are currently available, we focus the results on images and annotations.  However, see http://neurodata.io/graphs for more details about graph processing and analytics.
+All of the results presented herein are fundamentally reproducible; the data used to generate each table and figure panel can be reproduced by running a single Python script located in http://docs.neurodata.io/ocp-journal-paper.  Figures are made using R; each R script for generating the figures is also available from the above URL.  We have designed all of our infrastructure to support three different types of data: images, annotations, and graphs.  Because the focus of this manuscript is on electron microscopy data, for which scant graphs are currently available, we focus the results on images and annotations.  However, see http://neurodata.io/graphs for more details about graph processing and analytics.
 
 
 ## Infrastructure
