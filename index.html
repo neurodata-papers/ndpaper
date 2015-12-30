@@ -34,6 +34,7 @@
       p.small {
         font-variant: small-caps;
       }
+      .r { color: #fa0000; }
       .container {
         width: 500px;
         font-size: small;
@@ -69,11 +70,8 @@ Recent technical progress allows neuroexperimentalists to collect ever more deta
 
 <h3>Opportunity</h3>
 
-<p>Data from experimental neuroscientists can now be collected at astonishing rates across a wide variety of experimental paradigms, ranging from serial electron microscopy to calcium imaging to multimodal magnetic resonance imaging.  In each of the different paradigms, the raw data are typically collections of relatively small (e.g., 4 megabyte, MB) two-dimensional (2D) images.  These 2D images can be montaged into large 2D planes, or larger 3D volumes, 3D+time movies, and/or 3D+color multispectral data.  These data have troves of information about brains lurking within, 
-
-XXX something about principles XXX
-waiting to be extracted by the community. 
- </p>
+<p>Data from experimental neuroscientists can now be collected at astonishing rates across a wide variety of experimental paradigms, ranging from serial electron microscopy to calcium imaging to multimodal magnetic resonance imaging.  In each of the different paradigms, the raw data are typically collections of relatively small (e.g., 4 megabyte, MB) two-dimensional (2D) images.  These 2D images can be montaged into large 2D planes, or larger 3D volumes, 3D+time movies, and/or 3D+color multispectral data.  These data have troves of information about brains lurking within, waiting to be extracted by the communityXXX, which will reveal the underlying principles of normal, abnormal and exceptional cognitionXXX. 
+</p>
 
 
 <p>The focus of this work is serial electron microscopy (EM) data, a relatively novel yet important experimental modality, as it is unique in its ability to reveal nanoscale anatomical structure [@Denk04,etc.].  Such datasets can obtain terabytes (TB) a day; multiple such datasets already exist with ~100 TB (personal communication, Josh Morgan and Wei-Chung Allen Lee).  
@@ -84,11 +82,13 @@ Moreover, because it is single channel (one color) and single time step (anatomi
 <h3>Challenge</h3>
 
 
-*Unfortunately, existing computational ecosystems for data analysis are ill equipped to meet the challenges that arise with conducting science on terascale data.* Specifically, we divide the data analysis requirements into six components, each of which faces unique challenges:
+*Unfortunately, existing computational ecosystems for data analysis are ill equipped to meet the challenges that arise with conducting science on terascale data.*  
+To explain why, we consider one of the two cases studies that we will explore in the sequel. In particular, imaging that we have collected 10 TB of serial EM data from cortex, and we have the very simple neuroanatomical question to answer: what does the distribution of synapses look like? It is uniform, for example, in 3D space, or clustered, or layered?  We divide the data analysis requirements into six components, each of which faces unique challenges:
 
-XXX introduce a specific case study XXX
+1. Infrastructure: consists of a data cluster (hardware) that contains both data intensive and high-performance computing,  backend software designed to efficiently manage and manipulate the data intensive component, and  frontend software to process and analyze the data.  Standard laboratory computing typically includes a workstation with maybe a few terabytes of storage, images stored as files in folders organized across hard drives, and MATLAB which can only files 2 GB or smaller.  
 
-1. Infrastructure: standard laboratory workstations or even supercomputers cannot manage and manipulate many terabytes of data.  
+
+standard laboratory workstations do not have 10 TB of storage, and therefore, cannot even store the data. Even if one builds a small local data storage cluster, many decisions must be made that exceed the expertise of neuroscientist labs: which file system should be used, how should the data be organized, etc.  
 2. Storing: data cannot be read and written at scale even locally, much less remotely.  
 3. Exploring: tools to interactively visualize the data require the whole volume fit into RAM, which is not possible.  
 4. Pre-Processing: software requires manual intervention, which becomes a significant bottleneck when there are literally millions of images. 
