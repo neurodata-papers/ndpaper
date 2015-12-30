@@ -124,7 +124,7 @@ Perhaps more important than the particular questions we have address in this wor
 
 <h1>Results</h1> 
 
-All of the results presented herein are fundamentally reproducible; the data used to generate each table and figure panel can be reproduced by running a single Python script located in http://docs.neurodata.io/ocp-journal-paper.  Figures are made using R; each R script for generating the figures is also available from the above URL.  We have designed all of our infrastructure to support three different types of data: images, annotations, and graphs.  Because the focus of this manuscript is on electron microscopy data, for which scant graphs are currently available, we focus the results on images and annotations.  However, see http://neurodata.io/graphs for more details about graph processing and analytics.
+All of the results presented herein are fundamentally reproducible; the data used to generate each table and figure panel can be reproduced by running a single Python script located in http://docs.neurodata.io/ocp-journal-paper.  Figures are made using R; each R script for generating the figures is also available from the above URL.  We have designed all of our infrastructure to support three different types of data: images, annotations, and graphs.  Because the focus of this manuscript is on electron microscopy data, for which scant graphs are currently available, we focus the results on images and annotations, and in particular on single channel images.  However, see http://neurodata.io/graphs for more details about graph processing and analytics, and stay tuned for more updates supporting multichannel data.
 
 
 ## Infrastructure
@@ -140,8 +140,6 @@ Importantly *NeuroData* is designed to easily enable reading or writing of arbit
 Naively using the above described system, however, has the drawbacks just mentioned.  Therefore, we built *TileCache* which serves as a content distribution network.  More specifically, TileCache fetches the data and parses it into the appropriate format (e.g., a set of png files), and also pre-fetches data that it expects you will want next.  The implication is that for 1028x1028 frames, TileCache can load 60 frames per second in a streaming fashion (Figure~\ref{fig:infra}(C)).  In other words, using TileCache, Neurodata enables video rate data streaming.  And because TileCache is a stand-alone service, it can easily be deployed locally, thereby further eliminating the data transfer speeds to get data local to the machine on which you want the data.
 
 
-
-
 Writing to our spatial database would be more time consuming than simply uploading to a file server, because we re-write the data into a format that is efficient for reading.  We combat that by using a distributed database management system (such as Cassandra), that automatically distributes writing jobs across nodes.  We further speed up writing by compressing the data using Blosc, a multi-threaded library.  The result is that we can write data in compressed cubes in time linear with the data size (Figure~\ref{fig:infra}(D)).  The implications are the writing a terabyte of data on a single node take XXX hours.  
 
 Writing annotations is a bit more complicated than simply writing images because we store annotations as objects with associated metadata, such as what type of object is it (e.g., synapse), who labeled it, what time, with what confidence, etc. Because each write object is therefore relatively small, and write speeds are determined largely by the number of files to write, we built NeuroBlaze, which caches writes in memory, only writing to disk a single large file joining all the small writes.  This enables us to write  annotations extremely efficiently (Figure~\ref{fig:infra}(E)).  
@@ -153,27 +151,42 @@ Figure 1: Reading and writing to the database must be sufficiently fast to not b
 
 ## Store
 
-We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations.  Table~\ref{tab:images}(A) lists the  public EM datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django data model, the remaining properties are stored in our custom Laboratory Information Management System called ndlims.  The image data in Table~\ref{tab:images}(A) comprise approximately 100 terabytes (TB) of image data .TODO[@j6: make python function that builds html/md/css compliant table to include, and sums up total storage].  By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.  
+We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations.  Table~\ref{tab:images}(A) lists the  public image datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django [data model](http://docs.neurodata.io/open-connectome/sphinx/datamodel.html, the remaining properties are stored in our custom Laboratory Information Management System called [ndlims](https://github.com/openconnectome/ndlims).  The image data in Table~\ref{tab:images}(A) comprise approximately 80 teravoxels of image data (see [here](https://github.com/openconnectome/ocp-journal-paper/blob/gh-pages/Code/Tables/Table1/table1.py)).  These datasets span spatial cases of experimental neuroscience, ranging from nanoscale with electron microscopy to milliscale with MRI, and many in between.  We also store time-series data, as exemplified by the "Freeman14" dataset, a calcium imaging time-series. By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.  
 
 
 
-To complement the image databases, we also created an annotation database management system called RAMON \cite{GrayRoncal15b}.  We have used this infrastructure to store multiple manually and automatically generated dense volumetric annotations, listed in Table~\ref{tab:anno}(B).  
+To complement the image databases, we also created an annotation database management system called [RamonDB](http://docs.neurodata.io/nddocs/ramon.html) \cite{GrayRoncal15b}, and a richly attributed graph database management system called [RagDB](http://openconnecto.me/graphs/).  RAMONdb stores multiple manually and automatically generated dense volumetric annotations, listed in Table~\ref{tab:anno}(B) along with several key features of each.  Collectively, we have XXX voxels manually annotated, and YYY machine annotated.    
 
-Supplementary Table~\ref{tab:API}(A) lists all the functionality currently supported on all of the image databases, and Supplementary Table~\ref{tab:API}(B) lists the functionality on all of the annotation databases.  Importantly, we have both MATLAB (called CAJAL) and Python (called ndio) bindings to support all of that functionality, without the user having to learn a new programming interface. 
+Additionally, RagDB currently holds XXX different neurographs, ranging in species from *C. elegans* to humans (see [here](http://openconnecto.me/graph-services/download/) for details).  RagDB supports a variety of different graph functions (see [here](XXX link to ndio API for graphsXXX)), including building graphs from DTI data and downloading graphs.  Much like one can download neuroimages in a variety of formats (for example, png and hdf5), we also enable graphs to be downloaded in a variety of formats (for example, MATLAB and R readable formats).
+
+
+Supplementary Table~\ref{tab:API} lists all the functionality currently supported on all of the neuroimage, neuroannotation, and neurograph databases.  Importantly, we have both MATLAB (called [CAJAL](http://docs.neurodata.io/CAJAL/)) and Python (called [ndio](http://docs.neurodata.io/nddocs/ndio/)) bindings to support that functionality, without the user having to learn a new programming language. 
 
 
 <div class="container">
-Table 1: List of all current (as of 12/31/15) Open Connectome Project Datasets.  Table 1A lists the *image* datasets and associated metadata.  Table 1B lists the volumetric *annotation* datasets, derived from a subset of the image datasets. Table 1C lists the *graph* datasets, derived from the annotation datasets.
+Table 1: List of all current (as of 12/31/15) NeuroData Datasets.  Table 1A lists the *image* datasets and associated metadata.  Table 1B lists the volumetric *annotation* datasets, derived from a subset of the image datasets. 
 </div>
 
 ## Explore
 
-Interactively exploring these massive data requires tools that can automatically scale appropriately and efficiently.  For this reason, we have developed a number of *NeuroData Explorers*.   For images, we designed *Image Explorer* (IX; http://ix.neurodata.io).  It is the only visualization engine that has the following functionality: (i) loads data remotely from a server, (ii) works in Web-browsers, including mobile, (iii) natively supports volumetric annotations with associated metadata.  In particular, as Figure~\ref{fig:explorer}(A) demonstrates, one can visualize  electron microscopy data, and annotations on top (using one of many color blends), and also see the metadata associated with each annotation object.   Incidentally, IX also supports multiple color channels and time-series data, meaning that one can use it to overlay multiple disparate modalities.
+Interactively exploring these massive data requires tools that can automatically scale appropriately and efficiently.  For this reason, we have developed a number of *NeuroData Explorers*.   For images, we designed *Image Explorer* (IX; http://ix.neurodata.io).  It is the only visualization engine that has the following functionality: (i) loads data remotely from a server, (ii) works in Web-browsers, including mobile, (iii) natively supports volumetric annotations with associated metadata.  In particular, one can visualize  electron microscopy data, and annotations on top, and also "query" the metadata associated with each annotation object (Figure~\ref{fig:explorer}(A)).   IX also supports multiple color channels  
+(Figure~\ref{fig:explorer}(B)) and time-series data (Figure~\ref{fig:explorer}(C)). 
 
-To complement IX, we also built *Graph Explorer* (GX; http://gx.neurodata.io) and *Vector Explorer* (VX; http://vx.neurodata.io) (Figure~\ref{fig:explorer}(A) and (B)).  These two explorers enable users to upload either graphs or tabular data (where rows are subjects and columns are features, as in a csv file).  Both of these tools provide very basic functionality for graphs or tabular data that we find useful for exploring the relevant data types, including different normalization schemes, outlier detection, distributions of various features, and clustering.
+
+
+ and time-series data (see [here](http://ix.neurodata.io/Ex10R55/) for an example array tomography dataset \cite{Weiler14}, and [here](http://ix.neurodata.io/freeman14/) for an example time-series dataset \cite{Freeman14}).
+
+To complement IX, we also built *Graph Explorer* (GX; http://gx.neurodata.io) and *Vector Explorer* (VX; http://vx.neurodata.io) (Figure~\ref{fig:explorer}(B) and (C)).  These two explorers enable users to upload either graphs or tabular data (where rows are subjects and columns are features, as in a csv file).  Both of these tools provide very basic functionality for graphs or tabular data that we find useful for exploring the relevant data types, including different normalization schemes, outlier detection, distributions of various features, and clustering.
 
 <div class="container">
-Figure 2: Exploring the data is a crucial first step, regardless of the data type, therefore, we have built data explorers for images, vectors, and graphs. (A) Image Explorer enables a Google Maps like interface to pan in X, Y, Z, and time, zoom, and overlay annotations, blend colors, and more.  (B) Graph Explorer facilitates computing various graph statistics, community detection, and plotting for arbitrary uploaded or generated graphs. (C) Vector Explorer allows the user to upload a csv file and do basic exploratory data analysis. 
+Figure 2: Exploring the data is a crucial first step, regardless of the data type, therefore, we have built data explorers for images, vectors, and graphs. All subpanels are screenshots using these web-services.
+(A) IX enables overlaying annotation layers and querying them for metadata details ( http://brainviz1.cs.jhu.edu/ndv/kharris15apical/em,ramon_test/3/507/469/90/),
+(B) multispectral data (http://brainviz1.cs.jhu.edu/ndv/project/Aratome15c_S17_W10/1/5818/527/0/), including various blending and other color operations, and 
+(C) time-series data (http://viz.neurodata.io/freeman14/), including auto-play functions.
+
+(D) GX facilitates computing various graph statistics, community detection, and plotting for arbitrary uploaded or generated graphs (http://gx.neurodata.io). 
+
+(E) Vector Explorer allows the user to upload a csv file and do basic exploratory data analysis (http://ix.neurodata.io). 
 </div>
 
 ## Pre-process
@@ -189,7 +202,7 @@ Figure 3: *NeuroData* provides fully automatic terascale tools for both 2D & 3D 
 ## Parse
 
 
-Given that the data has been sufficiently pre-processed, we now proceed to parse the scene, assigning voxels with semantic labels.  Parsing the scene involves three steps: (i) manually labeling a subset of training data, (ii) training and evaluating various machine vision algorithms on appropriate performance metrics, and (iii) deploying the algorithm (and parameter) of choice at scale.  For manual labeling, we built *manno*, which essentially wraps ITK-SNAP by downloading image data from *NeuroData* in the appropriate format, uses ITK-SNAP to label a number of voxels, and then saves and uploads the annotations to the appropriate annotation database (with metadata; see Figure~\ref{fig:parse}(A) for an exemplar slice).  Given the training labels, *macho* uses ilastik to perform pixel level classification \cite{XXX}, and then custom morphological operations to detect objects.  We choose the operating point the maximized F1-score on a held-out dataset located in a volume separated from the training volume (Figure~\ref{fig:parse}(B)).  Finally, we deployed our chosen classifier on the full dataset, yielding ~10 million putative synapse detections (Figure~\ref{fig:parse}(C) shows approximately 1% of them).
+Given that the data has been sufficiently pre-processed, we now proceed to parse the scene, assigning voxels with semantic labels.  Parsing the scene involves three steps: (i) manually labeling a subset of training data, (ii) training and evaluating various machine vision algorithms on appropriate performance metrics, and (iii) deploying the algorithm (and parameter) of choice at scale.  For manual labeling, we built [*manno*](http://docs.neurodata.io/manno/), which essentially wraps ITK-SNAP by downloading image data from *NeuroData* in the appropriate format, uses ITK-SNAP to label a number of voxels, and then saves and uploads the annotations to the appropriate annotation database (with metadata; see Figure~\ref{fig:parse}(A) for an exemplar slice).  Given the training labels, *macho* uses ilastik to perform pixel level classification \cite{XXX}, and then custom morphological operations to detect objects.  We choose the operating point the maximized F1-score on a held-out dataset located in a volume separated from the training volume (Figure~\ref{fig:parse}(B)).  Finally, we deployed our chosen classifier on the full dataset, yielding ~10 million putative synapse detections (Figure~\ref{fig:parse}(C) shows approximately 1% of them).
 
 
 
@@ -233,6 +246,11 @@ A parsed scene is the data derivative upon which neuroscientific questions can b
 
 <div class="container" >
 Supplementary Figure 1: Infrastructure supporting all components of the OCP data analysis pipeline.  (A) The OCP Data Cluster. (B) Software running on the backend. (C) Software running on the frontend. 
+</div>
+
+
+<div class="container" >
+Supplementary Table 1: Functions supported in our databases.  (A) NeuroImages. (B) NeuroAnnotations. (C) NeuroGraphs.
 </div>
 
 
