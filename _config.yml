@@ -2,29 +2,20 @@
 title:              ""
 description:        ""
 
-# Author Info
 author_name:        "everyone"
 author_email:       team@neurodata.io
 
-# Site Settings
-baseurl:            "" # Base URL must end WITHOUT a slash, default: ""
-# permalink:          /articles/:title # Post permalink
+baseurl:            ""
 timezone:           America/New_York
 
-# Site Build
 highlighter:        pygments
-#markdown:           redcarpet
-#redcarpet:
-#    extensions:     ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data", "highlight", "footnotes"]
 markdown:           kramdown
 kramdown:
     input:          GFM
 sass:
     style:          :compressed
 
-# Other Params
 include:            [ "robots.txt" ]
 exclude:            [ "LICENSE", "README.md", "CNAME", "vendor", "Gemfile" ]
 gems:
   - jekyll-sitemap
-  # - markdown
