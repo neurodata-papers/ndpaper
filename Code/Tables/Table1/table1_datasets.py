@@ -36,7 +36,7 @@ for path in public_token_files:
         insert = {
             "modality": metadata['type'] if 'type' in metadata else "",
             "species": metadata['species'] if 'species' in metadata else "",
-            "dataset": "`{}`".format(info['dataset']['description']),
+            "dataset": "{}".format(info['dataset']['description']),
             "token": "`{}`".format(path[len(cache_path)+1:-5]),
             "resolution": metadata['resolution'] if 'resolution' in metadata else "",
             "image_size": ' x '.join([str(d) for d in info['dataset']['imagesize']['0']]),
