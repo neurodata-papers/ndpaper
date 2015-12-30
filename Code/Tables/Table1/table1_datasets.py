@@ -29,7 +29,7 @@ for path in public_token_files:
         if 'image' not in info['channels'].keys():
             skip = True
             for channel, channel_info in info['channels'].iteritems():
-                if channel_info['channel_type'] == 'oldchannel':
+                if channel_info['channel_type'] in ['oldchannel', 'timeseries']:
                     skip = False
             if skip:
                 continue
@@ -46,6 +46,8 @@ for path in public_token_files:
             "token": "`{}`".format(path[len(cache_path)+1:-5]),
             "resolution": " x ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "",
             "image_size": ' x '.join([str(d) for d in info['dataset']['imagesize']['0']]),
+            "channels": len(info['channels']),
+            "time": info['dataset']['timerange'][1] - info['dataset']['timerange'][0],
             "reference": link
         }
         sizes.append(info['dataset']['imagesize']['0'])
@@ -56,5 +58,5 @@ for path in public_token_files:
 # print ss
 # print sum(ss)
 
-pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()), col_order=['modality', 'species', 'dataset', ('resolution', "resolution (nm)"), ('image_size', "Image Size (voxels)"), 'reference'])
+pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()), col_order=['modality', 'species', 'dataset', ('resolution', "resolution (nm)"), ('image_size', "Image Size (voxels)"), ('channels', 'Number of Channels'), ('time', 'Time'), 'reference'])
 print pt.to_markdown()
