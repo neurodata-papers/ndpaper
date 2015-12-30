@@ -77,20 +77,20 @@ Recent technical progress allows neuroexperimentalists to collect ever more deta
 <h3>Opportunity</h3>
 
 <<<<<<< HEAD
-XXX flow from 1D (genomes), 2D (cosmos) & 2D+color (sloan2), now 3D (us), 3D+color/time 
+XXX flow from 1D (genomes), 2D (cosmos) & 2D+color (sloan2), now 3D (us), 3D+color/time
 
 crucial next step is 3D, then color+time
 XXX
 
 
-<p>Data from experimental neuroscientists can now be collected at astonishing rates across a wide variety of experimental paradigms, ranging from serial electron microscopy to calcium imaging to multimodal magnetic resonance imaging.  In each of the different paradigms, the raw data are typically collections of relatively small (e.g., 4 megabyte) two-dimensional  images.  These 2D images can be montaged into large 2D planes, or larger 3D volumes, 3D+time movies, and/or 3D+color multispectral data.  These data have troves of information about brains lurking within, waiting to be extracted by the community, which will reveal the underlying principles of normal, abnormal and exceptional function. 
+<p>Data from experimental neuroscientists can now be collected at astonishing rates across a wide variety of experimental paradigms, ranging from serial electron microscopy to calcium imaging to multimodal magnetic resonance imaging.  In each of the different paradigms, the raw data are typically collections of relatively small (e.g., 4 megabyte) two-dimensional  images.  These 2D images can be montaged into large 2D planes, or larger 3D volumes, 3D+time movies, and/or 3D+color multispectral data.  These data have troves of information about brains lurking within, waiting to be extracted by the community, which will reveal the underlying principles of normal, abnormal and exceptional function.
 </p>
 
 
 
 
-<p>The focus of this work is serial electron microscopy (EM) data, a relatively novel yet important experimental modality, as it is unique in its ability to reveal nanoscale anatomical structure [@Denk04,etc.].  Such datasets can obtain terabytes (TB) a day; multiple such datasets already exist with ~100 TB (personal communication, Josh Morgan and Wei-Chung Allen Lee).  
-And with the new IARPA program dubbed MICrONS, a 4-10 petabyte (PB) dataset is planned to be collected in the next three years [@MICrONS].  
+<p>The focus of this work is serial electron microscopy (EM) data, a relatively novel yet important experimental modality, as it is unique in its ability to reveal nanoscale anatomical structure [@Denk04,etc.].  Such datasets can obtain terabytes (TB) a day; multiple such datasets already exist with ~100 TB (personal communication, Josh Morgan and Wei-Chung Allen Lee).
+And with the new IARPA program dubbed MICrONS, a 4-10 petabyte (PB) dataset is planned to be collected in the next three years [@MICrONS].
 .footnote[moreover sentence isn't perfect, it doesn't quite follow]
 Moreover, because it is single channel (one color) and single time step (anatomical), addressing big data analysis on these datasets will be a crucial first step prior to addressing big data analysis on multispectral and temporal data.  </p>
 
@@ -110,7 +110,7 @@ Moreover, because it is single channel (one color) and single time step (anatomi
 </ol>
 
 
-If one group did manage to overcome all of those barriers, then they could answer this question and publish the results. But science is fundamentally a collective endeavor, where each result builds upon the previous works.  
+If one group did manage to overcome all of those barriers, then they could answer this question and publish the results. But science is fundamentally a collective endeavor, where each result builds upon the previous works.
 
 XXX reproducible. XXX
 
@@ -146,7 +146,7 @@ We have built the *NeuroData* computational ecosystem to address the above descr
 <h3>Resolution</h3>
 
 XXX final paragraph of intro should stand alone,
-summarize, 
+summarize,
 then give specific examples
 broader thing
 
@@ -154,14 +154,14 @@ broader thing
 XXX
 
 
-We have used this infrastructure in two different case studies.  In the first, we have reproduced all of the ~50 quantitative claims made by a  recent landmark EM paper [@Kasthuri15], including a claim about the probability of synapsing given spatial proximity.  Second, we used a significantly larger dataset (~10 TB) from another recent landmark EM paper [@Bock11] to address the exemplar use case mentioned above.  From that data, we characterize the three dimensional distribution of ~10 million synapses in mammalian cortex, to discover significant clustering and layering that was previously unknown.  
+We have used this infrastructure in two different case studies.  In the first, we have reproduced all of the ~50 quantitative claims made by a  recent landmark EM paper [@Kasthuri15], including a claim about the probability of synapsing given spatial proximity.  Second, we used a significantly larger dataset (~10 TB) from another recent landmark EM paper [@Bock11] to address the exemplar use case mentioned above.  From that data, we characterize the three dimensional distribution of ~10 million synapses in mammalian cortex, to discover significant clustering and layering that was previously unknown.
 
 
 
 
 
 <p>
-Here we demonstrate that the NeuroData infrastructure has therefore enabled  reproducing previous anatomical results on big data, as well as  produced quantitative answers to a fundamental neuroanatomical question with a sufficient sample size to leave little room for doubt about the veridicality of this summary statistic, at least on these data.  
+Here we demonstrate that the NeuroData infrastructure has therefore enabled  reproducing previous anatomical results on big data, as well as  produced quantitative answers to a fundamental neuroanatomical question with a sufficient sample size to leave little room for doubt about the veridicality of this summary statistic, at least on these data.
 Perhaps more important than the particular questions we have address in this work, is the capability we have enabled for the greater neuroscience community.  Anybody---professional or citizen scientists alike---can use our services to learn about the brain.  Power users can modify our scripts to answer different questions, and developers could add additional capabilities for the community.  As the community moves more and more towards collecting massive datasets, we hope these tools can be useful to address a wide range of scientific questions.
 </p>
 
@@ -211,7 +211,7 @@ Supplementary Table~\ref{tab:API} lists all the functionality currently supporte
 
 
 <div class="container">
-{% md_include table1.md %}
+{% include table1.html %}
 Table 1: List of all current (as of 12/31/15) NeuroData Datasets.  Table 1A lists the *image* datasets and associated metadata.  Table 1B lists the volumetric *annotation* datasets, derived from a subset of the image datasets.
 </div>
 
@@ -239,7 +239,7 @@ Figure 2: Exploring the data is a crucial first step, regardless of the data typ
 
 ## Pre-process
 
-Pre-processing of data, a process that converts raw data into a format ready for parsing, is an incredibly important and tedious task for essentially any data analysis task.  In electron microscopy, we can divide pre-processing into three steps: (i) geometric or (ii) chromatic alterations, and (iii) registration to a template or atlas. A number of groups are actively developing very nice geometric pre-processing packages, including Terastitcher [@XXX] and Saalfeld's Fiji plug-in [@XXX].  We therefore have focused our development efforts on the next two steps.  We built both a 2D and 3D chromatic pre-processing tool. The 2D tool, called *Distriubuted Multigrid Poisson* (DMG) addresses stitching artifacts from montaging multiple 2D tiles into a single large plane (Figure~\ref{fig:pre}(A)).  The 3D tool, called *Gradient Domain Fusion* (GDF) addresses histogram artifacts from different exposure times which can cause a strobe light effect across axial slices of the data (Figure~\ref{fig:pre}(B)).  Both tools were designed to stream the data efficiently, meaning that they can both operate on arbitrarily large data (Figure~\ref{fig:pre}(C)).  
+Pre-processing of data, a process that converts raw data into a format ready for parsing, is an incredibly important and tedious task for essentially any data analysis task.  In electron microscopy, we can divide pre-processing into three steps: (i) geometric or (ii) chromatic alterations, and (iii) registration to a template or atlas. A number of groups are actively developing very nice geometric pre-processing packages, including Terastitcher [@XXX] and Saalfeld's Fiji plug-in [@XXX].  We therefore have focused our development efforts on the next two steps.  We built both a 2D and 3D chromatic pre-processing tool. The 2D tool, called *Distriubuted Multigrid Poisson* (DMG) addresses stitching artifacts from montaging multiple 2D tiles into a single large plane (Figure~\ref{fig:pre}(A)).  The 3D tool, called *Gradient Domain Fusion* (GDF) addresses histogram artifacts from different exposure times which can cause a strobe light effect across axial slices of the data (Figure~\ref{fig:pre}(B)).  Both tools were designed to stream the data efficiently, meaning that they can both operate on arbitrarily large data (Figure~\ref{fig:pre}(C)).
 
 After addressing both geometric and chromatic aberrations, it is often desirable to align the image stack to a reference image, possibly in a different modality.  *ndreg* is our Python tool that sub-serves that functionality.  Because there does not yet exist public data set with both EM and another modality to align, we have aligned a whole mouse brain CLARITY image with the Allen Reference Atlas (Figure~\ref{fig:pre}(D)).  Despite the fact that the two images were collected at different scales, and using different modalities, we are able to successfully and automatically align the two using *ndreg*.
 
