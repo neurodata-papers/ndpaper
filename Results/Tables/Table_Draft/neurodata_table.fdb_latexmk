@@ -1,0 +1,16 @@
+# Fdb version 3
+["pdflatex"] 1445133944 "neurodata_table.tex" "neurodata_table.pdf" "neurodata_table" 1445133945
+  "/usr/local/texlive/2014/texmf-dist/tex/latex/base/article.cls" 1399675188 20496 66dd832c447553f6776fbeac03bb0580 ""
+  "/usr/local/texlive/2014/texmf-dist/tex/latex/base/size12.clo" 1399675188 8978 ae5f64dacfe4ff1b713dec8fd98fb590 ""
+  "/usr/local/texlive/2014/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty" 1160175134 20521 e5d13d98d57bd53d4fed3aa61bd29c86 ""
+  "/usr/local/texlive/2014/texmf-dist/tex/latex/preprint/fullpage.sty" 1137110595 2789 05b418f78b224ec872f5b11081138605 ""
+  "/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ot1ptm.fd" 1137110629 961 15056f4a61917ceed3a44e4ac11fcc52 ""
+  "/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/times.sty" 1156702453 857 6c716f26c5eadfb81029fcd6ce2d45e6 ""
+  "/usr/local/texlive/2014/texmf-dist/tex/latex/subfigure/subfigure.cfg" 1167176009 2062 a0e7d66e09e508f51289a656aec06ed2 ""
+  "/usr/local/texlive/2014/texmf-dist/tex/latex/subfigure/subfigure.sty" 1167176009 15188 91281c7ddbccfa54a8e0c3b56ab5aa72 ""
+  "neurodata_table.aux" 1445133945 757 8afa9cb8c10a03767e5dfc50f9faeec2 ""
+  "neurodata_table.tex" 1445133944 3559 d38b3c572c48ee4c3b240f3eb4fae33d ""
+  (generated)
+  "neurodata_table.pdf"
+  "neurodata_table.log"
+  "neurodata_table.aux"
