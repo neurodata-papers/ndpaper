@@ -82,32 +82,28 @@ Moreover, because it is single channel (one color) and single time step (anatomi
 <h3>Challenge</h3>
 
 
-*Unfortunately, existing computational ecosystems for data analysis are ill equipped to meet the challenges that arise with conducting science on terascale data.*  
-To explain why, we consider one of the two cases studies that we will explore in the sequel. In particular, imaging that we have collected 10 TB of serial EM data from cortex, and we have the very simple neuroanatomical question to answer: what does the distribution of synapses look like? It is uniform, for example, in 3D space, or clustered, or layered?  We divide the data analysis requirements into six components, each of which faces unique challenges:
+*Unfortunately, existing computational ecosystems for data analysis are ill equipped to meet the challenges that arise with conducting science on terascale data.*   To explain why, we consider one of the two cases studies that we will explore in the sequel. In particular, imaging that we have collected 10 TB of serial EM data from cortex, and we have the very simple neuroanatomical question to answer: what does the distribution of synapses look like? It is uniform, for example, in 3D space, or clustered, or layered?  We divide the data analysis requirements into six components, each of which faces unique challenges:
 
-1. Infrastructure: consists of a data cluster (hardware) that contains both data intensive and high-performance computing,  backend software designed to efficiently manage and manipulate the data intensive component, and  frontend software to process and analyze the data.  Standard laboratory computing typically includes a workstation with maybe a few terabytes of storage, images stored as files in folders organized across hard drives, and MATLAB which can only files 2 GB or smaller.  
-
-
-standard laboratory workstations do not have 10 TB of storage, and therefore, cannot even store the data. Even if one builds a small local data storage cluster, many decisions must be made that exceed the expertise of neuroscientist labs: which file system should be used, how should the data be organized, etc.  
-2. Storing: data cannot be read and written at scale even locally, much less remotely.  
-3. Exploring: tools to interactively visualize the data require the whole volume fit into RAM, which is not possible.  
-4. Pre-Processing: software requires manual intervention, which becomes a significant bottleneck when there are literally millions of images. 
-5. Parsing: manually parsing the scene can be even more time consuming due to the massive number of  voxels (for example, 10<sup>15</sup>). 
-6. Infering: Analyzing the resulting data derivatives, be they shapes or graphs or both, benefits from tools that natively operate on those data types, with statistical guarantees.
+1. Infrastructure: Without a terascale infrastructure, neuroscientists have to build custom hardware and software to load subsets of data into RAM (for example, in MATLAB or Python), because RAM typically only holds up to 16 GB of data, and the data of interest is orders of magnitude larger. 
+2. Storing: Most labs do not have many terabytes of storage, and even if they did, each scientist would need to dynamically choose where to put data, how to organize it, what format to use, etc.  Moreover, others could not easily access or operate on it.
+3. Exploring: Even visualizing data that is larger than RAM is non-trivial.  Current solutions typically involve sub-sampling or downsampling the data, and loading just that subset into RAM.  
+4. Pre-Processing: The raw data is never collected in a form amenable to parsing into semantic objects, rather, images must be stitched together, chromatic aberrations must be adjusted, and data must be aligned to other references to compare. Currently solutions typically require all the data to be loaded into RAM.
+5. Parsing: Manually identifying all the ~10,000,000 synapses, at a rate of about 1 synapse per second, would take over a year (40 hrs/week, 50 weeks/year).  
+6. Inferring: Inferring the statistical regularities (and irregularities) from the resulting data derivatives requires statistics incorporating space, shape, and graphs/networks.  Existing packages for such analyses either have limited capabilities, are expensive, or do not scale sufficiently.
 
 
+If one group did manage to overcome all of those barriers, then they could answer this question and publish the results. But science is fundamentally a collective endeavor, where each result builds upon the previous works.  With small data, the full analysis can easily be reproducible using existing technology: deposit the digital data in a data repository (like FigShare) and the code in a code repository (like GitHub). Although even the above is not yet standard practice in neuroscience, it could be.  With big data, even the above suggestion would not work.
 
-Further, if one group does manage to overcome those barriers, reproducing and extending their results  is typically impossible without collecting a new dataset; an unacceptably costly endeavor. 
+
+
+
+When the data are large, and the analyses are complicated however, neither of those actions are sufficient.  In terms of data, FigShare and related data repositories typically cannot accept many terabytes of data per project.  Even if they did, each researcher would have to make a number of decisions that would impact the utility of the data: in what format would the data be deposited? what metadata to include?   And even then, how would other researchers access it? Would they have to download the whole dataset, or would there be some search mechanism?
+
+
 
 XXX explain why this is the case.
 end up to the conclusion: therefore, you'd have to collect a new dataset and build up analysis from scratch.  XXX
 
-
- Science is fundamentally a collective endeavor, where each result builds upon the previous works by "standing on the shoulders of giants" .  With small data, the full analysis can easily be reproducible: deposit the digital data in a data repository (like FigShare) and the code in a code repository (like GitHub). 
-
-XXX start with small data.  end with "THis prevents...." XXX
-
-When the data are large, and the analyses are complicated however, neither of those actions are sufficient.  In terms of data, FigShare and related data repositories typically cannot accept many terabytes of data per project.  Even if they did, each researcher would have to make a number of decisions that would impact the utility of the data: in what format would the data be deposited? what metadata to include?   And even then, how would other researchers access it? Would they have to download the whole dataset, or would there be some search mechanism?
 
 Sharing the code can be similarly complicated for big data, as the computations often involve clusters, which are not yet "turn-key"; rather,  they remain highly specialized.  Therefore, reproducible ones analysis from the code requires access either to the original author's computing environment, or a replica of it.
 
@@ -184,7 +180,7 @@ Figure 1: Reading and writing to the database must be sufficiently fast to not b
 </div>
 
 
-## Databases
+## Store
 
 We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations.  Table~\ref{tab:images}(A) lists the  public EM datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django data model, the remaining properties are stored in our custom Laboratory Information Management System called ndlims.  The image data in Table~\ref{tab:images}(A) comprise approximately 100 terabytes (TB) of image data .TODO[@j6: make python function that builds html/md/css compliant table to include, and sums up total storage].  By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.  
 
