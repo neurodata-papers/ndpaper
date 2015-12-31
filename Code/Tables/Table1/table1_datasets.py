@@ -48,7 +48,7 @@ for path in public_token_files:
 
             "token": "`{}`".format(path[len(cache_path)+1:-5]),
 
-            "resolution": (" x ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "") + (", {}".format(metadata['frequency']) if 'frequency' in metadata else ""),
+            "resolution": (" x ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "") + ("; {}".format(metadata['frequency']) if 'frequency' in metadata else ""),
 
             "image_size": ' x '.join([str(d) for d in info['dataset']['imagesize']['0']]),
 
@@ -67,12 +67,14 @@ for path in public_token_files:
 # print sum(ss)
 
 pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()),
-                  col_order=['modality',
-                             'species',
+                  col_order=['reference',
                              'dataset',
-                             ('resolution', "Resolution (nm nm nm, Hz)"),
+                             'modality',
+                             'species',
+                             ('resolution', "Resolution (nm^3, Hz)"),
                              ('image_size', "Image Size (voxels)"),
                              ('channels', '#channels'),
                              ('time', '#timesteps'),
+                             ('size', "Size (XYZCT) GB")
                              'reference'])
 print pt.to_markdown()
