@@ -26,7 +26,7 @@
         background-color: #fff;
         position: absolute;
         left: 20px;
-        width: 640px;
+        /*max-width: 640px;*/
 
       }
       h1, h2, h3, h4, h5, h6 {
@@ -38,10 +38,29 @@
         font-variant: small-caps;
       }
       .r { color: #fa0000; }
-      .container {
-        width: 500px;
-        font-size: small;
 
+      p {
+          max-width: 640px;
+      }
+
+      .fig-container {
+        font-size: small;
+        border-top: 5px solid #efefef;
+        border-bottom: 5px solid #efefef;
+        padding: 1em;
+      }
+
+      thead {
+          background: #ccc;
+          font-weight: bold;
+      }
+
+      tr:nth-child(2n) {
+          background-color: #efefef;
+      }
+
+      td, th {
+          padding: 1em;
       }
       </style>
 
@@ -56,7 +75,6 @@
 ---
 
 
-<div class=container>
 <h1>Abstract</h1>
 
 Recent technical progress allows neuroexperimentalists to collect ever more detailed and informative anatomical and physiological data from brains of all sizes.  These datasets span experimentally accessible spatiotemporal scales, ranging from nanometer to meter, and millisecond to monthly sampling rates.  In classical neuroscientific experimental paradigms, it was feasible for neuroscientists to draw their results on paper. In contrast, many modern neuroscientific experimental paradigms break the classic data analysis workflow.  In particular, these large datasets create significant challenges for our community at every step of the data analysis pipeline: (0) infrastructure, (1) storage, (2) exploration, (3) pre-processing, (4) parsing, and (5) analyzing.
@@ -191,7 +209,7 @@ Writing to our spatial database would be more time consuming than simply uploadi
 
 Writing annotations is a bit more complicated than simply writing images because we store annotations as objects with associated metadata, such as what type of object is it (e.g., synapse), who labeled it, what time, with what confidence, etc. Because each write object is therefore relatively small, and write speeds are determined largely by the number of files to write, we built NeuroBlaze, which caches writes in memory, only writing to disk a single large file joining all the small writes.  This enables us to write  annotations extremely efficiently (Figure~\ref{fig:infra}(E)).
 
-<div class="container">
+<div class="fig-container">
 Figure 1: Reading and writing to the database must be sufficiently fast to not be the primary bottleneck.  (A) OCP can write images faster than most current data collection speeds, meaning that data can be sent directly to OCP without requiring a large local storage buffer.  (B) Reading images from OCP using the tilecache is sufficiently fast to view the data at video rates. (C) Unlike many other scientific big data efforts, neuroscience requires many fast annotation writes.  NeuroBlaze writes annotation objects much more efficiently than our image writing by caching the writes in memory. (D) Although current EM derived neurographs are relatively small, and there are few, we expect that to change dramatically in the coming years. Therefore, we have built infrastructure to support downloading a large number of large graphs efficiently.
 </div>
 
@@ -210,7 +228,7 @@ Additionally, RagDB currently holds XXX different neurographs, ranging in specie
 Supplementary Table~\ref{tab:API} lists all the functionality currently supported on all of the neuroimage, neuroannotation, and neurograph databases.  Importantly, we have both MATLAB (called [CAJAL](http://docs.neurodata.io/CAJAL/)) and Python (called [ndio](http://docs.neurodata.io/nddocs/ndio/)) bindings to support that functionality, without the user having to learn a new programming language.
 
 
-<div class="container">
+<div class="fig-container">
 {% include table1.html %}
 Table 1: List of all current (as of 12/31/15) NeuroData Datasets.  Table 1A lists the *image* datasets and associated metadata.  Table 1B lists the volumetric *annotation* datasets, derived from a subset of the image datasets.
 </div>
@@ -226,7 +244,7 @@ Interactively exploring these massive data requires tools that can automatically
 
 To complement IX, we also built *Graph Explorer* (GX; http://gx.neurodata.io) and *Vector Explorer* (VX; http://vx.neurodata.io) (Figure~\ref{fig:explorer}(B) and (C)).  These two explorers enable users to upload either graphs or tabular data (where rows are subjects and columns are features, as in a csv file).  Both of these tools provide very basic functionality for graphs or tabular data that we find useful for exploring the relevant data types, including different normalization schemes, outlier detection, distributions of various features, and clustering.
 
-<div class="container">
+<div class="fig-container">
 Figure 2: Exploring the data is a crucial first step, regardless of the data type, therefore, we have built data explorers for images, vectors, and graphs. All subpanels are screenshots using these web-services.
 (A) IX enables overlaying annotation layers and querying them for metadata details ( http://brainviz1.cs.jhu.edu/ndv/kharris15apical/em,ramon_test/3/507/469/90/),
 (B) multispectral data (http://brainviz1.cs.jhu.edu/ndv/project/Aratome15c_S17_W10/1/5818/527/0/), including various blending and other color operations, and
@@ -243,7 +261,7 @@ Pre-processing of data, a process that converts raw data into a format ready for
 
 After addressing both geometric and chromatic aberrations, it is often desirable to align the image stack to a reference image, possibly in a different modality.  *ndreg* is our Python tool that sub-serves that functionality.  Because there does not yet exist public data set with both EM and another modality to align, we have aligned a whole mouse brain CLARITY image with the Allen Reference Atlas (Figure~\ref{fig:pre}(D)).  Despite the fact that the two images were collected at different scales, and using different modalities, we are able to successfully and automatically align the two using *ndreg*.
 
-<div class="container">
+<div class="fig-container">
 Figure 3: *NeuroData* provides fully automatic terascale tools for both 2D & 3D chromatic adjustments, as well as nonlinear volume registration.  (A) DMG Chromatic pre-processing adjusts for aberrations induces by data collection and/or geometric stitching. (Bi) 2D image before DMG. (Bii) 2D image after DMG.  (Biii) XZ projection of data before GDF. (Biv) XZ projection after GDF.  (Bv) Time per image size (red) and number of slices (black) on a particular AMI.  (C) Volume registration.
 </div>
 
@@ -254,7 +272,7 @@ Given that the data has been sufficiently pre-processed, we now proceed to parse
 
 
 
-<div class="container">
+<div class="fig-container">
 <div><img src="http://docs.neurodata.io/ndintro/images/rob2.png" alt="Drawing" style="height: 250px;"/></div>
 Figure 4:
 
@@ -292,21 +310,16 @@ A parsed scene is the data derivative upon which neuroscientific questions can b
 
 
 
-<div class="container" >
+<div class="fig-container">
 Supplementary Figure 1: Infrastructure supporting all components of the OCP data analysis pipeline.  (A) The OCP Data Cluster. (B) Software running on the backend. (C) Software running on the frontend.
 </div>
 
 
-<div class="container" >
+<div class="fig-container">
 Supplementary Table 1: Functions supported in our databases.  (A) NeuroImages. (B) NeuroAnnotations. (C) NeuroGraphs.
 </div>
 
 
-
-
-
-
-	</div>
 
 	<script type="text/javascript">
         m = markdownit({
