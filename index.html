@@ -26,7 +26,7 @@
         background-color: #fff;
         position: absolute;
         left: 20px;
-        /*max-width: 640px;*/
+        max-width: 640px;
 
       }
       h1, h2, h3, h4, h5, h6 {
@@ -77,11 +77,13 @@
 
 <h1>Abstract</h1>
 
+<p>
 Recent technical progress allows neuroexperimentalists to collect ever more detailed and informative anatomical and physiological data from brains of all sizes.  These datasets span experimentally accessible spatiotemporal scales, ranging from nanometer to meter, and millisecond to monthly sampling rates.  In classical neuroscientific experimental paradigms, it was feasible for neuroscientists to draw their results on paper. In contrast, many modern neuroscientific experimental paradigms break the classic data analysis workflow.  In particular, these large datasets create significant challenges for our community at every step of the data analysis pipeline: (0) infrastructure, (1) storage, (2) exploration, (3) pre-processing, (4) parsing, and (5) analyzing.
+</p>
 
-
+<p>
 *NeuroData* has been developed to lower the barrier to entry into big data neuroscience. We have designed and built a computational infrastructure to enable petascale neuroscience.  This includes our flagship project, the *Open Connectome Project*. Our infrastructure enables anyone in the world with internet access to visualize, download, analyze, upload, or otherwise interact with a large number public datasets.  Moreover, all the results obtained using the NeuroData infrastructure are fundamentally reproducible and extensible.  We demonstrate the utility of these tools via two serial electron microscopy case studies.  First, we have reproduced all of the quantitative results from a recent landmark EM paper that included a saturated annotation of all objects. Second, we have tested a novel hypothesis about the distribution of synapse locations in cortex on a complementary dataset.  Via the *NeuroData* infrastructure, the answers to these tools are both fully reproducible, and extensible to any other datasets that hold the answers to these questions. Moreover, anybody else can now also do neuroscience at scale, regardless of their background, computational resources, and expertise.
-
+</p>
 </div>
 
 <!-- We are in the process of scaling up the number of datasets, the range of experimental modalities, and the Web-services we enable. Work underway will provide pre-packaged cluster environments—1-click deployable on local or commercial cloud computing infrastructures—so that others can replicate and modify our services internally. All of our code and data are available online at neurodata.io, in accordance with open science standards.  -->
@@ -94,94 +96,69 @@ Recent technical progress allows neuroexperimentalists to collect ever more deta
 
 <h3>Opportunity</h3>
 
-<<<<<<< HEAD
-XXX flow from 1D (genomes), 2D (cosmos) & 2D+color (sloan2), now 3D (us), 3D+color/time
-
-crucial next step is 3D, then color+time
-XXX
-
-
-<p>Data from experimental neuroscientists can now be collected at astonishing rates across a wide variety of experimental paradigms, ranging from serial electron microscopy to calcium imaging to multimodal magnetic resonance imaging.  In each of the different paradigms, the raw data are typically collections of relatively small (e.g., 4 megabyte) two-dimensional  images.  These 2D images can be montaged into large 2D planes, or larger 3D volumes, 3D+time movies, and/or 3D+color multispectral data.  These data have troves of information about brains lurking within, waiting to be extracted by the community, which will reveal the underlying principles of normal, abnormal and exceptional function.
+<p>In the 21st century, big data (data too large to fit on your workstation) is transforming industry, governments, and science.   Already, different disciplines have developed computational tools to support each different need.  For example, eHarmony uses big data analytics to help people find love.  Sites like this have transformed the experience of being single, as users now often interact with eHarmony's Web-services daily.  eHarmony's data is a collection of users, and semi-structured features for each.  Hadoop and related technologies have facilitated scalable analytics for such problems. In the sciences, the genomics revolution has had a similarly large impact.  A consortium of government entities deploy a suite of Web-services that enables geneticists to upload their new genetic sequences to a centralized data, and search for similar sequences across the existing data.  Again, these features are utilized nearly daily by many (perhaps most) geneticists.  These data, however, are not semi-structured features, rather, they are one-dimensional (1D) sequences.  Thus, storage and search require wholly different hardware and software requirements. Similarly, sky surveys, such as the Sloan Digital Sky Survey, have transformed cosmology.  Astrophysics practice also underwent a revolution. Rather that reserving telescope time months in advance, and hoping the sky was clear that day, scientists can browse the sky survey at any time, looking for anomalies or insights.  The cosmology data is 2D, rather than 1D, and so, yet another design strategy went in to developing the necessary resources to support the community.
 </p>
 
+
+<p>Neuroscience is now entering the age of big data, as laboratories from around the world are beginning to acquire data that exceeds their computational capabilities.  These data can come for dizzying variety of experimental paradigms, ranging from serial electron microscopy to calcium imaging to multimodal magnetic resonance imaging. For many of these paradigms the data are massive 3D image stacks.  Thus, the existing computational solutions for big data do not meet the requirements for these data.  Moreover, neuroscience is rife with >3D data, as certain modalities have many different channels (for example, array tomography datasets might have up to 24 channels), and includes functional data (which might have many thousands of time steps).  
+All these different datasets have troves of information about brains lurking within, waiting to be extracted by the community, which will reveal the underlying principles of normal, abnormal and exceptional function.
+</p>
 
 
 
 <p>The focus of this work is serial electron microscopy (EM) data, a relatively novel yet important experimental modality, as it is unique in its ability to reveal nanoscale anatomical structure [@Denk04,etc.].  Such datasets can obtain terabytes (TB) a day; multiple such datasets already exist with ~100 TB (personal communication, Josh Morgan and Wei-Chung Allen Lee).
 And with the new IARPA program dubbed MICrONS, a 4-10 petabyte (PB) dataset is planned to be collected in the next three years [@MICrONS].
-.footnote[moreover sentence isn't perfect, it doesn't quite follow]
 Moreover, because it is single channel (one color) and single time step (anatomical), addressing big data analysis on these datasets will be a crucial first step prior to addressing big data analysis on multispectral and temporal data.  </p>
 
 
 <h3>Challenge</h3>
 
-
-*Unfortunately, existing computational ecosystems for data analysis are ill equipped to meet the challenges that arise with conducting science on terascale data.*   To explain why, we consider one of the two cases studies that we will explore further below. In particular, imagine that we have collected 10 TB of serial EM data from a cortical column, and we have the very simple neuroanatomical question to answer: how uniform is the 3D distribution of synapses? For example, is it clustered in 3D space,  or layered?  We divide the data analysis requirements into six components, each of which faces unique challenges:
+<p>
+As mentioned above, existing computational ecosystems for data analysis are ill equipped to meet the challenges that arise with conducting science on big neuroscience.   To explain why, we consider one of the two cases studies that we will explore further below. In particular, imagine that we have collected 10 TB of serial EM data from a cortical column, and we have the very simple neuroanatomical question to answer: how uniform is the 3D distribution of synapses? For example, is it clustered in 3D space,  or layered?  We divide the data analysis requirements into six components, each of which faces unique challenges:
+</p>
 
 <ol start="0">
-  <li>Infrastructure: Without a terascale infrastructure, neuroscientists have to build custom hardware and software to load subsets of data into RAM (for example, in MATLAB or Python), because RAM typically only holds up to 16 GB of data, and the data of interest is orders of magnitude larger. </li>
+  <li>Infrastructure: Without a terascale infrastructure, neuroscientists have to build custom hardware and software to load sub-<em>cubes</em> of data into RAM (for example, in MATLAB or Python), because RAM typically only holds up to 16 GB of data, and the data of interest is orders of magnitude larger. </li>
   <li>Storing: Most labs do not have many terabytes of storage, and even if they did, each scientist would need to dynamically choose where to put data, how to organize it, what format to use, etc.  Moreover, others could not easily access or operate on it.</li>
-  <li>Exploring: Even visualizing data that is larger than RAM is non-trivial.  Current solutions typically involve sub-sampling or downsampling the data, and loading just that subset into RAM. </li>
-  <li>Pre-Processing: The raw data is never collected in a form amenable to parsing into semantic objects, rather, images must be stitched together, chromatic aberrations must be adjusted, and data must be aligned to other references to compare. Currently solutions typically require all the data to be loaded into RAM.</li>
-  <li>Parsing: Manually identifying all the ~10,000,000 synapses, at a rate of about 1 synapse per second, would take over a year (40 hrs/week, 50 weeks/year).</li>
+  <li>Exploring: Even visualizing data that is larger than RAM is non-trivial.  Current local solutions typically involve sub-sampling or downsampling the data, and loading just that subset into RAM, and remote solutions are either 2D, or lack 3D annotation metadata support. </li>
+  <li>Pre-Processing: The raw data is never collected in a form amenable to parsing into semantic objects, rather, images must be stitched together, chromatic aberrations must be adjusted, and data must be aligned to other references to compare. Currently solutions typically require all the data to be loaded into RAM, and must be local.</li>
+  <li>Parsing: Manually identifying all the ~10,000,000 synapses, at a rate of about 1 synapse per second, would take over a year (40 hrs/week, 50 weeks/year). Existing computational solutions, such as ilastik [@XXX], do not scale well on their own.</li>
   <li>Inferring: Inferring the statistical regularities (and irregularities) from the resulting data derivatives requires statistics incorporating space, shape, and graphs/networks.  Existing packages for such analyses either have limited capabilities, are expensive, or do not scale sufficiently.</li>
 </ol>
 
-
-If one group did manage to overcome all of those barriers, then they could answer this question and publish the results. But science is fundamentally a collective endeavor, where each result builds upon the previous works.
-
-XXX reproducible. XXX
-
-1. Infrastructure: Without a terascale infrastructure, neuroscientists have to build custom hardware and software to load subsets of data into RAM (for example, in MATLAB or Python), because RAM typically only holds up to 16 GB of data, and the data of interest is orders of magnitude larger.
-2. Storing: Most labs do not have many terabytes of storage, and even if they did, each scientist would need to dynamically choose where to put data, how to organize it, what format to use, etc.  Moreover, others could not easily access or operate on it.
-3. Exploring: Even visualizing data that is larger than RAM is non-trivial.  Current solutions typically involve sub-sampling or downsampling the data, and loading just that subset into RAM.
-4. Pre-Processing: The raw data is never collected in a form amenable to parsing into semantic objects, rather, images must be stitched together, chromatic aberrations must be adjusted, and data must be aligned to other references to compare. Currently solutions typically require all the data to be loaded into RAM.
-5. Parsing: Manually identifying all the ~10,000,000 synapses, at a rate of about 1 synapse per second, would take over a year (40 hrs/week, 50 weeks/year).
-6. Inferring: Inferring the statistical regularities (and irregularities) from the resulting data derivatives requires statistics incorporating space, shape, and graphs/networks.  Existing packages for such analyses either have limited capabilities, are expensive, or do not scale sufficiently.
+<p>
+If one group did manage to overcome all of those barriers, then they could answer this question and publish the results. But science is fundamentally a collective endeavor, where each result builds upon the previous works. With small data, the full analysis can easily be reproducible using existing technology: deposit the digital data in a data repository (like FigShare) and the code in a code repository (like GitHub). Although even the above is not yet standard practice in neuroscience, it could be.  With big data, even the above suggestion would not work, for a variety of reasons:
+<ol>
+  <li>Most data repositories will not except multi-terabyte datasets.
+  <li>Even if they did, how would other researchers access the data? Would they have to download the whole dataset, or could they specify a subset.  If they have to download the whole dataset, then they will need to build their own infrastructure to support it.
+  <li>Code to analyze terascale data is not yet "turn-key", that is, it is not as simple as running a MATLAB script.  Running the code often means having installed a number of libraries, some of which may only be compatible with certain operating systems.  Running and debugging other people's code often takes weeks per tool, and in the above, we have described many different tools.
+</ol>
+</p>
 
 
-
-With small data, the full analysis can easily be reproducible using existing technology: deposit the digital data in a data repository (like FigShare) and the code in a code repository (like GitHub). Although even the above is not yet standard practice in neuroscience, it could be.  With big data, even the above suggestion would not work, for a variety of reasons:
-1. Most data repositories will not except multi-terabyte datasets.
-2. Even if they did, how would other researchers access the data? Would they have to download the whole dataset, or could they specify a subset.  If they have to download the whole dataset, then they will need to build their own infrastructure to support it.
-3. Code to analyze terascale data is not yet "turn-key", that is, it is not as simple as running a MATLAB script.  Running the code often means having installed a number of libraries, some of which may only be compatible with certain operating systems.  Running and debugging other people's code often takes weeks per tool, and in the above, we have described many different tools.
-
-
-XXX also confirming, etc. perhaps moreso, and ***extensible*** XXX
-
-
-Thus, in practice, the effort of simply reproducing a previous result might require many months or years of work, often work that is distant from neuroscience core competencies.  Moreover, science proceeds not merely be reproducing previous results, but by extending them.  Therefore, to the extent that one can make relatively minor changes to a previous analysis, re-using as much infrastructure as possible, the barrier to extend previous results to novel findings can be significantly lowered. This includes simple modifications such as checking the robustness of previous analyses by modifying some of the assumptions, tests, or the data on which the results rely.
-
+<p>
+Thus, in practice, the effort of simply reproducing a previous result might require many months or years of work, often work that is distant from neuroscience core competencies.  Moreover, science proceeds not merely be reproducing previous results, but by confirming and extending them.  This includes simple modifications such as checking the robustness of previous analyses by modifying some of the assumptions, tests, or the data on which the results rely.
+Therefore, to the extent that one can make relatively minor changes to a previous analysis, re-using as much infrastructure as possible, the barrier to confirming and extending previous results to novel findings can be significantly lowered. 
+</p>
 
 
 
 <h3>Action</h3>
 
-
+<p>
 We have built the *NeuroData* computational ecosystem to address the above described problems,  therefore enabling *reproducible* and *extensible* neuroscience regardless of scale. In particular, we have made a large number of big neuroscience datasets open access.  By storing all of the datasets, regardless of scale and modality, in a common framework, a single infrastructure is sufficient for analysis on each of the datasets.  This includes each of the above five "analysis" steps (store, explore, pre-process, parse, and infer).  Moreover, all of the code we have developed is open source, and divided into two different components: backend and frontend. The backend code is deployed on our Web-accessible data cluster.  This means that anybody can store and explore existing datasets, or contribute new ones.  For the frontend code, we have configured an Amazon Machine Instance (AMI) that can run any of the remaining steps (pre-process, parse, and infer).  This means that anybody can create an Amazon account, boot this system, and run any of our analyses, and get the exact same results, without ever installing any software or learning anything about big data analytics.
-
+</p>
 
 <h3>Resolution</h3>
-
-XXX final paragraph of intro should stand alone,
-summarize,
-then give specific examples
-broader thing
-
-1 paragraph
-XXX
-
-
-We have used this infrastructure in two different case studies.  In the first, we have reproduced all of the ~50 quantitative claims made by a  recent landmark EM paper [@Kasthuri15], including a claim about the probability of synapsing given spatial proximity.  Second, we used a significantly larger dataset (~10 TB) from another recent landmark EM paper [@Bock11] to address the exemplar use case mentioned above.  From that data, we characterize the three dimensional distribution of ~10 million synapses in mammalian cortex, to discover significant clustering and layering that was previously unknown.
-
-
 
 
 
 <p>
-Here we demonstrate that the NeuroData infrastructure has therefore enabled  reproducing previous anatomical results on big data, as well as  produced quantitative answers to a fundamental neuroanatomical question with a sufficient sample size to leave little room for doubt about the veridicality of this summary statistic, at least on these data.
-Perhaps more important than the particular questions we have address in this work, is the capability we have enabled for the greater neuroscience community.  Anybody---professional or citizen scientists alike---can use our services to learn about the brain.  Power users can modify our scripts to answer different questions, and developers could add additional capabilities for the community.  As the community moves more and more towards collecting massive datasets, we hope these tools can be useful to address a wide range of scientific questions.
+Here we demonstrate that the NeuroData computational ecosystem can enable big data neuroscience.  In particular, we have used this infrastructure in two different case studies.  In the first, we have reproduced all of the ~50 quantitative claims made by a  recent landmark EM paper [@Kasthuri15], including a claim about the probability of synapsing given spatial proximity.  In the second, we used a significantly larger dataset (~10 TB) from another recent landmark EM paper [@Bock11].  From that data, we characterize the three dimensional distribution of ~10 million synapses in mammalian cortex, to discover significant clustering and layering that was previously unknown.
+Perhaps more important than the particular questions we have address in this work, is the capability we have enabled for the greater neuroscience community.  Anybody---professional or citizen scientists alike---can use our services to learn about the brain.  Power users can modify our scripts to answer different questions, and developers could add additional capabilities for the community.  As the community moves more and more towards collecting massive datasets, we hope these tools can be useful to address a wide range of scientific questions, and even other disciplines that are collecting 3D+ data.
 </p>
+
+
 
 
 
@@ -192,21 +169,26 @@ Perhaps more important than the particular questions we have address in this wor
 All of the results presented herein are fundamentally reproducible; the data used to generate each table and figure panel can be reproduced by running a single Python script located in http://docs.neurodata.io/ocp-journal-paper.  Figures are made using R; each R script for generating the figures is also available from the above URL.  We have designed all of our infrastructure to support three different types of data: images, annotations, and graphs.  Because the focus of this manuscript is on electron microscopy data, for which scant graphs are currently available, we focus the results on images and annotations, and in particular on single channel images.  However, see http://neurodata.io/graphs for more details about graph processing and analytics, and stay tuned for more updates supporting multichannel data.
 
 
-## Infrastructure
+<h2>Infrastructure</h2>
 
 .TODO[@kl: make figs]
 
+<p>
 Our infrastructure is designed for fast reading and writing of terabytes of data.  Figure~\ref{fig:infra} shows the read and write speeds for our system, including writing both images and annotations.  Although we operate our own data cluster for the vast majority of our public facing data, we have built an Amazon Machine Instance (AMI) that is pre-configured with all the necessary software; all the results presented in this section are using that AMI, and are therefore wholly reproducible.
+</p>
 
-
+<p>
 Importantly *NeuroData* is designed to easily enable reading or writing of arbitrarily sized image tiles or cubes using a single URL or Python call.  For example, to download the image in Figure~\ref{fig:infra}(A), one can simply type http://openconnecto.me/ocp/ca/kasthuri11/image/xy/0/9000,9500/12000,12500/50/ into any browser bar.  In contrast, if one desired to download an arbitrary image at an arbitrary zoom from data stored in files in a typical hierarchical folder system, one would have to write code to navigate to the right files, open them up, possibly downsample them, and stitch them back together.  Our infrastructure has built in support for all of that, significantly both speeding up and easing access to the data; Figure~\ref{fig:infra}(B) shows reading speed as a function of cube size, showing that reading speed is linear in the size of the data.    Because it is easy to implement different services for reading data into different file types, we have built support for a variety of exceptional 3rd party tools, to complement this ecosystem.  This includes ITK-SNAP [@XXX], CATMAID [@XXX], Viking [@XXX], Knossos [@XXX], VAST [@XXX], and BigDataViewer [@XXX].
 
 
+<p>
 Naively using the above described system, however, has the drawbacks just mentioned.  Therefore, we built *TileCache* which serves as a content distribution network.  More specifically, TileCache fetches the data and parses it into the appropriate format (e.g., a set of png files), and also pre-fetches data that it expects you will want next.  The implication is that for 1028x1028 frames, TileCache can load 60 frames per second in a streaming fashion (Figure~\ref{fig:infra}(C)).  In other words, using TileCache, Neurodata enables video rate data streaming.  And because TileCache is a stand-alone service, it can easily be deployed locally, thereby further eliminating the data transfer speeds to get data local to the machine on which you want the data.
 
 
+<p>
 Writing to our spatial database would be more time consuming than simply uploading to a file server, because we re-write the data into a format that is efficient for reading.  We combat that by using a distributed database management system (such as Cassandra), that automatically distributes writing jobs across nodes.  We further speed up writing by compressing the data using Blosc, a multi-threaded library.  The result is that we can write data in compressed cubes in time linear with the data size (Figure~\ref{fig:infra}(D)).  The implications are the writing a terabyte of data on a single node take XXX hours.
 
+<p>
 Writing annotations is a bit more complicated than simply writing images because we store annotations as objects with associated metadata, such as what type of object is it (e.g., synapse), who labeled it, what time, with what confidence, etc. Because each write object is therefore relatively small, and write speeds are determined largely by the number of files to write, we built NeuroBlaze, which caches writes in memory, only writing to disk a single large file joining all the small writes.  This enables us to write  annotations extremely efficiently (Figure~\ref{fig:infra}(E)).
 
 <div class="fig-container">
@@ -214,34 +196,40 @@ Figure 1: Reading and writing to the database must be sufficiently fast to not b
 </div>
 
 
-## Store
+<h2>Store</h2>
 
+<p>
 We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations.  [Table 1](#table-1) lists the  public image datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django [data model](http://docs.neurodata.io/open-connectome/sphinx/datamodel.html, the remaining properties are stored in our custom Laboratory Information Management System called [ndlims](https://github.com/openconnectome/ndlims).  The image data in [Table 1](#table-1) comprise approximately 80 teravoxels of image data (see [here](https://github.com/openconnectome/ocp-journal-paper/blob/gh-pages/Code/Tables/Table1/table1.py)).  These datasets span spatial cases of experimental neuroscience, ranging from nanoscale with electron microscopy to milliscale with MRI, and many in between.  We also store time-series data, as exemplified by the "Freeman14" dataset, a calcium imaging time-series. By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.
 
 
 
-To complement the image databases, we also created an annotation database management system called [RamonDB](http://docs.neurodata.io/nddocs/ramon.html) \cite{GrayRoncal15b}, and a richly attributed graph database management system called [RagDB](http://openconnecto.me/graphs/).  RAMONdb stores multiple manually and automatically generated dense volumetric annotations, listed in Table~\ref{tab:anno}(B) along with several key features of each.  Collectively, we have XXX voxels manually annotated, and YYY machine annotated.
+<p>
+To complement the image databases, we also created an annotation database management system called [RamonDB](http://docs.neurodata.io/nddocs/ramon.html) [@GrayRoncal15b], and a richly attributed graph database management system called [RagDB](http://openconnecto.me/graphs/).  RAMONdb stores multiple manually and automatically generated dense volumetric annotations, listed in Table~\ref{tab:anno}(B) along with several key features of each.  Collectively, we have XXX voxels manually annotated, and YYY machine annotated.
 
+<p>
 Additionally, RagDB currently holds XXX different neurographs, ranging in species from *C. elegans* to humans (see [here](http://openconnecto.me/graph-services/download/) for details).  RagDB supports a variety of different graph functions (see [here](XXX link to ndio API for graphsXXX)), including building graphs from DTI data and downloading graphs.  Much like one can download neuroimages in a variety of formats (for example, png and hdf5), we also enable graphs to be downloaded in a variety of formats (for example, MATLAB and R readable formats).
 
 
+<p>
 Supplementary Table~\ref{tab:API} lists all the functionality currently supported on all of the neuroimage, neuroannotation, and neurograph databases.  Importantly, we have both MATLAB (called [CAJAL](http://docs.neurodata.io/CAJAL/)) and Python (called [ndio](http://docs.neurodata.io/nddocs/ndio/)) bindings to support that functionality, without the user having to learn a new programming language.
 
 
 <div class="fig-container" id="table-1">
 {% include table1.html %}
-Table 1: List of all current (as of 12/31/15) NeuroData Datasets.  Table 1A lists the *image* datasets and associated metadata.  Table 1B lists the volumetric *annotation* datasets, derived from a subset of the image datasets.
+Table 1: List of all current (as of 12/31/15) NeuroData Datasets.  Table 1A lists the <em>image</em> datasets and associated metadata.  Table 1B lists the volumetric *annotation* datasets, derived from a subset of the image datasets.
 </div>
 
-## Explore
+<h2>Explore</h2>
 
+<p>
 Interactively exploring these massive data requires tools that can automatically scale appropriately and efficiently.  For this reason, we have developed a number of *NeuroData Explorers*.   For images, we designed *Image Explorer* (IX; http://ix.neurodata.io).  It is the only visualization engine that has the following functionality: (i) loads data remotely from a server, (ii) works in Web-browsers, including mobile, (iii) natively supports volumetric annotations with associated metadata.  In particular, one can visualize  electron microscopy data, and annotations on top, and also "query" the metadata associated with each annotation object (Figure~\ref{fig:explorer}(A)).   IX also supports multiple color channels
 (Figure~\ref{fig:explorer}(B)) and time-series data (Figure~\ref{fig:explorer}(C)).
 
 
 
- and time-series data (see [here](http://ix.neurodata.io/Ex10R55/) for an example array tomography dataset \cite{Weiler14}, and [here](http://ix.neurodata.io/freeman14/) for an example time-series dataset \cite{Freeman14}).
+ and time-series data (see [here](http://ix.neurodata.io/Ex10R55/) for an example array tomography dataset [@Weiler14], and [here](http://ix.neurodata.io/freeman14/) for an example time-series dataset [@Freeman14]).
 
+<p>
 To complement IX, we also built *Graph Explorer* (GX; http://gx.neurodata.io) and *Vector Explorer* (VX; http://vx.neurodata.io) (Figure~\ref{fig:explorer}(B) and (C)).  These two explorers enable users to upload either graphs or tabular data (where rows are subjects and columns are features, as in a csv file).  Both of these tools provide very basic functionality for graphs or tabular data that we find useful for exploring the relevant data types, including different normalization schemes, outlier detection, distributions of various features, and clustering.
 
 <div class="fig-container">
@@ -255,19 +243,22 @@ Figure 2: Exploring the data is a crucial first step, regardless of the data typ
 (E) Vector Explorer allows the user to upload a csv file and do basic exploratory data analysis (http://ix.neurodata.io).
 </div>
 
-## Pre-process
+<h2>Pre-process</h2>
 
+<p>
 Pre-processing of data, a process that converts raw data into a format ready for parsing, is an incredibly important and tedious task for essentially any data analysis task.  In electron microscopy, we can divide pre-processing into three steps: (i) geometric or (ii) chromatic alterations, and (iii) registration to a template or atlas. A number of groups are actively developing very nice geometric pre-processing packages, including Terastitcher [@XXX] and Saalfeld's Fiji plug-in [@XXX].  We therefore have focused our development efforts on the next two steps.  We built both a 2D and 3D chromatic pre-processing tool. The 2D tool, called *Distriubuted Multigrid Poisson* (DMG) addresses stitching artifacts from montaging multiple 2D tiles into a single large plane (Figure~\ref{fig:pre}(A)).  The 3D tool, called *Gradient Domain Fusion* (GDF) addresses histogram artifacts from different exposure times which can cause a strobe light effect across axial slices of the data (Figure~\ref{fig:pre}(B)).  Both tools were designed to stream the data efficiently, meaning that they can both operate on arbitrarily large data (Figure~\ref{fig:pre}(C)).
 
+<p>
 After addressing both geometric and chromatic aberrations, it is often desirable to align the image stack to a reference image, possibly in a different modality.  *ndreg* is our Python tool that sub-serves that functionality.  Because there does not yet exist public data set with both EM and another modality to align, we have aligned a whole mouse brain CLARITY image with the Allen Reference Atlas (Figure~\ref{fig:pre}(D)).  Despite the fact that the two images were collected at different scales, and using different modalities, we are able to successfully and automatically align the two using *ndreg*.
 
 <div class="fig-container">
 Figure 3: *NeuroData* provides fully automatic terascale tools for both 2D & 3D chromatic adjustments, as well as nonlinear volume registration.  (A) DMG Chromatic pre-processing adjusts for aberrations induces by data collection and/or geometric stitching. (Bi) 2D image before DMG. (Bii) 2D image after DMG.  (Biii) XZ projection of data before GDF. (Biv) XZ projection after GDF.  (Bv) Time per image size (red) and number of slices (black) on a particular AMI.  (C) Volume registration.
 </div>
 
-## Parse
+<h2>Parse</h2>
 
 
+<p>
 Given that the data has been sufficiently pre-processed, we now proceed to parse the scene, assigning voxels with semantic labels.  Parsing the scene involves three steps: (i) manually labeling a subset of training data, (ii) training and evaluating various machine vision algorithms on appropriate performance metrics, and (iii) deploying the algorithm (and parameter) of choice at scale.  For manual labeling, we built [*manno*](http://docs.neurodata.io/manno/), which essentially wraps ITK-SNAP by downloading image data from *NeuroData* in the appropriate format, uses ITK-SNAP to label a number of voxels, and then saves and uploads the annotations to the appropriate annotation database (with metadata; see Figure~\ref{fig:parse}(A) for an exemplar slice).  Given the training labels, *macho* uses ilastik to perform pixel level classification [@XXX], and then custom morphological operations to detect objects.  We choose the operating point the maximized F1-score on a held-out dataset located in a volume separated from the training volume (Figure~\ref{fig:parse}(B)).  Finally, we deployed our chosen classifier on the full dataset, yielding ~10 million putative synapse detections (Figure~\ref{fig:parse}(C) shows approximately 1% of them).
 
 
@@ -279,13 +270,14 @@ Figure 4:
 </div>
 
 
-## Analyze
+<h2>Analyze</h2>
 
+<p>
 Analysis has relatively task specific requirements, although analysis of anatomical data has some shared features.  In particular, from anatomy data, the kinds of questions typically include space, shape, and graphs.  Spatial statistics is a relatively developed branch of statistics, and we therefore can rely on previously developed tools [@Cressie15].  The statistics of shape is a much more recent subdiscipline in statistics [@Younes10], partially because it depends on the mathematics of nonlinear manifolds, which are still being actively developed [@Chikuse03].
 
 
 
-
+<p>
 A parsed scene is the data derivative upon which neuroscientific questions can be directly applied.  We focused on two particular questions.  First, a question previously addressed in the literature: To what extend does Peter's Rule hold amongst neurons in mammalian cortex.  To address this question
 
 
