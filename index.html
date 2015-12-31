@@ -76,7 +76,7 @@ Recent technical progress allows neuroexperimentalists to collect ever more deta
 
 <h3>Opportunity</h3>
 
-<<<<<<< HEAD
+
 XXX flow from 1D (genomes), 2D (cosmos) & 2D+color (sloan2), now 3D (us), 3D+color/time 
 
 crucial next step is 3D, then color+time
@@ -198,11 +198,11 @@ Figure 1: Reading and writing to the database must be sufficiently fast to not b
 
 ## Store
 
-We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations.  Table~\ref{tab:images}(A) lists the  public image datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django [data model](http://docs.neurodata.io/open-connectome/sphinx/datamodel.html, the remaining properties are stored in our custom Laboratory Information Management System called [ndlims](https://github.com/openconnectome/ndlims).  The image data in Table~\ref{tab:images}(A) comprise approximately 80 teravoxels of image data (see [here](https://github.com/openconnectome/ocp-journal-paper/blob/gh-pages/Code/Tables/Table1/table1.py)).  These datasets span spatial cases of experimental neuroscience, ranging from nanoscale with electron microscopy to milliscale with MRI, and many in between.  We also store time-series data, as exemplified by the "Freeman14" dataset, a calcium imaging time-series. By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.
+We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations.  Table~\ref{tab:images}(A) lists the  public image datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django data model (see http://docs.neurodata.io/open-connectome/sphinx/datamodel.html, the remaining properties are stored in our custom Laboratory Information Management System called [ndlims](https://github.com/openconnectome/ndlims).  The image data in Table~\ref{tab:images}(A) comprise approximately 80 teravoxels of image data (see [here](https://github.com/openconnectome/ocp-journal-paper/blob/gh-pages/Code/Tables/Table1/table1.py)).  These datasets span spatial cases of experimental neuroscience, ranging from nanoscale with electron microscopy to milliscale with MRI, and many in between.  We also store time-series data, as exemplified by the "Freeman14" dataset, a calcium imaging time-series. By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.
 
 
 
-To complement the image databases, we also created an annotation database management system called [RamonDB](http://docs.neurodata.io/nddocs/ramon.html) \cite{GrayRoncal15b}, and a richly attributed graph database management system called [RagDB](http://openconnecto.me/graphs/).  RAMONdb stores multiple manually and automatically generated dense volumetric annotations, listed in Table~\ref{tab:anno}(B) along with several key features of each.  Collectively, we have XXX voxels manually annotated, and YYY machine annotated.
+To complement the image databases, we also created an annotation database management system called [RamonDB](http://docs.neurodata.io/nddocs/ramon.html) [@GrayRoncal15b], and a richly attributed graph database management system called [RagDB](http://openconnecto.me/graphs/).  RAMONdb stores multiple manually and automatically generated dense volumetric annotations, listed in Table~\ref{tab:anno}(B) along with several key features of each.  Collectively, we have XXX voxels manually annotated, and YYY machine annotated.
 
 Additionally, RagDB currently holds XXX different neurographs, ranging in species from *C. elegans* to humans (see [here](http://openconnecto.me/graph-services/download/) for details).  RagDB supports a variety of different graph functions (see [here](XXX link to ndio API for graphsXXX)), including building graphs from DTI data and downloading graphs.  Much like one can download neuroimages in a variety of formats (for example, png and hdf5), we also enable graphs to be downloaded in a variety of formats (for example, MATLAB and R readable formats).
 
@@ -222,7 +222,7 @@ Interactively exploring these massive data requires tools that can automatically
 
 
 
- and time-series data (see [here](http://ix.neurodata.io/Ex10R55/) for an example array tomography dataset \cite{Weiler14}, and [here](http://ix.neurodata.io/freeman14/) for an example time-series dataset \cite{Freeman14}).
+ and time-series data (see [here](http://ix.neurodata.io/Ex10R55/) for an example array tomography dataset [@Weiler14], and [here](http://ix.neurodata.io/freeman14/) for an example time-series dataset [@Freeman14]).
 
 To complement IX, we also built *Graph Explorer* (GX; http://gx.neurodata.io) and *Vector Explorer* (VX; http://vx.neurodata.io) (Figure~\ref{fig:explorer}(B) and (C)).  These two explorers enable users to upload either graphs or tabular data (where rows are subjects and columns are features, as in a csv file).  Both of these tools provide very basic functionality for graphs or tabular data that we find useful for exploring the relevant data types, including different normalization schemes, outlier detection, distributions of various features, and clustering.
 
