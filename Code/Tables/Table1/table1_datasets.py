@@ -47,7 +47,13 @@ for path in public_token_files:
         else:
             link = ""
 
-        size = reduce(mul, info['dataset']['imagesize']['0'], 1)
+        dimensions = [
+            info['dataset']['imagesize']['0'][0] - info['dataset']['offset']['0'][0],
+            info['dataset']['imagesize']['0'][1] - info['dataset']['offset']['0'][1],
+            info['dataset']['imagesize']['0'][2] - info['dataset']['offset']['0'][2],
+        ]
+
+        size = reduce(mul, dimensions, 1)
         size *= len(info['channels'])
         size *= (info['dataset']['timerange'][1] - info['dataset']['timerange'][0]) + 1
         insert = {
@@ -61,7 +67,7 @@ for path in public_token_files:
 
             "resolution": (" &times; ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "") + ("; {}".format(metadata['frequency']) if 'frequency' in metadata else ""),
 
-            "image_size": ' &times; '.join([str(d) for d in info['dataset']['imagesize']['0']]),
+            "image_size": ' &times; '.join([str(d) for d in dimensions]),
 
             "channels": len(info['channels']),
 
@@ -71,7 +77,7 @@ for path in public_token_files:
 
             "size": size / (1000*1000*1000)
         }
-        sizes.append(info['dataset']['imagesize']['0'])
+        sizes.append(dimensions)
         token_info.append(insert)
 
 # print sizes
@@ -84,9 +90,9 @@ pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()),
                              'dataset',
                              'modality',
                              'species',
-                             ('resolution', "resolution (nm^3; Hz)"),
-                             ('image_size', "image size (voxels)"),
+                             ('resolution', "resolution (nm<sup>3</sup>; Hz)"),
+                             ('image_size', "# voxels / volume"),
                              ('channels', '#channels'),
                              ('time', '#timesteps'),
-                             ('size', "size (XYZCT) GB")])
+                             ('size', "total # voxels (GV)")])
 print pt.to_markdown()

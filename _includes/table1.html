@@ -5,11 +5,11 @@
 <th align="left">dataset</th>
 <th align="left">modality</th>
 <th align="left">species</th>
-<th align="left">resolution (nm^3; Hz)</th>
-<th align="left">image size (voxels)</th>
+<th align="left">resolution (nm<sup>3</sup>; Hz)</th>
+<th align="left"># voxels / volume</th>
 <th align="left">#channels</th>
 <th align="left">#timesteps</th>
-<th align="left">size (XYZCT) GB</th>
+<th align="left">total # voxels (GV)</th>
 </tr>
 </thead>
 <tbody>
@@ -41,10 +41,10 @@
 <td align="left">EM</td>
 <td align="left">M. musculus</td>
 <td align="left">4 × 4 × 45</td>
-<td align="left">135424 × 119808 × 4156</td>
+<td align="left">135424 × 119808 × 1239</td>
 <td align="left">1</td>
 <td align="left">1</td>
-<td align="left">67430</td>
+<td align="left">20102</td>
 </tr>
 <tr class="even">
 <td align="left"><a href='http://www.nature.com/articles/sdata201446'>Weller et al. Scientific Data (2014)</a></td>
@@ -206,34 +206,45 @@
 <td align="left">EM</td>
 <td align="left">M. musculus</td>
 <td align="left">3 × 3 × 30</td>
-<td align="left">21504 × 26624 × 1850</td>
+<td align="left">21504 × 26624 × 1849</td>
 <td align="left">1</td>
 <td align="left">1</td>
-<td align="left">1059</td>
+<td align="left">1058</td>
 </tr>
 <tr class="odd">
+<td align="left"><a href='hhttp://www.cell.com/cell/abstract/S0092-8674(15)00824-7'>Kasthuri et al. Cell (2015)</a></td>
+<td align="left">kasthuri11</td>
+<td align="left">EM</td>
+<td align="left">Mouse</td>
+<td align="left">3 × 3 × 30</td>
+<td align="left">21504 × 26624 × 1849</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1058</td>
+</tr>
+<tr class="even">
 <td align="left"><a href="http://www.sciencedirect.com/science/article/pii/S0092867415008247">sciencedirect.com/science/art...</a></td>
 <td align="left">kasthuri11cc</td>
 <td align="left">EM</td>
 <td align="left">M. musculus</td>
 <td align="left">3 × 3 × 30</td>
-<td align="left">21504 × 26624 × 1850</td>
+<td align="left">21504 × 26624 × 1849</td>
 <td align="left">1</td>
 <td align="left">1</td>
-<td align="left">1059</td>
+<td align="left">1058</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href='http://www.cell.com/cell/abstract/S0092-8674(15)00824-7'>Kasthuri et al. Cell (2015)</a></td>
 <td align="left">kasthuri14Maine</td>
 <td align="left">EM</td>
 <td align="left">M. musculus</td>
 <td align="left"></td>
-<td align="left">6144 × 6144 × 2042</td>
+<td align="left">6144 × 6144 × 2041</td>
 <td align="left">1</td>
 <td align="left">1</td>
 <td align="left">77</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href='http://www.cell.com/cell/abstract/S0092-8674(15)00824-7'>Kasthuri et al. Cell (2015)</a></td>
 <td align="left">kasthuri14s1colEM</td>
 <td align="left">EM</td>
@@ -244,7 +255,7 @@
 <td align="left">1</td>
 <td align="left">409</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href='http://www.nature.com/articles/sdata201546'>Harris et al. Scientific Data (2015)</a></td>
 <td align="left">kharris15apical</td>
 <td align="left">EM</td>
@@ -255,7 +266,7 @@
 <td align="left">1</td>
 <td align="left">13</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href='http://www.nature.com/articles/sdata201546'>Harris et al. Scientific Data (2015)</a></td>
 <td align="left">kharris15oblique</td>
 <td align="left">EM</td>
@@ -266,60 +277,60 @@
 <td align="left">1</td>
 <td align="left">6</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href='http://www.nature.com/articles/sdata201546'>Harris et al. Scientific Data (2015)</a></td>
 <td align="left">kharris15spine</td>
 <td align="left">EM</td>
 <td align="left">R. rattus</td>
 <td align="left">2 × 2 × 50</td>
-<td align="left">9000 × 9000 × 89</td>
+<td align="left">9000 × 9000 × 59</td>
 <td align="left">1</td>
 <td align="left">1</td>
-<td align="left">7</td>
+<td align="left">4</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href='http://www.wormatlas.org/ver1/MoW_built0.92/toc.html'>Worm Atlas</a></td>
 <td align="left">ritaN2</td>
 <td align="left">EM</td>
 <td align="left">C. elegans</td>
 <td align="left">5 × 5 × 60</td>
-<td align="left">13101 × 14378 × 1199</td>
+<td align="left">13101 × 14378 × 1198</td>
 <td align="left">2</td>
 <td align="left">1</td>
 <td align="left">451</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href='http://www.wormatlas.org/ver1/MoW_built0.92/toc.html'>Worm Atlas</a></td>
 <td align="left">ritaN2_5</td>
 <td align="left">EM</td>
 <td align="left">C. elegans</td>
 <td align="left">5 × 5 × 60</td>
-<td align="left">37379 × 25986 × 743</td>
+<td align="left">37379 × 25986 × 742</td>
 <td align="left">2</td>
 <td align="left">1</td>
-<td align="left">1443</td>
+<td align="left">1441</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href='http://www.wormatlas.org/ver1/MoW_built0.92/toc.html'>Worm Atlas</a></td>
 <td align="left">ritaN2_four</td>
 <td align="left">EM</td>
 <td align="left">C. elegans</td>
 <td align="left">5 × 5 × 60</td>
-<td align="left">28381 × 24234 × 322</td>
+<td align="left">28381 × 24234 × 321</td>
 <td align="left">2</td>
 <td align="left">1</td>
-<td align="left">442</td>
+<td align="left">441</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href='http://www.nature.com/nature/journal/v500/n7461/full/nature12450.html'>Takemura et al. Nature (2013)</a></td>
 <td align="left">takemura13</td>
 <td align="left">EM</td>
 <td align="left">D. melanogaster</td>
 <td align="left">4 × 4 × 45</td>
-<td align="left">12000 × 12000 × 1460</td>
+<td align="left">12000 × 12000 × 1299</td>
 <td align="left">1</td>
 <td align="left">1</td>
-<td align="left">210</td>
+<td align="left">187</td>
 </tr>
 </tbody>
 </table>
