@@ -38,11 +38,6 @@
         font-variant: small-caps;
       }
       .r { color: #fa0000; }
-
-      p {
-          max-width: 640px;
-      }
-
       .fig-container {
         font-size: small;
         border-top: 5px solid #efefef;
@@ -166,7 +161,7 @@ Perhaps more important than the particular questions we have address in this wor
 <h1>Results</h1>
 
 
-All of the results presented herein are fundamentally reproducible; the data used to generate each table and figure panel can be reproduced by running a single Python script located in http://docs.neurodata.io/ocp-journal-paper.  Figures are made using R; each R script for generating the figures is also available from the above URL.  We have designed all of our infrastructure to support three different types of data: images, annotations, and graphs.  Because the focus of this manuscript is on electron microscopy data, for which scant graphs are currently available, we focus the results on images and annotations, and in particular on single channel images.  However, see http://neurodata.io/graphs for more details about graph processing and analytics, and stay tuned for more updates supporting multichannel data.
+All of the results presented herein are fundamentally reproducible; the data used to generate each table and figure panel can be reproduced by running a single Python script located in http://docs.neurodata.io/ocp-journal-paper.  Figures are made using R; each R script for generating the figures is also available from the above URL.  We have designed all of our infrastructure to support three different types of data: images, annotations, and graphs.  Because the focus of this manuscript is on electron microscopy data, for which scant graphs are currently available, we focus the results on images and annotations, and in particular on single channel images.  However, see http://neurodata.io/graphs for more details about graph processing and analytics, and see http://at.neurodata.io for more updates supporting multichannel data.
 
 
 <h2>Infrastructure</h2>
@@ -199,7 +194,7 @@ Figure 1: Reading and writing to the database must be sufficiently fast to not b
 <h2>Store</h2>
 
 <p>
-We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations.  [Table 1](#table-1) lists the  public image datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django [data model](http://docs.neurodata.io/open-connectome/sphinx/datamodel.html, the remaining properties are stored in our custom Laboratory Information Management System called [ndlims](https://github.com/openconnectome/ndlims).  The image data in [Table 1](#table-1) comprise approximately 80 teravoxels of image data (see [here](https://github.com/openconnectome/ocp-journal-paper/blob/gh-pages/Code/Tables/Table1/table1.py)).  These datasets span spatial cases of experimental neuroscience, ranging from nanoscale with electron microscopy to milliscale with MRI, and many in between.  We also store time-series data, as exemplified by the "Freeman14" dataset, a calcium imaging time-series. By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.
+We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations.  [Table 1](#tab:images) lists the  public image datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django [data model](http://docs.neurodata.io/open-connectome/sphinx/datamodel.html, the remaining properties are stored in our custom Laboratory Information Management System called [ndlims](https://github.com/openconnectome/ndlims).  The image data in [Table 1](#tab:images) comprise approximately 80 teravoxels of image data (see [here](https://github.com/openconnectome/ocp-journal-paper/blob/gh-pages/Code/Tables/Table1/table1.py)).  These datasets span spatial cases of experimental neuroscience, ranging from nanoscale with electron microscopy to milliscale with MRI, and many in between.  We also store time-series data, as exemplified by the "Freeman14" dataset, a calcium imaging time-series. By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.
 
 
 
@@ -214,7 +209,7 @@ Additionally, RagDB currently holds XXX different neurographs, ranging in specie
 Supplementary Table~\ref{tab:API} lists all the functionality currently supported on all of the neuroimage, neuroannotation, and neurograph databases.  Importantly, we have both MATLAB (called [CAJAL](http://docs.neurodata.io/CAJAL/)) and Python (called [ndio](http://docs.neurodata.io/nddocs/ndio/)) bindings to support that functionality, without the user having to learn a new programming language.
 
 
-<div class="fig-container" id="table-1">
+<div class="fig-container" id="tab:images">
 {% include table1.html %}
 Table 1: List of all current (as of 12/31/15) NeuroData Datasets.  Table 1A lists the <em>image</em> datasets and associated metadata.  Table 1B lists the volumetric *annotation* datasets, derived from a subset of the image datasets.
 </div>
@@ -270,25 +265,48 @@ Figure 4:
 </div>
 
 
-<h2>Analyze</h2>
+<h2>Infer</h2>
 
 <p>
-Analysis has relatively task specific requirements, although analysis of anatomical data has some shared features.  In particular, from anatomy data, the kinds of questions typically include space, shape, and graphs.  Spatial statistics is a relatively developed branch of statistics, and we therefore can rely on previously developed tools [@Cressie15].  The statistics of shape is a much more recent subdiscipline in statistics [@Younes10], partially because it depends on the mathematics of nonlinear manifolds, which are still being actively developed [@Chikuse03].
+Inference has relatively task specific requirements, although statistical inference from anatomical data has some shared features.  In particular, in anatomy,  the questions typically include space, shape, and graphs.  Spatial statistics is a relatively developed branch of statistics, and we therefore can rely on previously developed methods [@Cressie15], though with novel implementations.  The statistics of shape is a much more recent sub-discipline in statistics [@Younes10], partially because it depends on the mathematics of nonlinear manifolds, which are still being actively developed [@Chikuse03].  We therefore developed novel implementations of several of these key quantities.  Finally, graph statistics is a similarly new field [@Kolaczyk09], as graphs are discrete combinatorial objects that require careful mathematical treatment [@Bollobas13].  Again, we have developed our own methods, and built our own scalable and open source implementations (http://flashx.io).  Below, we provide two case studies, one using spatial statistics, the other using graph statistics. 
+</p>
 
-
-
-<p>
-A parsed scene is the data derivative upon which neuroscientific questions can be directly applied.  We focused on two particular questions.  First, a question previously addressed in the literature: To what extend does Peter's Rule hold amongst neurons in mammalian cortex.  To address this question
 
 
 
 <h1>Case Studies</h1>
 
 
-<h2>Reproducing Quantitative Claims from Previous Big Neuroscience Data Paper</h2>
+<h2>Reproducing Quantitative Claims from Kasthuri et al. Cell (2012)</h2>
 
 
-<h2>Discovering the Spatial Distribution of Synapses</h2>
+<p>
+Several months ago a landmark paper was published, Kasthuri et al. Cell (2015) [@Kasthuri15].  In it, the authors heroically manually annotated a subvolume of somatosensory cortex, and provided three things:
+<ol>
+  <li>a paragraphical "parts list" of all the anatomical objects in a small volume, 
+  <li>an excel file listing all 1,700 synapses, as well as over 20 properties of each (for example, post-synaptic density centroid location and size), and
+  <li>a VAST remote volume file containing the manual labels, as well as some additional information (object type, and parents). 
+</ol>
+
+
+We converted the latter two of those objects into the RAMON annotation data specification using CAJAL, and ingested the data into RamonDB.  One immediate implication of this is that we could check for consistency between the provided excel spreadsheet and the VAST data.  Indeed, we discovered that for XXX% of the synapses in the spreadsheet, the location provided did not match any synapses in the actual VAST export.  Similarly, the VAST export contained XXX synapses that we could not find in the spreadsheet.  While this may seem to be a banality, checking the data consistency is the first step for any data analysis, and often the first "result" is idiosyncracies that can be corrected.  Of the inconsistencies, we ignored some that we could not figure out how to correct, and corrected the rest to proceed.
+</p>
+
+
+<p>
+We next proceeded to assess each of the quantitative claims from the paragraphical parts list that amonut to counting particular kinds of objects or computing volumes.  Within VAST, there is no way to compute these quantitites, and the spreadsheet does not contain enough information to extract them all (because it only includes synapses, and doesn't include tight boundaries).  Therefore, only via using RamonDB, can one automatically and reproducibly compute all these properties.  Table [#tab:parts] is the automatically generated table from our Python script, including all quantitative claims from the manuscript.   
+</p>
+
+<p>
+ In addition to a parts list, the authors of Kasthuri et al. tested a hypothesis about the relationship between spatial proximity of axon-dendrite pairs and the number of synapses between those pairs.  In particular, the question is: does spatial proximity on its own explain number of connections, or is that model insufficient to characterize the data? This question has recently been hotly debated [@Markram15].  Testing this hypothesis is difficult due to the difficulty of randomly sampling graphs with a given degree distribution [@http://arxiv.org/abs/1301.6635].  We therefore developed a novel methodology that is statistically principled, to obtain a p-value of XXX.  Our code for testing this hypothesis has been incoroprated into FlashX.
+</p>
+
+
+
+
+<h2>Discovering the Spatial Distribution of Synapses using the Data from Bock et al. Nature (2011)</h2>
+
+
 
 
 
@@ -302,13 +320,18 @@ A parsed scene is the data derivative upon which neuroscientific questions can b
 
 
 
-<div class="fig-container">
+<div class="fig-container", id="fig:infra">
 Supplementary Figure 1: Infrastructure supporting all components of the OCP data analysis pipeline.  (A) The OCP Data Cluster. (B) Software running on the backend. (C) Software running on the frontend.
 </div>
 
 
-<div class="fig-container">
+<div class="fig-container", id="tab:api">
 Supplementary Table 1: Functions supported in our databases.  (A) NeuroImages. (B) NeuroAnnotations. (C) NeuroGraphs.
+</div>
+
+
+<div class="fig-container", id="tab:parts">
+Supplementary Figure 1: Infrastructure supporting all components of the OCP data analysis pipeline.  (A) The OCP Data Cluster. (B) Software running on the backend. (C) Software running on the frontend.
 </div>
 
 
