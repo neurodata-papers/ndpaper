@@ -7,7 +7,8 @@ ndl = ndlims()
 
 path = "../../../Data/metadata"
 
-tokens = oo.get_public_tokens()
+# tokens = oo.get_public_tokens()
+tokens = ['kasthuri11cc']
 for t in tokens:
     with open('{}/projinfo_cache/{}.json'.format(path, t), 'w') as outfile:
         info = oo.get_token_info(t)
