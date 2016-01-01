@@ -36,8 +36,14 @@ for path in public_token_files:
                 continue
         metadata = info['metadata']
         if 'reference' in metadata:
-            link = metadata['reference']
-            link = "[{}]({})".format(link[11:40] + "...", link)
+            if type(metadata['reference']) is not dict:
+                link = metadata['reference']
+                link = "[{}]({})".format(link[11:40] + "...", link)
+            else:
+                link = "<a href='{}'>{}</a>".format(
+                    metadata['reference']['url'],
+                    metadata['reference']['text']
+                )
         else:
             link = ""
 
@@ -53,9 +59,9 @@ for path in public_token_files:
 
             "token": "`{}`".format(path[len(cache_path)+1:-5]),
 
-            "resolution": (" x ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "") + ("; {}".format(metadata['frequency']) if 'frequency' in metadata else ""),
+            "resolution": (" &times; ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "") + ("; {}".format(metadata['frequency']) if 'frequency' in metadata else ""),
 
-            "image_size": ' x '.join([str(d) for d in info['dataset']['imagesize']['0']]),
+            "image_size": ' &times; '.join([str(d) for d in info['dataset']['imagesize']['0']]),
 
             "channels": len(info['channels']),
 
