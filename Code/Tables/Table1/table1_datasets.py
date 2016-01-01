@@ -52,9 +52,9 @@ for path in public_token_files:
 
             "token": "`{}`".format(path[len(cache_path)+1:-5]),
 
-            "resolution": (" x ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "") + ("; {}".format(metadata['frequency']) if 'frequency' in metadata else ""),
+            "resolution": (" × ".join((metadata['resolution'][:-3]).split(' ')) if 'resolution' in metadata else "") + ("; {}".format(metadata['frequency']) if 'frequency' in metadata else ""),
 
-            "image_size": ' x '.join([str(d) for d in info['dataset']['imagesize']['0']]),
+            "image_size": ' × '.join([str(d) for d in info['dataset']['imagesize']['0']]),
 
             "channels": len(info['channels']),
 
