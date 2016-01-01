@@ -39,6 +39,10 @@ for path in public_token_files:
             link = "[{}]({})".format(link[11:40] + "...", link)
         else:
             link = ""
+
+        size = reduce(mul, info['dataset']['imagesize']['0'], 1)
+        size *= len(info['channels'])
+        size *= (info['dataset']['timerange'][1] - info['dataset']['timerange'][0]) + 1
         insert = {
             "modality": metadata['type'] if 'type' in metadata else "",
 
@@ -56,7 +60,9 @@ for path in public_token_files:
 
             "time": (info['dataset']['timerange'][1] - info['dataset']['timerange'][0]) + 1,
 
-            "reference": link
+            "reference": link,
+
+            "size": size / (1000*1000*1000)
         }
         sizes.append(info['dataset']['imagesize']['0'])
         token_info.append(insert)
@@ -75,6 +81,5 @@ pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()),
                              ('image_size', "Image Size (voxels)"),
                              ('channels', '#channels'),
                              ('time', '#timesteps'),
-                             ('size', "Size (XYZCT) GB"),
-                             'reference'])
+                             ('size', "Size (XYZCT) GB")])
 print pt.to_markdown()
