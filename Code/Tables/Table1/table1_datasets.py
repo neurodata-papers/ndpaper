@@ -75,6 +75,6 @@ pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()),
                              ('image_size', "Image Size (voxels)"),
                              ('channels', '#channels'),
                              ('time', '#timesteps'),
-                             ('size', "Size (XYZCT) GB")
+                             ('size', "Size (XYZCT) GB"),
                              'reference'])
 print pt.to_markdown()
