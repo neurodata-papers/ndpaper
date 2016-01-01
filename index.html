@@ -254,11 +254,11 @@ Figure 3: *NeuroData* provides fully automatic terascale tools for both 2D & 3D 
 
 
 <p>
-Given that the data has been sufficiently pre-processed, we now proceed to parse the scene, assigning voxels with semantic labels.  Parsing the scene involves three steps: (i) manually labeling a subset of training data, (ii) training and evaluating various machine vision algorithms on appropriate performance metrics, and (iii) deploying the algorithm (and parameter) of choice at scale.  For manual labeling, we built [*manno*](http://docs.neurodata.io/manno/), which essentially wraps ITK-SNAP by downloading image data from *NeuroData* in the appropriate format, uses ITK-SNAP to label a number of voxels, and then saves and uploads the annotations to the appropriate annotation database (with metadata; see Figure~\ref{fig:parse}(A) for an exemplar slice).  Given the training labels, *macho* uses ilastik to perform pixel level classification [@XXX], and then custom morphological operations to detect objects.  We choose the operating point the maximized F1-score on a held-out dataset located in a volume separated from the training volume (Figure~\ref{fig:parse}(B)).  Finally, we deployed our chosen classifier on the full dataset, yielding ~10 million putative synapse detections (Figure~\ref{fig:parse}(C) shows approximately 1% of them).
+Given that the data has been sufficiently pre-processed, we now proceed to parse the scene, assigning voxels with semantic labels.  Parsing the scene involves three steps: (i) manually labeling a subset of training data, (ii) training and evaluating various machine vision algorithms on appropriate performance metrics, and (iii) deploying the algorithm (and parameter) of choice at scale.  For manual labeling, we built [*manno*](http://docs.neurodata.io/manno/), which essentially wraps ITK-SNAP by downloading image data from *NeuroData* in the appropriate format, uses ITK-SNAP to label a number of voxels, and then saves and uploads the annotations to the appropriate annotation database (with metadata; see Figure~\ref{fig:parse}(A) for an exemplar slice).  Given the training labels, [*macho*](http://docs.neurodata.io/macho/) uses ilastik to perform pixel level classification [@XXX], and then custom morphological operations to detect objects.  We choose the operating point the maximized F1-score on a held-out dataset located in a volume separated from the training volume (Figure~\ref{fig:parse}(B)).  Finally, we deployed our chosen classifier on the full dataset, using [*maxxo*](http://docs.neurodata.io/maxxo/), which utilizes LONI Pipeline to distribute ilastik across many nodes of a HPC.  The result was ~10 million putative synapse detections (Figure~\ref{fig:parse}(C) shows approximately 1% of them).
 
 
 
-<div class="fig-container">
+<div class="fig-container", id="fig:allsyn">
 <div><img src="http://docs.neurodata.io/ndintro/images/rob2.png" alt="Drawing" style="height: 250px;"/></div>
 Figure 4:
 
@@ -306,7 +306,20 @@ We next proceeded to assess each of the quantitative claims from the paragraphic
 
 <h2>Discovering the Spatial Distribution of Synapses using the Data from Bock et al. Nature (2011)</h2>
 
+The spatial distribution of synapses is a fundamental property of neural tissue, and one that has seen some study in the past.  In particular, two recent very nice studies examined the spatial distribution of synapses in rat cortex [@http://cercor.oxfordjournals.org/content/24/6/1579.long, @http://journal.frontiersin.org/article/10.3389/fnana.2014.00085/abstract].  Using a few thousand synapses, they fail to reject the hypothesis that synapses are distributed according to a random sequential adsoption model, implying that their synapses are distributed almost randomly, with the only constraint that they cannot overlap.  Their experimental design included multiple small volumes from different animals, which is often a wise experimental design choice, to mitigate batch effects [@http://www.nature.com/nrg/journal/v11/n10/full/nrg2825.html].  In contrast, we used a single large volume from Bock et al. Nature (2011).  Using the combination of (manno,macho,maxxo) described above, we detected ~10 million synapses, a number comensurate with the expected density of synapses per volume reported in the literature.  Our complementary experimental design decision enabled us to consider the spatial distribution across a much larger volume, in case parts of the volume look approximately uniform, and other parts do not.  Indeed, Figure [#fig:syn-clust](A) depicts the spatial distribution of synapses detected in our volume.  The size of the dots corresponds to the relative density of synapses.  It is immediately apparent that synapses are <em>not</em> distributed uniformly in space; rather, there is a clear cluster pattern.  The inset in the figure shows a volume of 200 cubic microns, the size of the volumes used in the previous publications.  It would be difficult indeed to detect anisotropies from volumes of this size, given the nature of the non-uniformity. Figure [#fig:syn-clust](B) shows the 2D histograms projected onto the three canonical planes.  Even ignoring the edge effects, again, it is clear that the synapses are not distributed uniformly in space.  
 
+
+
+<div class="fig-container", id="fig:allsyn">
+<img src="http://docs.neurodata.io/ndintro/images/3D.png" alt="Drawing" style="width: 300px;"/>
+<img src="http://docs.neurodata.io/ndintro/images/2Dproj.png"    alt="Drawing" style="width: 300px; "/>
+
+Figure:
+
+</div>
+
+
+<h1>Discussion</h1>
 
 
 
