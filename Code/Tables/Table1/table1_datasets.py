@@ -91,8 +91,8 @@ pt = TablePrinter(sorted(token_info, key=lambda k: k['dataset'].lower()),
                              'modality',
                              'species',
                              ('resolution', "resolution (nm<sup>3</sup>; Hz)"),
-                             ('image_size', "# voxels / volume"),
+                             ('image_size', "#voxels / volume"),
                              ('channels', '#channels'),
                              ('time', '#timesteps'),
-                             ('size', "total # voxels (GV)")])
+                             ('size', "total (GV)")])
 print pt.to_markdown()

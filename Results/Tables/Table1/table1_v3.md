@@ -1,4 +1,4 @@
-| reference|dataset|modality|species|resolution (nm<sup>3</sup>; Hz)|# voxels / volume|#channels|#timesteps|total # voxels (GV) |
+| reference|dataset|modality|species|resolution (nm<sup>3</sup>; Hz)|#voxels / volume|#channels|#timesteps|total (GV) |
 | -----|-----|-----|-----|-----|-----|-----|-----|----- |
 | <a href='http://www.nature.com/nature/journal/v520/n7549/abs/nature14297.html'>Ohyama et al. Nature (2015)</a>|acardona_0111_8|EM|D. melanogaster|4 &times; 4 &times; 45|32768 &times; 32768 &times; 4840|1|1|5196 |
 | <a href='http://www.nature.com/nature/journal/v520/n7549/abs/nature14297.html'>Ohyama et al. Nature (2015)</a>|acardona_abd1_5|EM|D. melanogaster|4 &times; 4 &times; 45|24576 &times; 24576 &times; 461|1|1|278 |
@@ -18,10 +18,9 @@
 | |flycol|EM|D. melanogaster|4 &times; 4 &times; 45|2000 &times; 2000 &times; 6240|1|1|24 |
 | <a href='http://www.nature.com/nmeth/journal/v10/n5/full/nmeth.2434.html'>Ahrens et al. Nature Methods (2013)</a>|freeman14|Ophys|D. rerio|650 &times; 650 &times; 5000; 0.8|2048 &times; 1172 &times; 30|1|100|7 |
 | <a href='http://www.cell.com/cell/abstract/S0092-8674(15)00824-7'>Kasthuri et al. Cell (2015)</a>|kasthuri11|EM|M. musculus|3 &times; 3 &times; 30|21504 &times; 26624 &times; 1849|1|1|1058 |
-| <a href='hhttp://www.cell.com/cell/abstract/S0092-8674(15)00824-7'>Kasthuri et al. Cell (2015)</a>|kasthuri11|EM|Mouse|3 &times; 3 &times; 30|21504 &times; 26624 &times; 1849|1|1|1058 |
-| [sciencedirect.com/science/art...](http://www.sciencedirect.com/science/article/pii/S0092867415008247)|kasthuri11cc|EM|M. musculus|3 &times; 3 &times; 30|21504 &times; 26624 &times; 1849|1|1|1058 |
-| <a href='http://www.cell.com/cell/abstract/S0092-8674(15)00824-7'>Kasthuri et al. Cell (2015)</a>|kasthuri14Maine|EM|M. musculus||6144 &times; 6144 &times; 2041|1|1|77 |
-| <a href='http://www.cell.com/cell/abstract/S0092-8674(15)00824-7'>Kasthuri et al. Cell (2015)</a>|kasthuri14s1colEM|EM|M. musculus||49152 &times; 32768 &times; 254|1|1|409 |
+| <a href='http://www.cell.com/cell/abstract/S0092-8674(15)00824-7'>Kasthuri et al. Cell (2015)</a>|kasthuri11cc|EM|M. musculus|3 &times; 3 &times; 30|21504 &times; 26624 &times; 1849|1|1|1058 |
+| <a href='http://www.cell.com/cell/abstract/S0092-8674(15)00824-7'>Kasthuri et al. Cell (2015)</a>|kasthuri14Maine|EM|M. musculus|2000 × 2000 × 30|6144 &times; 6144 &times; 2041|1|1|77 |
+| <a href='http://www.cell.com/cell/abstract/S0092-8674(15)00824-7'>Kasthuri et al. Cell (2015)</a>|kasthuri14s1colEM|EM|M. musculus|30 × 30 × 30|49152 &times; 32768 &times; 254|1|1|409 |
 | <a href='http://www.nature.com/articles/sdata201546'>Harris et al. Scientific Data (2015)</a>|kharris15apical|EM|R. rattus|2 &times; 2 &times; 50|8192 &times; 8192 &times; 194|1|1|13 |
 | <a href='http://www.nature.com/articles/sdata201546'>Harris et al. Scientific Data (2015)</a>|kharris15oblique|EM|R. rattus|2 &times; 2 &times; 50|8192 &times; 8192 &times; 91|1|1|6 |
 | <a href='http://www.nature.com/articles/sdata201546'>Harris et al. Scientific Data (2015)</a>|kharris15spine|EM|R. rattus|2 &times; 2 &times; 50|9000 &times; 9000 &times; 59|1|1|4 |
