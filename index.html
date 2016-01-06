@@ -194,7 +194,14 @@ Figure 1: Reading and writing to the database must be sufficiently fast to not b
 <h2>Store</h2>
 
 <p>
-We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations. <a href="#tab:images">Table 1(A)</a> lists the  public image datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django [data model](http://docs.neurodata.io/open-connectome/sphinx/datamodel.html, the remaining properties are stored in our custom Laboratory Information Management System called [ndlims](https://github.com/openconnectome/ndlims).  The image data in [Table 1](#tab:images) comprise approximately 80 teravoxels of image data (see [here](https://github.com/openconnectome/ocp-journal-paper/blob/gh-pages/Code/Tables/Table1/table1.py)).  These datasets span spatial cases of experimental neuroscience, ranging from nanoscale with electron microscopy to milliscale with MRI, and many in between.  We also store time-series data, as exemplified by the "Freeman14" dataset, a calcium imaging time-series. By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.
+We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations. <a href="#tab:images">Table 1(A)</a> lists the  public image datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django 
+<a href="http://docs.neurodata.io/open-connectome/sphinx/datamodel.html">data model</a>, the remaining properties are stored in our custom Laboratory Information Management System called <a href="https://github.com/openconnectome/ndlims">ndlims</a>.  The image data in <a href="#tab:images">Table 1(A)</a>  comprise approximately 80 teravoxels of image data.  These datasets span spatial scales of experimental neuroscience, ranging from nanoscale with electron microscopy to milliscale with MRI, and many in between.  We also store time-series data, as exemplified by the "Freeman14" dataset, a calcium imaging time-series. By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.
+</p>
+
+
+<div id="par:private-data"> 
+In addition to the above described public datasets, we also host a large number of private datasets, including a variety of additional modalities. This includes >300 array tomography datasets associated with the <a href="http://synapto.me">Open Synaptome Project</a>; approximately 20 different whole brain CLARITY datasets, including several multispectral datasets; several expansion microscopy datasets; and several X-ray microscopy datasets.   In total, we have XXX private datasets from XXX different collaborators spanning XXX total voxels.  Thus, NeuroData is both the largest and most diverse public neuroscience data repository in the world.
+</div>
 
 
 
@@ -210,8 +217,8 @@ Additionally, RagDB currently holds XXX different neurographs, ranging in specie
 
 
 <div class="fig-container" id="tab:images">
+Table 1: List of all <em>public</em> current (as of 12/31/15) NeuroData Datasets.  Table 1A lists the <em>image</em> datasets and associated metadata.  Table 1B lists the volumetric *annotation* datasets, derived from a subset of the image datasets.
 {% include table1.html %}
-Table 1: List of all current (as of 12/31/15) NeuroData Datasets.  Table 1A lists the <em>image</em> datasets and associated metadata.  Table 1B lists the volumetric *annotation* datasets, derived from a subset of the image datasets.
 </div>
 
 <h2>Explore</h2>
