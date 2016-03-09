@@ -95,7 +95,7 @@ Recent technical progress allows neuroexperimentalists to collect ever more deta
 </p>
 
 
-<p>Neuroscience is now entering the age of big data, as laboratories from around the world are beginning to acquire data that exceeds their computational capabilities.  These data can come for dizzying variety of experimental paradigms, ranging from serial electron microscopy to calcium imaging to multimodal magnetic resonance imaging. For many of these paradigms the data are massive 3D image stacks.  Thus, the existing computational solutions for big data do not meet the requirements for these data.  Moreover, neuroscience is rife with >3D data, as certain modalities have many different channels (for example, array tomography datasets might have up to 24 channels), and includes functional data (which might have many thousands of time steps).  
+<p>Neuroscience is now entering the age of big data, as laboratories from around the world are beginning to acquire data that exceeds their computational capabilities.  These data can come for dizzying variety of experimental paradigms, ranging from serial electron microscopy to calcium imaging to multimodal magnetic resonance imaging. For many of these paradigms the data are massive 3D image stacks.  Thus, the existing computational solutions for big data do not meet the requirements for these data.  Moreover, neuroscience is rife with >3D data, as certain modalities have many different channels (for example, array tomography datasets might have up to 24 channels), and includes functional data (which might have many thousands of time steps).
 All these different datasets have troves of information about brains lurking within, waiting to be extracted by the community, which will reveal the underlying principles of normal, abnormal and exceptional mental function.
 </p>
 
@@ -133,7 +133,7 @@ If one group did manage to overcome all of those barriers, then they could answe
 
 <p>
 Thus, in practice, the effort of simply reproducing a previous result might require many months or years of work, often work that is distant from neuroscienctists' core competencies.  Moreover, science proceeds not merely be reproducing previous results, but by confirming and extending them.  This includes simple modifications such as checking the robustness of previous analyses by modifying some of the assumptions, tests, or the data on which the results rely.
-Therefore, to the extent that one can make relatively minor changes to a previous analysis, re-using as much infrastructure as possible, the barrier to confirming and extending previous results to novel findings can be significantly lowered. 
+Therefore, to the extent that one can make relatively minor changes to a previous analysis, re-using as much infrastructure as possible, the barrier to confirming and extending previous results to novel findings can be significantly lowered.
 </p>
 
 
@@ -194,12 +194,12 @@ Figure 1: Reading and writing to the database must be sufficiently fast to not b
 <h2>Store</h2>
 
 <p>
-We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations. <a href="#tab:images">Table 1(A)</a> lists the  public image datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django 
+We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations. <a href="#tab:images">Table 1(A)</a> lists the  public image datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django
 <a href="http://docs.neurodata.io/open-connectome/sphinx/datamodel.html">data model</a>, the remaining properties are stored in our custom Laboratory Information Management System called <a href="https://github.com/openconnectome/ndlims">ndlims</a>.  The image data in <a href="#tab:images">Table 1(A)</a>  comprise approximately 80 teravoxels of image data.  These datasets span spatial scales of experimental neuroscience, ranging from nanoscale with electron microscopy to milliscale with MRI, and many in between.  We also store time-series data, as exemplified by the "Freeman14" dataset, a calcium imaging time-series. By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.
 </p>
 
 
-<div id="par:private-data"> 
+<div id="par:private-data">
 In addition to the above described public datasets, we also host a large number of private datasets, including a variety of additional modalities. This includes >300 array tomography datasets associated with the <a href="http://synapto.me">Open Synaptome Project</a>; approximately 20 different whole brain CLARITY datasets, including several multispectral datasets; several expansion microscopy datasets; and several X-ray microscopy datasets.   In total, we have XXX private datasets from XXX different collaborators spanning XXX total voxels.  Thus, NeuroData is both the largest and most diverse public neuroscience data repository in the world.
 </div>
 
@@ -219,6 +219,8 @@ Additionally, RagDB currently holds XXX different neurographs, ranging in specie
 <div class="fig-container" id="tab:images">
 Table 1: List of all <em>public</em> current (as of 12/31/15) NeuroData Datasets.  Table 1A lists the <em>image</em> datasets and associated metadata.  Table 1B lists the volumetric *annotation* datasets, derived from a subset of the image datasets.
 {% include table1.html %}
+
+{% include table1b.html %}
 </div>
 
 <h2>Explore</h2>
@@ -275,7 +277,7 @@ Figure 4:
 <h2>Infer</h2>
 
 <p>
-Inference has relatively task specific requirements, although statistical inference from anatomical data has some shared features.  In particular, in anatomy,  the questions typically include space, shape, and graphs.  Spatial statistics is a relatively developed branch of statistics, and we therefore can rely on previously developed methods [@Cressie15], though with novel implementations.  The statistics of shape is a much more recent sub-discipline in statistics [@Younes10], partially because it depends on the mathematics of nonlinear manifolds, which are still being actively developed [@Chikuse03].  We therefore developed novel implementations of several of these key quantities.  Finally, graph statistics is a similarly new field [@Kolaczyk09], as graphs are discrete combinatorial objects that require careful mathematical treatment [@Bollobas13].  Again, we have developed our own methods, and built our own scalable and open source implementations (http://flashx.io).  Below, we provide two case studies, one using spatial statistics, the other using graph statistics. 
+Inference has relatively task specific requirements, although statistical inference from anatomical data has some shared features.  In particular, in anatomy,  the questions typically include space, shape, and graphs.  Spatial statistics is a relatively developed branch of statistics, and we therefore can rely on previously developed methods [@Cressie15], though with novel implementations.  The statistics of shape is a much more recent sub-discipline in statistics [@Younes10], partially because it depends on the mathematics of nonlinear manifolds, which are still being actively developed [@Chikuse03].  We therefore developed novel implementations of several of these key quantities.  Finally, graph statistics is a similarly new field [@Kolaczyk09], as graphs are discrete combinatorial objects that require careful mathematical treatment [@Bollobas13].  Again, we have developed our own methods, and built our own scalable and open source implementations (http://flashx.io).  Below, we provide two case studies, one using spatial statistics, the other using graph statistics.
 </p>
 
 
@@ -290,9 +292,9 @@ Inference has relatively task specific requirements, although statistical infere
 <p>
 Several months ago a landmark paper was published, Kasthuri et al. Cell (2015) [@Kasthuri15].  In it, the authors heroically manually annotated a subvolume of somatosensory cortex, and provided three things:
 <ol>
-  <li>a paragraphical "parts list" of all the anatomical objects in a small volume, 
+  <li>a paragraphical "parts list" of all the anatomical objects in a small volume,
   <li>an excel file listing all 1,700 synapses, as well as over 20 properties of each (for example, post-synaptic density centroid location and size), and
-  <li>a VAST remote volume file containing the manual labels, as well as some additional information (object type, and parents). 
+  <li>a VAST remote volume file containing the manual labels, as well as some additional information (object type, and parents).
 </ol>
 
 
@@ -301,7 +303,7 @@ We converted the latter two of those objects into the RAMON annotation data spec
 
 
 <p>
-We next proceeded to assess each of the quantitative claims from the paragraphical parts list that amonut to counting particular kinds of objects or computing volumes.  Within VAST, there is no way to compute these quantitites, and the spreadsheet does not contain enough information to extract them all (because it only includes synapses, and doesn't include tight boundaries).  Therefore, only via using RamonDB, can one automatically and reproducibly compute all these properties.  Table [#tab:parts] is the automatically generated table from our Python script, including all quantitative claims from the manuscript.   
+We next proceeded to assess each of the quantitative claims from the paragraphical parts list that amonut to counting particular kinds of objects or computing volumes.  Within VAST, there is no way to compute these quantitites, and the spreadsheet does not contain enough information to extract them all (because it only includes synapses, and doesn't include tight boundaries).  Therefore, only via using RamonDB, can one automatically and reproducibly compute all these properties.  Table [#tab:parts] is the automatically generated table from our Python script, including all quantitative claims from the manuscript.
 </p>
 
 <p>
@@ -313,7 +315,7 @@ We next proceeded to assess each of the quantitative claims from the paragraphic
 
 <h2>Discovering the Spatial Distribution of Synapses using the Data from Bock et al. Nature (2011)</h2>
 
-The spatial distribution of synapses is a fundamental property of neural tissue, and one that has seen some study in the past.  In particular, two recent very nice studies examined the spatial distribution of synapses in rat cortex [@http://cercor.oxfordjournals.org/content/24/6/1579.long, @http://journal.frontiersin.org/article/10.3389/fnana.2014.00085/abstract].  Using a few thousand synapses, they fail to reject the hypothesis that synapses are distributed according to a random sequential adsoption model, implying that their synapses are distributed almost randomly, with the only constraint that they cannot overlap.  Their experimental design included multiple small volumes from different animals, which is often a wise experimental design choice, to mitigate batch effects [@http://www.nature.com/nrg/journal/v11/n10/full/nrg2825.html].  In contrast, we used a single large volume from Bock et al. Nature (2011).  Using the combination of (manno,macho,maxxo) described above, we detected ~10 million synapses, a number comensurate with the expected density of synapses per volume reported in the literature.  Our complementary experimental design decision enabled us to consider the spatial distribution across a much larger volume, in case parts of the volume look approximately uniform, and other parts do not.  Indeed, Figure [#fig:syn-clust](A) depicts the spatial distribution of synapses detected in our volume.  The size of the dots corresponds to the relative density of synapses.  It is immediately apparent that synapses are <em>not</em> distributed uniformly in space; rather, there is a clear cluster pattern.  The inset in the figure shows a volume of 200 cubic microns, the size of the volumes used in the previous publications.  It would be difficult indeed to detect anisotropies from volumes of this size, given the nature of the non-uniformity. Figure [#fig:syn-clust](B) shows the 2D histograms projected onto the three canonical planes.  Even ignoring the edge effects, again, it is clear that the synapses are not distributed uniformly in space.  
+The spatial distribution of synapses is a fundamental property of neural tissue, and one that has seen some study in the past.  In particular, two recent very nice studies examined the spatial distribution of synapses in rat cortex [@http://cercor.oxfordjournals.org/content/24/6/1579.long, @http://journal.frontiersin.org/article/10.3389/fnana.2014.00085/abstract].  Using a few thousand synapses, they fail to reject the hypothesis that synapses are distributed according to a random sequential adsoption model, implying that their synapses are distributed almost randomly, with the only constraint that they cannot overlap.  Their experimental design included multiple small volumes from different animals, which is often a wise experimental design choice, to mitigate batch effects [@http://www.nature.com/nrg/journal/v11/n10/full/nrg2825.html].  In contrast, we used a single large volume from Bock et al. Nature (2011).  Using the combination of (manno,macho,maxxo) described above, we detected ~10 million synapses, a number comensurate with the expected density of synapses per volume reported in the literature.  Our complementary experimental design decision enabled us to consider the spatial distribution across a much larger volume, in case parts of the volume look approximately uniform, and other parts do not.  Indeed, Figure [#fig:syn-clust](A) depicts the spatial distribution of synapses detected in our volume.  The size of the dots corresponds to the relative density of synapses.  It is immediately apparent that synapses are <em>not</em> distributed uniformly in space; rather, there is a clear cluster pattern.  The inset in the figure shows a volume of 200 cubic microns, the size of the volumes used in the previous publications.  It would be difficult indeed to detect anisotropies from volumes of this size, given the nature of the non-uniformity. Figure [#fig:syn-clust](B) shows the 2D histograms projected onto the three canonical planes.  Even ignoring the edge effects, again, it is clear that the synapses are not distributed uniformly in space.
 
 
 
