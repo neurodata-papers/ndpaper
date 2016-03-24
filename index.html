@@ -197,7 +197,19 @@ We used the above described infrastructure to build a number of image and annota
 
 
 <p>
-@kunal: can you write usecase for your benchmarks here.
+You can reproduce our Read/Write throughput benchmarks using the following steps:
+<ul>
+  <li>Launch the AWS AMI "ami-id Here".</li>
+  <li>Run the <a href="https://github.com/neurodata/ndstore/tree/microns/benchmarks/ndstore_benchmark.py">ndstore_benchmark.py</a> in the <a href="https://github.com/neurodata/ndstore/tree/microns/benchmarks">benchmarks</a> folder. The commands to run the read and write benchmarks are mentioned in the <a href="https://github.com/neurodata/ndstore/blob/microns/benchmarks/README.md">README</a> file. These commands will generate csv files for the respective benchmarks.</li>
+  <li>Run the <a href=" https://github.com/neurodata/ocp-journal-paper/blob/gh-pages/Code/Plots/ThroughputPlots.r">ThroughPlots.r</a> script in the <a href="https://github.com/neurodata/ocp-journal-paper/blob/gh-pages/Code/Plots/">Plots</a> folder. This script will generate the thorughput graphs included in the paper.</li>
+</ul>
+You can reproduce our Tilecache benchmarks using the following steps:
+<ul>
+  <li>Launch the AWS AMI "ami-id here".</li>
+  <li>Run the <a href="https://github.com/neurodata/ndtilecache/blob/master/benchmarks/ndtilecache_benchmark.py">ndtilecache_benchmark.py</a> script in the <a href="https://github.com/neurodata/ndtilecache/blob/master/benchmarks/">benchmarks</a>folder. The command to run the benchmarks are mentioned in the <a href="https://github.com/neurodata/ndtilecache/blob/master/benchmarks/README.md">README file.</a> file. These commands will generate the csv file for the benchmark.</li>
+  <li>Run the <a href="">TilecachePlots.r</a> script in the <a href="">Plots</a> folder. This script will generate the tilecache graph in the paper.</li>
+</ul>
+
 </p>
 
 <div id="par:private-data">
