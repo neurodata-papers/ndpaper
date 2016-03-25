@@ -1,5 +1,6 @@
 #! /usr/bin/Rscript
 ###
+### Benchmark image generation
 ###
 ### Jesse Leigh Patsolic 
 ### 2016 <jesse@cis.jhu.edu>
@@ -7,20 +8,62 @@
 #
 
 
-### data.csv is the 2nd sheet of the NeuroData R/W spreadsheet.
-
 require(ggplot2)
+require(foreach)
 
-dat <- read.csv("data.csv")
-dat$Threads <- as.factor(dat$Threads)
-dat$Size <- as.factor(dat$Size)
+baseURLread<-"https://raw.githubusercontent.com/neurodata/ocp-journal-paper/gh-pages/Results/CSV/ndstore/read/"
+
+baseURLwrite<-"https://raw.githubusercontent.com/neurodata/ocp-journal-paper/gh-pages/Results/CSV/ndstore/write/"
+
+Threads <- c(1,2,4,8,16,32)
+size <- c(0.5,2^c(0:11))
+
+readFiles <- paste0(baseURLread,"read_",Threads,"_threads.csv")
+writeFiles <- paste0(baseURLwrite,"write_",Threads,"_threads.csv")
+
+
+datRead <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
+  tmp <- read.csv(readFiles[i],header=FALSE)  
+  avg <- apply(tmp[,-1],1,mean)
+  sx <- apply(tmp[,-1],1,sd)/sqrt(dim(tmp)[2]-1)
+  ci <- qt(0.975,df=dim(tmp)[2]-2)* sx/sqrt(dim(tmp)[2]-1)
+  
+  emin <- avg - ci
+  emax <- avg + ci
+  throughput<-(Threads[i]*size)/avg
+  thmin <- (Threads[i]*size)/emax
+  thmax <- (Threads[i]*size)/emin
+
+  th <- data.frame(size=size,threads=Threads[i],avg=avg,emin=emin,emax=emax)
+  th <- data.frame(size=size,threads=Threads[i],throughput=throughput, thmin=thmin,thmax=thmax)
+}
+
+datWrite <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
+  tmp <- read.csv(writeFiles[i],header=FALSE)  
+  avg <- apply(tmp[,-1],1,mean)
+  sx <- apply(tmp[,-1],1,sd)/sqrt(dim(tmp)[2]-1)
+  ci <- qt(0.975,df=dim(tmp)[2]-2)* sx/sqrt(dim(tmp)[2]-1)
+  
+  emin <- avg - ci
+  emax <- avg + ci
+  th <- data.frame(size=size,threads=Threads[i],avg=avg,emin=emin,emax=emax)
+}
+
+
+datRead$threads <- as.factor(datRead$threads)
+datRead$size <- as.factor(datRead$size)
+
+datWrite$threads <- as.factor(datWrite$threads)
+datWrite$size <- as.factor(datWrite$size)
 
 ts <- 20
-p <-  ggplot(data=dat,aes(x=Size, y = Throughput, group=Threads,color=Threads)) + 
+#p1 <-  ggplot(data=datRead,aes(x=size,y=avg,ymin=emin,ymax=emax, group=threads,color=threads)) + 
+p1 <-  ggplot(data=datRead,aes(x=size,y=throughput,ymin=thmin,ymax=thmax, group=threads,color=threads)) + 
     geom_line(size=1.5) + 
+    geom_errorbar(width=0.25) +
     ylab("Throughput (MB/sec)") + 
+    #ylab("Time (sec)") +
     xlab("Size of cutout (MB)") + 
-    ggtitle("Read Throughput across multiple threads") + 
     theme(plot.title=element_text(size=ts),
           axis.title.x=element_text(size=ts),
           axis.title.y=element_text(size=ts),
@@ -28,25 +71,21 @@ p <-  ggplot(data=dat,aes(x=Size, y = Throughput, group=Threads,color=Threads)) 
           legend.text=element_text(size=ts-2),
           axis.text=element_text(size=ts-2))
 
-pdf("ReadThroughputPlot.pdf", height=4,width=10)
-print(p)
+pdf("../../Results/Figures/store/ReadThroughputPlot.pdf", height=4,width=10)
+print(p1)
 dev.off()
 
-png("ReadThroughputPlot.png", height=480, width=1000, res=96)
-print(p)
+png("../../Results/Figures/store/ReadThroughputPlot.png", height=480, width=1200, res=120)
+print(p1)
 dev.off()
 
-
-dat <- read.csv("data2.csv")
-dat$Threads <- as.factor(dat$Threads)
-dat$Size <- as.factor(dat$Size)
-
-ts <- 20
-p <-  ggplot(data=dat,aes(x=Size, y = Throughput, group=Threads,color=Threads)) + 
+#p2 <-  ggplot(data=datWrite,aes(x=size,y=avg,ymin=emin,ymax=emax,group=threads,color=threads)) + 
+p2 <-  ggplot(data=datRead,aes(x=size,y=throughput,ymin=thmin,ymax=thmax, group=threads,color=threads)) + 
     geom_line(size=1.5) + 
+    geom_errorbar(width=0.25) +
     ylab("Throughput (MB/sec)") + 
+    #ylab("Time (sec)") +
     xlab("Size of cutout (MB)") + 
-    ggtitle("Write Throughput across multiple threads") + 
     theme(plot.title=element_text(size=ts),
           axis.title.x=element_text(size=ts),
           axis.title.y=element_text(size=ts),
@@ -54,15 +93,15 @@ p <-  ggplot(data=dat,aes(x=Size, y = Throughput, group=Threads,color=Threads)) 
           legend.text=element_text(size=ts-2),
           axis.text=element_text(size=ts-2))
 
-pdf("WriteThroughputPlot.pdf", height=4,width=10)
-print(p)
+pdf("../../Results/Figures/store/WriteThroughputPlot.pdf", height=4,width=10)
+print(p2)
 dev.off()
 
-png("WriteThroughputPlot.png", height=480, width=1000, res=96)
-print(p)
+png("../../Results/Figures/store/WriteThroughputPlot.png", height=480, width=1200, res=120)
+print(p2)
 dev.off()
 
-#   Time: 30 min
+#   Time: ~2 hrs
 ##  Working status: Works!
-### Comments: I don't like the quality of the png files.
+### Comments: 
 ####Soli Deo Gloria
