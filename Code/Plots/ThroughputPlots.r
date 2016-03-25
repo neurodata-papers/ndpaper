@@ -64,6 +64,7 @@ p1 <-  ggplot(data=datRead,aes(x=size,y=throughput,ymin=thmin,ymax=thmax, group=
     ylab("Throughput (MB/sec)") + 
     #ylab("Time (sec)") +
     xlab("Size of cutout (MB)") + 
+    ggtitle("Read throughput across multiple threads.") +
     theme(plot.title=element_text(size=ts),
           axis.title.x=element_text(size=ts),
           axis.title.y=element_text(size=ts),
@@ -86,6 +87,7 @@ p2 <-  ggplot(data=datRead,aes(x=size,y=throughput,ymin=thmin,ymax=thmax, group=
     ylab("Throughput (MB/sec)") + 
     #ylab("Time (sec)") +
     xlab("Size of cutout (MB)") + 
+    ggtitle("Write throughput across multiple threads.") +
     theme(plot.title=element_text(size=ts),
           axis.title.x=element_text(size=ts),
           axis.title.y=element_text(size=ts),
