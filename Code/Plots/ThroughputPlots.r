@@ -24,7 +24,7 @@ writeFiles <- paste0(baseURLwrite,"write_",Threads,"_threads.csv")
 
 datRead <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   tmp <- read.csv(readFiles[i],header=FALSE)  
-  avg <- apply(tmp[,-1],1,mean)
+  avg <- apply(tmp[,-1]/Threads[i],1,mean)
   sx <- apply(tmp[,-1],1,sd)/sqrt(dim(tmp)[2]-1)
   ci <- qt(0.975,df=dim(tmp)[2]-2)*sx
   
@@ -41,7 +41,7 @@ datRead <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
 
 datWrite <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   tmp <- read.csv(writeFiles[i],header=FALSE)  
-  avg <- apply(tmp[,-1],1,mean)
+  avg <- apply(tmp[,-1]/Threads[i],1,mean)
   sx <- apply(tmp[,-1],1,sd)/sqrt(dim(tmp)[2]-1)
   ci <- qt(0.975,df=dim(tmp)[2]-2)*sx
   
