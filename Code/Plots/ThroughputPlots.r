@@ -27,7 +27,7 @@ datRead <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   colnames(tmp) <- c("Size", paste0("test",1:(ncol(tmp)-1),"_",Threads[i]))
 
   st <- stack(tmp[,-1])
-  st$values <- (Threads[i]*size/1024)/st$values
+  st$values <- (Threads[i]*size/1024)/st$values # Converted to GB
   th<-data.frame(size=size,threads=Threads[i],st)
 }
 
@@ -37,7 +37,7 @@ datWrite <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   colnames(tmp) <- c("Size", paste0("test",1:(ncol(tmp)-1),"_",Threads[i]))
 
   st <- stack(tmp[,-1])
-  st$values <- (Threads[i]*size/1024)/st$values
+  st$values <- (Threads[i]*size/1024)/st$values # Converted to GB
   th<-data.frame(size=size,threads=Threads[i],st)
 }
 

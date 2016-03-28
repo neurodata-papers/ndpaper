@@ -71,11 +71,11 @@ p1 <- ggplot(data=datRead,aes(x=size,y=values,group=ind,color=threads)) +
           axis.text=element_text(size=11))
 
 
-pdf("../../Results/Figures/store/ReadTimePlot.pdf", height=4,width=15)
+pdf("../../Results/Figures/store/ReadTimePlot.pdf", height=4,width=12)
 print(p1)
 dev.off()
 
-png("../../Results/Figures/store/ReadTimePlot.png", height=480, width=1200, res=120)
+png("../../Results/Figures/store/ReadTimePlot.png", height=480, width=1440, res=120)
 print(p1)
 dev.off()
 
