@@ -24,50 +24,38 @@ writeFiles <- paste0(baseURLwrite,"write_",Threads,"_threads.csv")
 
 datRead <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   tmp <- read.csv(readFiles[i],header=FALSE)  
-  avg <- apply(tmp[,-1]/Threads[i],1,mean)
-  sx <- apply(tmp[,-1],1,sd)/sqrt(dim(tmp)[2]-1)
-  ci <- qt(0.975,df=dim(tmp)[2]-2)*sx
-  
-  emin <- avg - ci
-  emax <- avg + ci
-  throughput<-(Threads[i]*size)/avg
-  thmin <- (Threads[i]*size)/emax
-  thmax <- (Threads[i]*size)/emin
+  colnames(tmp) <- c("Size", paste0("test",1:(ncol(tmp)-1),"_",Threads[i]))
 
-  ### Switch th for throughput
-  th<- data.frame(size=size,threads=Threads[i],avg=avg,emin=emin,emax=emax)
-  #th <- data.frame(size=size,threads=Threads[i],throughput=throughput, thmin=thmin,thmax=thmax)
+  th<-data.frame(size=size,threads=Threads[i],stack(tmp[,-1]/Threads[i]))
 }
+
 
 datWrite <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   tmp <- read.csv(writeFiles[i],header=FALSE)  
-  avg <- apply(tmp[,-1]/Threads[i],1,mean)
-  sx <- apply(tmp[,-1],1,sd)/sqrt(dim(tmp)[2]-1)
-  ci <- qt(0.975,df=dim(tmp)[2]-2)*sx
-  
-  emin <- avg - ci
-  emax <- avg + ci
-  throughput<-(Threads[i]*size)/avg
-  thmin <- (Threads[i]*size)/emax
-  thmax <- (Threads[i]*size)/emin
+  colnames(tmp) <- c("Size", paste0("test",1:(ncol(tmp)-1),"_",Threads[i]))
 
-  ### Switch th for throughput
-  th<- data.frame(size=size,threads=Threads[i],avg=avg,emin=emin,emax=emax)
-  #th <- data.frame(size=size,threads=Threads[i],throughput=throughput, thmin=thmin,thmax=thmax)
+  th<-data.frame(size=size,threads=Threads[i],stack(tmp[,-1]/Threads[i]))
 }
 
 
 datRead$threads <- as.factor(datRead$threads)
 datRead$size <- as.factor(datRead$size)
+datRead$ind <- as.factor(datRead$ind)
 
 datWrite$threads <- as.factor(datWrite$threads)
 datWrite$size <- as.factor(datWrite$size)
+datWrite$ind <- as.factor(datWrite$ind)
 
 ts <- 20
-p1 <-  ggplot(data=datRead,aes(x=size,y=avg,ymin=emin,ymax=emax, group=threads,color=threads)) + 
-#p1 <-  ggplot(data=datRead,aes(x=size,y=throughput,ymin=thmin,ymax=thmax, group=threads,color=threads)) + 
-    geom_line(size=1.5) + 
-    geom_errorbar(width=0.25) +
+
+### JLP messed with the colors
+cbPalette <- c("#000000", "#56B4E9", "#E69F00","#0072D8", "#FFF000","#470778", "#CC79A7")
+
+p1 <- ggplot(data=datRead,aes(x=size,y=values,group=ind,color=threads)) + 
+    geom_line(size=0.8) + 
+    scale_y_log10() + 
+    scale_colour_manual(values=cbPalette) + 
+    #geom_errorbar(width=0.25) +
     #ylab("Throughput (MB/sec)") + 
     ylab("Time (sec)") +
     xlab("Size of cutout (MB)") + 
@@ -80,6 +68,7 @@ p1 <-  ggplot(data=datRead,aes(x=size,y=avg,ymin=emin,ymax=emax, group=threads,c
           legend.text=element_text(size=ts-2),
           axis.text=element_text(size=ts-2))
 
+
 pdf("../../Results/Figures/store/ReadThroughputPlot.pdf", height=4,width=10)
 print(p1)
 dev.off()
@@ -88,10 +77,10 @@ png("../../Results/Figures/store/ReadThroughputPlot.png", height=480, width=1200
 print(p1)
 dev.off()
 
-p2 <-  ggplot(data=datWrite,aes(x=size,y=avg,ymin=emin,ymax=emax,group=threads,color=threads)) + 
-#p2 <-  ggplot(data=datWrite,aes(x=size,y=throughput,ymin=thmin,ymax=thmax, group=threads,color=threads)) + 
-    geom_line(size=1.5) + 
-    geom_errorbar(width=0.25) +
+p2 <- ggplot(data=datWrite,aes(x=size,y=values,group=ind,color=threads)) + 
+    geom_line(size=0.8) + 
+    scale_y_log10() + 
+    scale_colour_manual(values=cbPalette) + 
     #ylab("Throughput (MB/sec)") + 
     ylab("Time (sec)") +
     xlab("Size of cutout (MB)") + 
