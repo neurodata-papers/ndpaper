@@ -197,7 +197,9 @@ We used the above described infrastructure to build a number of image and annota
 
 
 <p>
-@kunal: can you write usecase for your benchmarks here.
+@KL TODO Use casei
+In the project one of the workload is to run computer vision algorithms at scale to detect cell bodie in the data. This workload can be split into three sections to provide a better understanding of the problem. First section, reading sub volumes of data from the spatial database using multiple readers. The NDStore backend is scalable and is capable of upto 9GB/sec read throughput one a single node running MySQL. Usually, we run multiple nodes providing much higher read throughtput. Second section, to detect cell bodies in the data using a large compute cluster. We will talk more about this in the next section. Third section, to write the detected cell bodies as annotation back to the database. We can achieve upto 1.5GB/sec write throughput with 16 threads on a single nodes running MySQL. With high read and write throughput we avoid bottlenecks in the first and third section for large scale runs.
+
 </p>
 
 <div id="par:private-data">
@@ -338,8 +340,20 @@ Figure:
 
 <h3>Databases</h3>
 
-
-@kunal: provide list for reproducing all 3 benchmark figures.
+<p>
+You can reproduce our Read/Write throughput benchmarks using the following steps:
+<ul>
+  <li>Launch the AWS AMI "ami-id Here".</li>
+  <li>Run the <a href="https://github.com/neurodata/ndstore/tree/microns/benchmarks/ndstore_benchmark.py">ndstore_benchmark.py</a> in the <a href="https://github.com/neurodata/ndstore/tree/microns/benchmarks">benchmarks</a> folder. The commands to run the read and write benchmarks are mentioned in the <a href="https://github.com/neurodata/ndstore/blob/microns/benchmarks/README.md">README</a> file. These commands will generate csv files for the respective benchmarks.</li>
+  <li>Run the <a href=" https://github.com/neurodata/ocp-journal-paper/blob/gh-pages/Code/Plots/ThroughputPlots.r">ThroughPlots.r</a> script in the <a href="https://github.com/neurodata/ocp-journal-paper/blob/gh-pages/Code/Plots/">Plots</a> folder. This script will generate the thorughput graphs included in the paper.</li>
+</ul>
+You can reproduce our Tilecache benchmarks using the following steps:
+<ul>
+  <li>Launch the AWS AMI "ami-id here".</li>
+  <li>Run the <a href="https://github.com/neurodata/ndtilecache/blob/master/benchmarks/ndtilecache_benchmark.py">ndtilecache_benchmark.py</a> script in the <a href="https://github.com/neurodata/ndtilecache/blob/master/benchmarks/">benchmarks</a>folder. The command to run the benchmarks are mentioned in the <a href="https://github.com/neurodata/ndtilecache/blob/master/benchmarks/README.md">README file.</a> file. These commands will generate the csv file for the benchmark.</li>
+  <li>Run the <a href="">TilecachePlots.r</a> script in the <a href="">Plots</a> folder. This script will generate the tilecache graph in the paper.</li>
+</ul>
+</p>
 
 <h2>Explore</h2>
 
