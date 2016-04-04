@@ -197,7 +197,7 @@ We used the above described infrastructure to build a number of image and annota
 
 
 <p>
-@KL TODO Use casei
+@KL TODO Use case
 In the project one of the workload is to run computer vision algorithms at scale to detect cell bodie in the data. This workload can be split into three sections to provide a better understanding of the problem. First section, reading sub volumes of data from the spatial database using multiple readers. The NDStore backend is scalable and is capable of upto 9GB/sec read throughput one a single node running MySQL. Usually, we run multiple nodes providing much higher read throughtput. Second section, to detect cell bodies in the data using a large compute cluster. We will talk more about this in the next section. Third section, to write the detected cell bodies as annotation back to the database. We can achieve upto 1.5GB/sec write throughput with 16 threads on a single nodes running MySQL. With high read and write throughput we avoid bottlenecks in the first and third section for large scale runs.
 
 </p>
@@ -273,8 +273,14 @@ Figure 3: *NeuroData* provides fully automatic terascale tools for both 2D & 3D 
 
 
 <p>
-Given that the data has been sufficiently pre-processed, we now proceed to parse the scene, assigning voxels with semantic labels.  Parsing the scene involves three steps: (i) manually labeling a subset of training data, (ii) training and evaluating various machine vision algorithms on appropriate performance metrics, and (iii) deploying the algorithm (and parameter) of choice at scale.  For manual labeling, we built [*manno*](http://docs.neurodata.io/manno/), which essentially wraps ITK-SNAP by downloading image data from *NeuroData* in the appropriate format, uses ITK-SNAP to label a number of voxels, and then saves and uploads the annotations to the appropriate annotation database (with metadata; see Figure~\ref{fig:parse}(A) for an exemplar slice).  Given the training labels, [*macho*](http://docs.neurodata.io/macho/) uses ilastik to perform pixel level classification [@XXX], and then custom morphological operations to detect objects.  We choose the operating point the maximized F1-score on a held-out dataset located in a volume separated from the training volume (Figure~\ref{fig:parse}(B)).  Finally, we deployed our chosen classifier on the full dataset, using [*maxxo*](http://docs.neurodata.io/maxxo/), which utilizes LONI Pipeline to distribute ilastik across many nodes of a HPC.  The result was ~10 million putative synapse detections (Figure~\ref{fig:parse}(C) shows approximately 1% of them).
+Given that the data has been sufficiently pre-processed, we now proceed to parse the scene, assigning voxels with semantic labels.  Parsing the scene involves three steps: (i) manually labeling a subset of training data, (ii) training and evaluating various machine vision algorithms on appropriate performance metrics, and (iii) deploying the algorithm (and parameter set) of choice at scale.  For manual labeling, we built [*manno*](http://docs.neurodata.io/manno/), a protocol that leverages ITK-SNAP by downloading image data from *NeuroData* in the appropriate format, uses ITK-SNAP to label a number of voxels, and then saves and uploads the annotations to the appropriate annotation database (with metadata; see Figure~\ref{fig:parse}(A) for an exemplar slice).  Given the training labels, [*macho*](http://docs.neurodata.io/macho/) uses ilastik to perform pixel level classification [@XXX], and then custom morphological operations to detect objects.  We choose the operating point that maximized f1-score on a held-out dataset located in a volume separated from the training volume (Figure~\ref{fig:parse}(B)).  Finally, we deployed our chosen classifier on the full dataset, using [*maxxo*](http://docs.neurodata.io/maxxo/), which utilizes the LONI Pipeline to distribute ilastik across many nodes of a HPC.  The result was ~11 million putative synapse detections (Figure~\ref{fig:parse}(C) shows approximately 2% of them).
 
+<div class="fig-container" id="tab:images">
+Figure 4: A schematic showing the synapses labeled with our manual annotation (mana) protocol (left) and the resulting parased scene detections using vesicle (right).  These figures, and associated associated error metrics can be reproduced using the Jupyter notebook provided with this manuscript.
+
+<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/parse/ndp_bock_truth_crop.png" alt="Drawing" style="width: 700px;"/>
+<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/parse/ndp_bock_detect_crop.png" alt="Drawing" style="width: 700px;"/>
+</div>
 
 
 <div class="fig-container", id="fig:allsyn">
