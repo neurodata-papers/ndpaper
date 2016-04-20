@@ -163,7 +163,8 @@ All of the results presented herein are fundamentally reproducible; the data use
 
 <h2>Store</h2>
 
-<h3>Databases</h3>
+<h3>Images</h3>
+
 
 <p>
 Our infrastructure is designed for fast reading and writing of terabytes of data.  Figure~\ref{fig:infra} shows the read and write speeds for our system, including writing both images and annotations.  Although we operate our own data cluster for the vast majority of our public facing data, we have built an Amazon Machine Instance (AMI) that is pre-configured with all the necessary software; all the results presented in this section are using that AMI, and are therefore wholly reproducible.
@@ -180,6 +181,8 @@ Naively using the above described system, however, has the drawbacks just mentio
 <p>
 Writing to our spatial database would be more time consuming than simply uploading to a file server, because we re-write the data into a format that is efficient for reading.  We combat that by using a distributed database management system (such as Cassandra), that automatically distributes writing jobs across nodes.  We further speed up writing by compressing the data using Blosc, a multi-threaded library.  The result is that we can write data in compressed cubes in time linear with the data size (Figure~\ref{fig:infra}(D)).  The implications are the writing a terabyte of data on a single node take XXX hours.
 </p>
+
+<h3>Shapes</h3>
 
 <p>
 Writing annotations is a bit more complicated than simply writing images because we store annotations as objects with associated metadata, such as what type of object is it (e.g., synapse), who labeled it, what time, with what confidence, etc. Because each write object is therefore relatively small, and write speeds are determined largely by the number of files to write, we built NeuroBlaze, which caches writes in memory, only writing to disk a single large file joining all the small writes.  This enables us to write  annotations extremely efficiently (Figure~\ref{fig:infra}(E)).
@@ -200,15 +203,9 @@ In the project one of the workload is to run computer vision algorithms at scale
 </p>
 
 
+<h3>Graphs</h3>
 
-<h3>Utilities</h3>
-
-
-<p>
-<a href="#tab:API">Supplementary Table #tab:API</a> lists all the functionality currently supported on all of the neuroimage, neuroannotation, and neurograph databases.  Importantly, we have both MATLAB (called [CAJAL](http://docs.neurodata.io/CAJAL/)) and Python (called [ndio](http://docs.neurodata.io/nddocs/ndio/)) bindings to support that functionality, without the user having to learn a new programming language.
-</p>
-
-<h3>Hardware</h3>
+<h3>Matrices</h3>
 
 
 <h2>Explore</h2>
@@ -298,6 +295,15 @@ Figure 4: A schematic showing the synapses labeled with our manual annotation (m
 <p>
 Inference has relatively task specific requirements, although statistical inference from anatomical data has some shared features.  In particular, in anatomy,  the questions typically include space, shape, and graphs.  Spatial statistics is a relatively developed branch of statistics, and we therefore can rely on previously developed methods [@Cressie15], though with novel implementations.  The statistics of shape is a much more recent sub-discipline in statistics [@Younes10], partially because it depends on the mathematics of nonlinear manifolds, which are still being actively developed [@Chikuse03].  We therefore developed novel implementations of several of these key quantities.  Finally, graph statistics is a similarly new field [@Kolaczyk09], as graphs are discrete combinatorial objects that require careful mathematical treatment [@Bollobas13].  Again, we have developed our own methods, and built our own scalable and open source implementations (http://flashx.io).  Below, we provide two case studies, one using spatial statistics, the other using graph statistics.
 </p>
+
+
+
+
+<p>
+<a href="#tab:API">Supplementary Table #tab:API</a> lists all the functionality currently supported on all of the neuroimage, neuroannotation, and neurograph databases.  Importantly, we have both MATLAB (called [CAJAL](http://docs.neurodata.io/CAJAL/)) and Python (called [ndio](http://docs.neurodata.io/nddocs/ndio/)) bindings to support that functionality, without the user having to learn a new programming language.
+</p>
+
+
 
 
 <h3>Images</h3>
@@ -397,12 +403,18 @@ Figure:
 
 
 
+
+
+
+<h1>Appendix</h1>
+
+
 <h1>Reproducability Guidelines</h1>
 
 
 <h2>Store</h2>
 
-<h3>Databases</h3>
+<h3>Images</h3>
 
 <p>
 You can reproduce our Read/Write throughput benchmarks using the following steps:
@@ -425,10 +437,9 @@ You can reproduce our Tilecache benchmarks using the following steps:
 
 <h2>Analyze</h2>
 
+<h3>Utilities</h3>
 
-
-<h1>Appendix</h1>
-
+<h3>Hardware</h3>
 
 
 <div class="fig-container", id="fig:infra">
