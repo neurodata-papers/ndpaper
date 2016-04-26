@@ -8,10 +8,6 @@ author_email:       team@neurodata.io
 baseurl:            ""
 timezone:           America/New_York
 
-highlighter:        pygments
-markdown:           kramdown
-kramdown:
-    input:          GFM
 sass:
     style:          :compressed
 
