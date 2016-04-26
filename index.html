@@ -110,7 +110,7 @@ As mentioned above, existing computational ecosystems for data analysis are ill 
 </p>
 
 <ol start="1">
-<!--   <li>Infrastructure: Without a terascale infrastructure, neuroscientists have to build custom hardware and software to load sub-<em>cubes</em> of data into RAM (for example, in MATLAB or Python), because RAM typically only holds up to 16 GB of data, and the data of interest is orders of magnitude larger. </li> -->  
+<!--   <li>Infrastructure: Without a terascale infrastructure, neuroscientists have to build custom hardware and software to load sub-<em>cubes</em> of data into RAM (for example, in MATLAB or Python), because RAM typically only holds up to 16 GB of data, and the data of interest is orders of magnitude larger. </li> -->
  <li>Storing: Most labs do not have many terabytes of storage, and even if they did, each scientist would need to dynamically choose where to put data, how to organize it, what format to use, etc.  Moreover, others could not easily access or operate on it. </li>
   <li>Exploring: Even visualizing data that is larger than RAM is non-trivial.  Current local solutions typically involve sub-sampling or downsampling the data, and loading just that subset into RAM, and remote solutions are either 2D, or lack 3D annotation metadata support. </li>
   <!-- <li>Pre-Processing: The raw data is never collected in a form amenable to parsing into semantic objects, rather, images must be stitched together, chromatic aberrations must be adjusted, and data must be aligned to other references to compare. Currently solutions typically require all the data to be loaded into RAM, and must be local.</li> -->
@@ -215,17 +215,25 @@ In the project one of the workload is to run computer vision algorithms at scale
 
 
 <p>
-Interactively exploring these massive data requires tools that can automatically scale appropriately and efficiently.  For this reason, we have developed a number of *NeuroData Explorers*.   For images, we designed *Image Explorer* (IX; http://ix.neurodata.io).  It is the only visualization engine that has the following functionality: (i) loads data remotely from a server, (ii) works in Web-browsers, including mobile, (iii) natively supports volumetric annotations with associated metadata.  In particular, one can visualize  electron microscopy data, and annotations on top, and also "query" the metadata associated with each annotation object (Figure~\ref{fig:explorer}(A)).   IX also supports multiple color channels
-(Figure~\ref{fig:explorer}(B)) and time-series data (Figure~\ref{fig:explorer}(C)),
-and time-series data (see [here](http://ix.neurodata.io/Ex10R55/) for an example array tomography dataset [@Weiler14], and [here](http://ix.neurodata.io/freeman14/) for an example time-series dataset [@Freeman14]).
+Interactively exploring these massive data requires tools that can automatically scale appropriately and efficiently.  For this reason, we have developed a number of *NeuroData Explorers*.   For images, we designed *NeuroDataViz* (ndviz; http://viz.neurodata.io).  It is the only visualization engine that has the following functionality: (i) loads data remotely from a server, (ii) works in Web-browsers, including mobile, (iii) natively supports volumetric annotations with associated metadata, (iv) supports 2D, 3D, and 3D+time imaging datasets.  In particular, one can visualize  electron microscopy data, and annotations on top, and also "query" the metadata associated with each annotation object (Figure~\ref{fig:explorer}(A)). Ndviz also supports multiple color channels
+(Figure~\ref{fig:explorer}(B)) and time-series data (Figure~\ref{fig:explorer}(C)). Many example datasets are available by visiting http://viz.neurodata.io and clicking on the "Data" link in the navbar. In particularly, see [here](http://viz.neurodata.io/dataview/weiler14) for an example array tomography dataset [@Weiler14], and [here](http://viz.neurodata.io/dataview/freeman14) for an example time-series dataset [@Freeman14]).
 </p>
 
-
-
 <div class="fig-container">
+(A)
+<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/ndviz/ndv-ramon-metadata.png" alt="Drawing" style="width: 640px;"/>
+<br>
+<br>
+(B)
+<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/ndviz/ndv-weiler-multispectral.png" alt="Drawing" style="width: 640px;"/>
+<br>
+<br>
+(C)
+<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/ndviz/ndv-freeman-timeseries.png" alt="Drawing" style="width: 640px;"/>
+<br>
 Figure 2: Exploring the data is a crucial first step, regardless of the data type, therefore, we have built data explorers for images, vectors, and graphs. All subpanels are screenshots using these web-services.
-(A) IX enables overlaying annotation layers and querying them for metadata details ( http://brainviz1.cs.jhu.edu/ndv/kharris15apical/em,ramon_test/3/507/469/90/),
-(B) multispectral data (http://brainviz1.cs.jhu.edu/ndv/project/Aratome15c_S17_W10/1/5818/527/0/), including various blending and other color operations, and
+(A) ndviz enables overlaying annotation layers and querying them for metadata details ( http://viz.neurodata.io/project/kasthuri2015_ramon_v4/xy/2/2062/4105/1100/ @willgray can this be public?),
+(B) multispectral data (http://viz.neurodata.io/project/Ex12R75_glutamatergic/xy/1/736/881/8/), including various blending and other color operations, and
 (C) time-series data (http://viz.neurodata.io/freeman14/), including auto-play functions.
 
 (D) GX facilitates computing various graph statistics, community detection, and plotting for arbitrary uploaded or generated graphs (http://gx.neurodata.io).
@@ -279,7 +287,7 @@ Given that the data has been sufficiently pre-processed, we now proceed to parse
 <br>
 <img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/parse/ndp_bock_detect_crop.png" alt="Drawing" style="width: 320px;"/>
 <br>
-Figure 4: A schematic showing the synapses labeled with our manual annotation (mana) protocol (left) and the resulting parased scene detections using vesicle (right).  These figures, and associated associated error metrics can be reproduced using the Jupyter notebook provided with this manuscript. 
+Figure 4: A schematic showing the synapses labeled with our manual annotation (mana) protocol (left) and the resulting parased scene detections using vesicle (right).  These figures, and associated associated error metrics can be reproduced using the Jupyter notebook provided with this manuscript.
 </div>
 
 
