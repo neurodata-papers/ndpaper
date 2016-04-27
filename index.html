@@ -189,9 +189,9 @@ Writing annotations is a bit more complicated than simply writing images because
 </p>
 
 <div class="fig-container", id="fig:benchmarks1">
-<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/store/ReadThroughputPlot.png" alt="Drawing" style="width: 640px;"/>
-<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/store/WriteThroughputPlot.png" alt="Drawing" style="width: 640px;"/>
-<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/store/tile_read_speed.png" alt="Drawing" style="width: 560px;"/>
+<img src="Results/Figures/store/ReadThroughputPlot.png" alt="Drawing" style="width: 640px;"/>
+<img src="Results/Figures/store/WriteThroughputPlot.png" alt="Drawing" style="width: 640px;"/>
+<img src="Results/Figures/store/tile_read_speed.png" alt="Drawing" style="width: 560px;"/>
 <br>
 Figure 1: Reading and writing to the database must be sufficiently fast to not be the primary bottleneck.  (A) OCP can write images faster than most current data collection speeds, meaning that data can be sent directly to OCP without requiring a large local storage buffer.  (B) Reading images from OCP using the tilecache is sufficiently fast to view the data at video rates. (C) Unlike many other scientific big data efforts, neuroscience requires many fast annotation writes.  NeuroBlaze writes annotation objects much more efficiently than our image writing by caching the writes in memory. (D) Although current EM derived neurographs are relatively small, and there are few, we expect that to change dramatically in the coming years. Therefore, we have built infrastructure to support downloading a large number of large graphs efficiently.
 </div>
@@ -221,15 +221,15 @@ Interactively exploring these massive data requires tools that can automatically
 
 <div class="fig-container">
 (A)
-<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/ndviz/ndv-ramon-metadata.png" alt="Drawing" style="width: 640px;"/>
+<img src="Results/Figures/ndviz/ndv-ramon-metadata.png" alt="Drawing" style="width: 640px;"/>
 <br>
 <br>
 (B)
-<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/ndviz/ndv-weiler-multispectral.png" alt="Drawing" style="width: 640px;"/>
+<img src="Results/Figures/ndviz/ndv-weiler-multispectral.png" alt="Drawing" style="width: 640px;"/>
 <br>
 <br>
 (C)
-<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/ndviz/ndv-freeman-timeseries.png" alt="Drawing" style="width: 640px;"/>
+<img src="Results/Figures/ndviz/ndv-freeman-timeseries.png" alt="Drawing" style="width: 640px;"/>
 <br>
 Figure 2: Exploring the data is a crucial first step, regardless of the data type, therefore, we have built data explorers for images, vectors, and graphs. All subpanels are screenshots using these web-services.
 (A) ndviz enables overlaying annotation layers and querying them for metadata details ( http://viz.neurodata.io/project/kasthuri2015_ramon_v4/xy/2/2062/4105/1100/ @willgray can this be public?),
@@ -282,10 +282,10 @@ Given that the data has been sufficiently pre-processed, we now proceed to parse
 
 <div class="fig-container" id="tab:images">
 
-<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/parse/ndp_bock_truth_crop.png" alt="Drawing" style="width: 320px;"/>
+<img src="Results/Figures/parse/ndp_bock_truth_crop.png" alt="Drawing" style="width: 320px;"/>
 <br>
 <br>
-<img src="http://docs.neurodata.io/ocp-journal-paper/Results/Figures/parse/ndp_bock_detect_crop.png" alt="Drawing" style="width: 320px;"/>
+<img src="Results/Figures/parse/ndp_bock_detect_crop.png" alt="Drawing" style="width: 320px;"/>
 <br>
 Figure 4: A schematic showing the synapses labeled with our manual annotation (mana) protocol (left) and the resulting parased scene detections using vesicle (right).  These figures, and associated associated error metrics can be reproduced using the Jupyter notebook provided with this manuscript.
 </div>
