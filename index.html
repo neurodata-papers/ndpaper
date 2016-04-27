@@ -330,11 +330,250 @@ Inference has relatively task specific requirements, although statistical infere
 <h3>Image Datasets</h3>
 
 <p>
-We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations. <a href="#tab:images">Table 1(A)</a> lists the  public image datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django
+We used the above described infrastructure to build a number of image and annotation databases to support a variety of operations. <a href="#tab:public">Table 1(A)</a> lists the public image datasets that we are currently hosting, as well as several key properties of each.  Those properties that are required for efficient access of the data are stored in a Django
 <a href="http://docs.neurodata.io/open-connectome/sphinx/datamodel.html">data model</a>, the remaining properties are stored in our custom Laboratory Information Management System called <a href="https://github.com/openconnectome/ndlims">ndlims</a>.  The image data in <a href="#tab:images">Table 1(A)</a>  comprise approximately 80 teravoxels of image data.  These datasets span spatial scales of experimental neuroscience, ranging from nanoscale with electron microscopy to milliscale with MRI, and many in between.  We also store time-series data, as exemplified by the "Freeman14" dataset, a calcium imaging time-series. By storing disparate datasets in the same format, anybody can access and analyze many different datasets with the same functionality and syntax.
 </p>
 
 <div class="fig-container" id="tab:images">
+
+<!-- begin table 1b -->
+<h4>Table 1B</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">reference</th>
+<th align="left">number of datasets</th>
+<th align="left">modality</th>
+<th align="left">species</th>
+<th align="left">resolution (nm<sup>3</sup>; Hz)</th>
+<th align="left">#voxels / volume</th>
+<th align="left">#channels</th>
+<th align="left">#timesteps</th>
+<th align="left">total (GV)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><a href='http://www.nature.com/nature/journal/v520/n7549/abs/nature14297.html'>Ohyama et al. Nature (2015)</a></td>
+<td align="left">2</td>
+<td align="left">EM</td>
+<td align="left">D. melanogaster</td>
+<td align="left">(4 × 4 × 45)</td>
+<td align="left">Various</td>
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">5474</td>
+</tr>
+<tr class="even">
+<td align="left"><a href='http://www.nature.com/nature/journal/v520/n7549/abs/nature14297.html'>Bock et al. Nature (2011)</a></td>
+<td align="left">1</td>
+<td align="left">EM</td>
+<td align="left">M. musculus</td>
+<td align="left">(9 × 4 × 45)</td>
+<td align="left">(135424 × 119808 × 1239)</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">20102</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href='http://www.nature.com/articles/sdata201446'>Weller et al. Scientific Data (2014)</a></td>
+<td align="left">12</td>
+<td align="left">AT</td>
+<td align="left">M. musculus</td>
+<td align="left">(100 × 100 × 70)</td>
+<td align="left">Various</td>
+<td align="left">288</td>
+<td align="left">1</td>
+<td align="left">184</td>
+</tr>
+<tr class="even">
+<td align="left">flycol</td>
+<td align="left">1</td>
+<td align="left">EM</td>
+<td align="left">D. melanogaster</td>
+<td align="left">(4 × 4 × 45)</td>
+<td align="left">(2000 × 2000 × 6240)</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">24</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href='http://www.nature.com/nmeth/journal/v10/n5/full/nmeth.2434.html'>Ahrens et al. Nature Methods (2013)</a></td>
+<td align="left">1</td>
+<td align="left">Ophys</td>
+<td align="left">D. rerio</td>
+<td align="left">(650 × 650 × 5000; 0.8)</td>
+<td align="left">(2048 × 1172 × 30)</td>
+<td align="left">1</td>
+<td align="left">100</td>
+<td align="left">7</td>
+</tr>
+<tr class="even">
+<td align="left"><a href='http://www.cell.com/cell/abstract/S0092-8674(15)00824-7'>Kasthuri et al. Cell (2015)</a></td>
+<td align="left">4</td>
+<td align="left">EM</td>
+<td align="left">M. musculus</td>
+<td align="left">Various</td>
+<td align="left">Various</td>
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left">2602</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href='http://www.nature.com/articles/sdata201546'>Harris et al. Scientific Data (2015)</a></td>
+<td align="left">3</td>
+<td align="left">EM</td>
+<td align="left">R. rattus</td>
+<td align="left">Various</td>
+<td align="left">Various</td>
+<td align="left">3</td>
+<td align="left">1</td>
+<td align="left">23</td>
+</tr>
+<tr class="even">
+<td align="left"><a href='http://www.wormatlas.org/ver1/MoW_built0.92/toc.html'>Worm Atlas</a></td>
+<td align="left">3</td>
+<td align="left">EM</td>
+<td align="left">C. elegans</td>
+<td align="left">Various</td>
+<td align="left">Various</td>
+<td align="left">6</td>
+<td align="left">1</td>
+<td align="left">2333</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href='http://www.nature.com/nature/journal/v500/n7461/full/nature12450.html'>Takemura et al. Nature (2013)</a></td>
+<td align="left">1</td>
+<td align="left">EM</td>
+<td align="left">D. melanogaster</td>
+<td align="left">(4 × 4 × 45)</td>
+<td align="left">(12000 × 12000 × 1299)</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">187</td>
+</tr>
+</tbody>
+</table>
+<!-- end table 1b -->
+Table 1: List of all <em>public</em> current (as of 12/31/15) NeuroData Datasets.  Table 1A lists the <em>image</em> datasets and associated metadata.  Table 1B lists the volumetric *annotation* datasets, derived from a subset of the image datasets.
+</div>
+
+<div id="par:private-data">
+In addition to the above described public datasets, we also host a large number of private datasets, including a variety of additional modalities. This includes >300 array tomography datasets associated with the <a href="http://synapto.me">Open Synaptome Project</a>; approximately 20 different whole brain CLARITY datasets, including several multispectral datasets; several expansion microscopy datasets; and several X-ray microscopy datasets.   In total, we have XXX private datasets from XXX different collaborators spanning XXX total voxels.  Thus, NeuroData is both the largest and most diverse public neuroscience data repository in the world.
+</div>
+
+
+<h3>Annotation Datasets</h3>
+
+<p>
+To complement the image databases, we also created an annotation database management system called [RamonDB](http://docs.neurodata.io/nddocs/ramon.html) [@GrayRoncal15b], and a richly attributed graph database management system called [RagDB](http://openconnecto.me/graphs/).  RAMONdb stores multiple manually and automatically generated dense volumetric annotations, listed in Table~\ref{tab:anno}(B) along with several key features of each.  Collectively, we have XXX voxels manually annotated, and YYY machine annotated.
+</p>
+
+
+<h3>Graph Datasets</h3>
+
+
+<p>
+Additionally, RagDB currently holds XXX different neurographs, ranging in species from *C. elegans* to humans (see [here](http://openconnecto.me/graph-services/download/) for details).  RagDB supports a variety of different graph functions (see [here](XXX link to ndio API for graphsXXX)), including building graphs from DTI data and downloading graphs.  Much like one can download neuroimages in a variety of formats (for example, png and hdf5), we also enable graphs to be downloaded in a variety of formats (for example, MATLAB and R readable formats).
+</p>
+
+
+<h2>Applications</h2>
+
+<h3>Extensible Neurocartography</h3>
+
+
+<p>
+Several months ago a landmark paper was published, Kasthuri et al. Cell (2015) [@Kasthuri15].  In it, the authors heroically manually annotated a subvolume of somatosensory cortex, and provided three things:
+<ol>
+  <li>a paragraphical "parts list" of all the anatomical objects in a small volume,
+  <li>an excel file listing all 1,700 synapses, as well as over 20 properties of each (for example, post-synaptic density centroid location and size), and
+  <li>a VAST remote volume file containing the manual labels, as well as some additional information (object type, and parents).
+</ol>
+
+
+We converted the latter two of those objects into the RAMON annotation data specification using CAJAL, and ingested the data into RamonDB.  One immediate implication of this is that we could check for consistency between the provided excel spreadsheet and the VAST data.  Indeed, we discovered that for XXX% of the synapses in the spreadsheet, the location provided did not match any synapses in the actual VAST export.  Similarly, the VAST export contained XXX synapses that we could not find in the spreadsheet.  While this may seem to be a banality, checking the data consistency is the first step for any data analysis, and often the first "result" is idiosyncracies that can be corrected.  Of the inconsistencies, we ignored some that we could not figure out how to correct, and corrected the rest to proceed.
+</p>
+
+
+<p>
+We next proceeded to assess each of the quantitative claims from the paragraphical parts list that amonut to counting particular kinds of objects or computing volumes.  Within VAST, there is no way to compute these quantitites, and the spreadsheet does not contain enough information to extract them all (because it only includes synapses, and doesn't include tight boundaries).  Therefore, only via using RamonDB, can one automatically and reproducibly compute all these properties.  Table [#tab:parts] is the automatically generated table from our Python script, including all quantitative claims from the manuscript.
+</p>
+
+<p>
+ In addition to a parts list, the authors of Kasthuri et al. tested a hypothesis about the relationship between spatial proximity of axon-dendrite pairs and the number of synapses between those pairs.  In particular, the question is: does spatial proximity on its own explain number of connections, or is that model insufficient to characterize the data? This question has recently been hotly debated [@Markram15].  Testing this hypothesis is difficult due to the difficulty of randomly sampling graphs with a given degree distribution [@http://arxiv.org/abs/1301.6635].  We therefore developed a novel methodology that is statistically principled, to obtain a p-value of XXX.  Our code for testing this hypothesis has been incoroprated into FlashX.
+</p>
+
+
+
+<h3>Synapse Spatial Distribution</h3>
+
+
+
+
+The spatial distribution of synapses is a fundamental property of neural tissue, and one that has seen some study in the past.  In particular, two recent very nice studies examined the spatial distribution of synapses in rat cortex [@http://cercor.oxfordjournals.org/content/24/6/1579.long, @http://journal.frontiersin.org/article/10.3389/fnana.2014.00085/abstract].  Using a few thousand synapses, they fail to reject the hypothesis that synapses are distributed according to a random sequential adsoption model, implying that their synapses are distributed almost randomly, with the only constraint that they cannot overlap.  Their experimental design included multiple small volumes from different animals, which is often a wise experimental design choice, to mitigate batch effects [@http://www.nature.com/nrg/journal/v11/n10/full/nrg2825.html].  In contrast, we used a single large volume from Bock et al. Nature (2011).  Using the combination of (manno,macho,maxxo) described above, we detected ~10 million synapses, a number comensurate with the expected density of synapses per volume reported in the literature.  Our complementary experimental design decision enabled us to consider the spatial distribution across a much larger volume, in case parts of the volume look approximately uniform, and other parts do not.  Indeed, Figure [#fig:syn-clust](A) depicts the spatial distribution of synapses detected in our volume.  The size of the dots corresponds to the relative density of synapses.  It is immediately apparent that synapses are <em>not</em> distributed uniformly in space; rather, there is a clear cluster pattern.  The inset in the figure shows a volume of 200 cubic microns, the size of the volumes used in the previous publications.  It would be difficult indeed to detect anisotropies from volumes of this size, given the nature of the non-uniformity. Figure [#fig:syn-clust](B) shows the 2D histograms projected onto the three canonical planes.  Even ignoring the edge effects, again, it is clear that the synapses are not distributed uniformly in space.
+
+
+
+<div class="fig-container", id="fig:allsyn">
+<div><img src="http://docs.neurodata.io/ndintro/images/rob2.png" alt="Drawing" style="height: 250px;"/></div>
+
+<img src="http://docs.neurodata.io/ndintro/images/3D.png" alt="Drawing" style="width: 300px;"/>
+<img src="http://docs.neurodata.io/ndintro/images/2Dproj.png"    alt="Drawing" style="width: 300px; "/>
+
+Figure:
+
+</div>
+
+
+<h1>Discussion</h1>
+
+
+
+
+
+
+<h1>Appendix</h1>
+
+
+<h1>Reproducability Guidelines</h1>
+
+
+<h2>Store</h2>
+
+<h3>Images</h3>
+
+<p>
+You can reproduce our Read/Write throughput benchmarks using the following steps:
+<ul>
+  <li>Launch the AWS type i2.8xlarge.</li>
+  <!--<li>Create the file system using the commands in <a href="https://github.com/kunallillaney/raid-automator/blob/master/README.md">README.md</a></li>.-->
+  <li>Run the <a href="https://github.com/neurodata/ndstore/blob/microns/setup/neurodata_install.sh">neurodata_install.sh</a>to install ndstore</li>.
+  <li>Run the <a href="https://github.com/neurodata/ndstore/tree/microns/benchmarks/ndstore_benchmark.py">ndstore_benchmark.py</a> in the <a href="https://github.com/neurodata/ndstore/tree/microns/benchmarks">benchmarks</a> folder. The commands to run the read and write benchmarks are mentioned in the <a href="https://github.com/neurodata/ndstore/blob/microns/benchmarks/README.md">README</a> file. These commands will generate csv files for the respective benchmarks.</li>
+  <li>Run the <a href=" https://github.com/neurodata/ocp-journal-paper/blob/gh-pages/Code/Plots/ThroughputPlots.r">ThroughPlots.r</a> script in the <a href="https://github.com/neurodata/ocp-journal-paper/blob/gh-pages/Code/Plots/">Plots</a> folder. This script will generate the thorughput graphs included in the paper.</li>
+</ul>
+You can reproduce our Tilecache benchmarks using the following steps:
+<ul>
+  <li>Launch the AWS type i2.8xlarge.</li>
+  <!--<li>Create the file system using the commands in <a href="https://github.com/kunallillaney/raid-automator/blob/master/README.md">README.md</a></li>.-->
+  <li>Run the <a href="https://github.com/neurodata/ndtilecache/blob/master/setup/ndtilecache_install.sh">ndtilecache_install.sh</a>to install ndstore</li>.
+  <li>Run the <a href="https://github.com/neurodata/ndtilecache/blob/master/benchmarks/ndtilecache_benchmark.py">ndtilecache_benchmark.py</a> script in the <a href="https://github.com/neurodata/ndtilecache/blob/master/benchmarks/">benchmarks</a>folder. The command to run the benchmarks are mentioned in the <a href="https://github.com/neurodata/ndtilecache/blob/master/benchmarks/README.md">README file.</a> file. These commands will generate the csv file for the benchmark.</li>
+  <li>Run the <a href="">TilecachePlots.r</a> script in the <a href="">Plots</a> folder. This script will generate the tilecache graph in the paper.</li>
+</ul>
+</p>
+
+<h2>Explore</h2>
+
+<h2>Parse</h2>
+
+<h2>Analyze</h2>
+
+<h3>Utilities</h3>
+
+<h3>Hardware</h3>
+
+
+<div class="fig-container" id="tab:public">
 <!-- begin table 1a -->
 <h4>Table 1A</h4>
 <table>
@@ -662,243 +901,8 @@ We used the above described infrastructure to build a number of image and annota
 </tr>
 </tbody>
 </table>
-<!-- end table 1a -->
-
-<!-- begin table 1b -->
-<h4>Table 1B</h4>
-<table>
-<thead>
-<tr class="header">
-<th align="left">reference</th>
-<th align="left">number of datasets</th>
-<th align="left">modality</th>
-<th align="left">species</th>
-<th align="left">resolution (nm<sup>3</sup>; Hz)</th>
-<th align="left">#voxels / volume</th>
-<th align="left">#channels</th>
-<th align="left">#timesteps</th>
-<th align="left">total (GV)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><a href='http://www.nature.com/nature/journal/v520/n7549/abs/nature14297.html'>Ohyama et al. Nature (2015)</a></td>
-<td align="left">2</td>
-<td align="left">EM</td>
-<td align="left">D. melanogaster</td>
-<td align="left">(4 × 4 × 45)</td>
-<td align="left">Various</td>
-<td align="left">2</td>
-<td align="left">1</td>
-<td align="left">5474</td>
-</tr>
-<tr class="even">
-<td align="left"><a href='http://www.nature.com/nature/journal/v520/n7549/abs/nature14297.html'>Bock et al. Nature (2011)</a></td>
-<td align="left">1</td>
-<td align="left">EM</td>
-<td align="left">M. musculus</td>
-<td align="left">(9 × 4 × 45)</td>
-<td align="left">(135424 × 119808 × 1239)</td>
-<td align="left">1</td>
-<td align="left">1</td>
-<td align="left">20102</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href='http://www.nature.com/articles/sdata201446'>Weller et al. Scientific Data (2014)</a></td>
-<td align="left">12</td>
-<td align="left">AT</td>
-<td align="left">M. musculus</td>
-<td align="left">(100 × 100 × 70)</td>
-<td align="left">Various</td>
-<td align="left">288</td>
-<td align="left">1</td>
-<td align="left">184</td>
-</tr>
-<tr class="even">
-<td align="left">flycol</td>
-<td align="left">1</td>
-<td align="left">EM</td>
-<td align="left">D. melanogaster</td>
-<td align="left">(4 × 4 × 45)</td>
-<td align="left">(2000 × 2000 × 6240)</td>
-<td align="left">1</td>
-<td align="left">1</td>
-<td align="left">24</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href='http://www.nature.com/nmeth/journal/v10/n5/full/nmeth.2434.html'>Ahrens et al. Nature Methods (2013)</a></td>
-<td align="left">1</td>
-<td align="left">Ophys</td>
-<td align="left">D. rerio</td>
-<td align="left">(650 × 650 × 5000; 0.8)</td>
-<td align="left">(2048 × 1172 × 30)</td>
-<td align="left">1</td>
-<td align="left">100</td>
-<td align="left">7</td>
-</tr>
-<tr class="even">
-<td align="left"><a href='http://www.cell.com/cell/abstract/S0092-8674(15)00824-7'>Kasthuri et al. Cell (2015)</a></td>
-<td align="left">4</td>
-<td align="left">EM</td>
-<td align="left">M. musculus</td>
-<td align="left">Various</td>
-<td align="left">Various</td>
-<td align="left">4</td>
-<td align="left">1</td>
-<td align="left">2602</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href='http://www.nature.com/articles/sdata201546'>Harris et al. Scientific Data (2015)</a></td>
-<td align="left">3</td>
-<td align="left">EM</td>
-<td align="left">R. rattus</td>
-<td align="left">Various</td>
-<td align="left">Various</td>
-<td align="left">3</td>
-<td align="left">1</td>
-<td align="left">23</td>
-</tr>
-<tr class="even">
-<td align="left"><a href='http://www.wormatlas.org/ver1/MoW_built0.92/toc.html'>Worm Atlas</a></td>
-<td align="left">3</td>
-<td align="left">EM</td>
-<td align="left">C. elegans</td>
-<td align="left">Various</td>
-<td align="left">Various</td>
-<td align="left">6</td>
-<td align="left">1</td>
-<td align="left">2333</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href='http://www.nature.com/nature/journal/v500/n7461/full/nature12450.html'>Takemura et al. Nature (2013)</a></td>
-<td align="left">1</td>
-<td align="left">EM</td>
-<td align="left">D. melanogaster</td>
-<td align="left">(4 × 4 × 45)</td>
-<td align="left">(12000 × 12000 × 1299)</td>
-<td align="left">1</td>
-<td align="left">1</td>
-<td align="left">187</td>
-</tr>
-</tbody>
-</table>
-<!-- end table 1b -->
-Table 1: List of all <em>public</em> current (as of 12/31/15) NeuroData Datasets.  Table 1A lists the <em>image</em> datasets and associated metadata.  Table 1B lists the volumetric *annotation* datasets, derived from a subset of the image datasets.
+<!-- end table 1a -->	
 </div>
-
-<div id="par:private-data">
-In addition to the above described public datasets, we also host a large number of private datasets, including a variety of additional modalities. This includes >300 array tomography datasets associated with the <a href="http://synapto.me">Open Synaptome Project</a>; approximately 20 different whole brain CLARITY datasets, including several multispectral datasets; several expansion microscopy datasets; and several X-ray microscopy datasets.   In total, we have XXX private datasets from XXX different collaborators spanning XXX total voxels.  Thus, NeuroData is both the largest and most diverse public neuroscience data repository in the world.
-</div>
-
-
-<h3>Annotation Datasets</h3>
-
-<p>
-To complement the image databases, we also created an annotation database management system called [RamonDB](http://docs.neurodata.io/nddocs/ramon.html) [@GrayRoncal15b], and a richly attributed graph database management system called [RagDB](http://openconnecto.me/graphs/).  RAMONdb stores multiple manually and automatically generated dense volumetric annotations, listed in Table~\ref{tab:anno}(B) along with several key features of each.  Collectively, we have XXX voxels manually annotated, and YYY machine annotated.
-</p>
-
-
-<h3>Graph Datasets</h3>
-
-
-<p>
-Additionally, RagDB currently holds XXX different neurographs, ranging in species from *C. elegans* to humans (see [here](http://openconnecto.me/graph-services/download/) for details).  RagDB supports a variety of different graph functions (see [here](XXX link to ndio API for graphsXXX)), including building graphs from DTI data and downloading graphs.  Much like one can download neuroimages in a variety of formats (for example, png and hdf5), we also enable graphs to be downloaded in a variety of formats (for example, MATLAB and R readable formats).
-</p>
-
-
-<h2>Applications</h2>
-
-<h3>Extensible Neurocartography</h3>
-
-
-<p>
-Several months ago a landmark paper was published, Kasthuri et al. Cell (2015) [@Kasthuri15].  In it, the authors heroically manually annotated a subvolume of somatosensory cortex, and provided three things:
-<ol>
-  <li>a paragraphical "parts list" of all the anatomical objects in a small volume,
-  <li>an excel file listing all 1,700 synapses, as well as over 20 properties of each (for example, post-synaptic density centroid location and size), and
-  <li>a VAST remote volume file containing the manual labels, as well as some additional information (object type, and parents).
-</ol>
-
-
-We converted the latter two of those objects into the RAMON annotation data specification using CAJAL, and ingested the data into RamonDB.  One immediate implication of this is that we could check for consistency between the provided excel spreadsheet and the VAST data.  Indeed, we discovered that for XXX% of the synapses in the spreadsheet, the location provided did not match any synapses in the actual VAST export.  Similarly, the VAST export contained XXX synapses that we could not find in the spreadsheet.  While this may seem to be a banality, checking the data consistency is the first step for any data analysis, and often the first "result" is idiosyncracies that can be corrected.  Of the inconsistencies, we ignored some that we could not figure out how to correct, and corrected the rest to proceed.
-</p>
-
-
-<p>
-We next proceeded to assess each of the quantitative claims from the paragraphical parts list that amonut to counting particular kinds of objects or computing volumes.  Within VAST, there is no way to compute these quantitites, and the spreadsheet does not contain enough information to extract them all (because it only includes synapses, and doesn't include tight boundaries).  Therefore, only via using RamonDB, can one automatically and reproducibly compute all these properties.  Table [#tab:parts] is the automatically generated table from our Python script, including all quantitative claims from the manuscript.
-</p>
-
-<p>
- In addition to a parts list, the authors of Kasthuri et al. tested a hypothesis about the relationship between spatial proximity of axon-dendrite pairs and the number of synapses between those pairs.  In particular, the question is: does spatial proximity on its own explain number of connections, or is that model insufficient to characterize the data? This question has recently been hotly debated [@Markram15].  Testing this hypothesis is difficult due to the difficulty of randomly sampling graphs with a given degree distribution [@http://arxiv.org/abs/1301.6635].  We therefore developed a novel methodology that is statistically principled, to obtain a p-value of XXX.  Our code for testing this hypothesis has been incoroprated into FlashX.
-</p>
-
-
-
-<h3>Synapse Spatial Distribution</h3>
-
-
-
-
-The spatial distribution of synapses is a fundamental property of neural tissue, and one that has seen some study in the past.  In particular, two recent very nice studies examined the spatial distribution of synapses in rat cortex [@http://cercor.oxfordjournals.org/content/24/6/1579.long, @http://journal.frontiersin.org/article/10.3389/fnana.2014.00085/abstract].  Using a few thousand synapses, they fail to reject the hypothesis that synapses are distributed according to a random sequential adsoption model, implying that their synapses are distributed almost randomly, with the only constraint that they cannot overlap.  Their experimental design included multiple small volumes from different animals, which is often a wise experimental design choice, to mitigate batch effects [@http://www.nature.com/nrg/journal/v11/n10/full/nrg2825.html].  In contrast, we used a single large volume from Bock et al. Nature (2011).  Using the combination of (manno,macho,maxxo) described above, we detected ~10 million synapses, a number comensurate with the expected density of synapses per volume reported in the literature.  Our complementary experimental design decision enabled us to consider the spatial distribution across a much larger volume, in case parts of the volume look approximately uniform, and other parts do not.  Indeed, Figure [#fig:syn-clust](A) depicts the spatial distribution of synapses detected in our volume.  The size of the dots corresponds to the relative density of synapses.  It is immediately apparent that synapses are <em>not</em> distributed uniformly in space; rather, there is a clear cluster pattern.  The inset in the figure shows a volume of 200 cubic microns, the size of the volumes used in the previous publications.  It would be difficult indeed to detect anisotropies from volumes of this size, given the nature of the non-uniformity. Figure [#fig:syn-clust](B) shows the 2D histograms projected onto the three canonical planes.  Even ignoring the edge effects, again, it is clear that the synapses are not distributed uniformly in space.
-
-
-
-<div class="fig-container", id="fig:allsyn">
-<div><img src="http://docs.neurodata.io/ndintro/images/rob2.png" alt="Drawing" style="height: 250px;"/></div>
-
-<img src="http://docs.neurodata.io/ndintro/images/3D.png" alt="Drawing" style="width: 300px;"/>
-<img src="http://docs.neurodata.io/ndintro/images/2Dproj.png"    alt="Drawing" style="width: 300px; "/>
-
-Figure:
-
-</div>
-
-
-<h1>Discussion</h1>
-
-
-
-
-
-
-<h1>Appendix</h1>
-
-
-<h1>Reproducability Guidelines</h1>
-
-
-<h2>Store</h2>
-
-<h3>Images</h3>
-
-<p>
-You can reproduce our Read/Write throughput benchmarks using the following steps:
-<ul>
-  <li>Launch the AWS type i2.8xlarge.</li>
-  <!--<li>Create the file system using the commands in <a href="https://github.com/kunallillaney/raid-automator/blob/master/README.md">README.md</a></li>.-->
-  <li>Run the <a href="https://github.com/neurodata/ndstore/blob/microns/setup/neurodata_install.sh">neurodata_install.sh</a>to install ndstore</li>.
-  <li>Run the <a href="https://github.com/neurodata/ndstore/tree/microns/benchmarks/ndstore_benchmark.py">ndstore_benchmark.py</a> in the <a href="https://github.com/neurodata/ndstore/tree/microns/benchmarks">benchmarks</a> folder. The commands to run the read and write benchmarks are mentioned in the <a href="https://github.com/neurodata/ndstore/blob/microns/benchmarks/README.md">README</a> file. These commands will generate csv files for the respective benchmarks.</li>
-  <li>Run the <a href=" https://github.com/neurodata/ocp-journal-paper/blob/gh-pages/Code/Plots/ThroughputPlots.r">ThroughPlots.r</a> script in the <a href="https://github.com/neurodata/ocp-journal-paper/blob/gh-pages/Code/Plots/">Plots</a> folder. This script will generate the thorughput graphs included in the paper.</li>
-</ul>
-You can reproduce our Tilecache benchmarks using the following steps:
-<ul>
-  <li>Launch the AWS type i2.8xlarge.</li>
-  <!--<li>Create the file system using the commands in <a href="https://github.com/kunallillaney/raid-automator/blob/master/README.md">README.md</a></li>.-->
-  <li>Run the <a href="https://github.com/neurodata/ndtilecache/blob/master/setup/ndtilecache_install.sh">ndtilecache_install.sh</a>to install ndstore</li>.
-  <li>Run the <a href="https://github.com/neurodata/ndtilecache/blob/master/benchmarks/ndtilecache_benchmark.py">ndtilecache_benchmark.py</a> script in the <a href="https://github.com/neurodata/ndtilecache/blob/master/benchmarks/">benchmarks</a>folder. The command to run the benchmarks are mentioned in the <a href="https://github.com/neurodata/ndtilecache/blob/master/benchmarks/README.md">README file.</a> file. These commands will generate the csv file for the benchmark.</li>
-  <li>Run the <a href="">TilecachePlots.r</a> script in the <a href="">Plots</a> folder. This script will generate the tilecache graph in the paper.</li>
-</ul>
-</p>
-
-<h2>Explore</h2>
-
-<h2>Parse</h2>
-
-<h2>Analyze</h2>
-
-<h3>Utilities</h3>
-
-<h3>Hardware</h3>
 
 
 <div class="fig-container", id="fig:infra">
