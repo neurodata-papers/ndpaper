@@ -182,6 +182,11 @@ Naively using the above described system, however, has the drawbacks just mentio
 Writing to our spatial database would be more time consuming than simply uploading to a file server, because we re-write the data into a format that is efficient for reading.  We combat that by using a distributed database management system (such as Cassandra), that automatically distributes writing jobs across nodes.  We further speed up writing by compressing the data using Blosc, a multi-threaded library.  The result is that we can write data in compressed cubes in time linear with the data size (Figure~\ref{fig:infra}(D)).  The implications are the writing a terabyte of data on a single node take XXX hours.
 </p>
 
+
+<p>
+In the project one of the workload is to run computer vision algorithms at scale to detect cell bodie in the data. This workload can be split into three sections to provide a better understanding of the problem. First section, reading sub volumes of data from the spatial database using multiple readers. The NDStore backend is scalable and is capable of upto 9GB/sec read throughput one a single node running MySQL. Usually, we run multiple nodes providing much higher read throughtput. Second section, to detect cell bodies in the data using a large compute cluster. We will talk more about this in the next section. Third section, to write the detected cell bodies as annotation back to the database. We can achieve upto 1.5GB/sec write throughput with 16 threads on a single nodes running MySQL. With high read and write throughput we avoid bottlenecks in the first and third section for large scale runs.
+</p>
+
 <h3>Shapes</h3>
 
 <p>
@@ -197,13 +202,8 @@ Figure 1: Reading and writing to the database must be sufficiently fast to not b
 </div>
 
 
-
-<p>
-In the project one of the workload is to run computer vision algorithms at scale to detect cell bodie in the data. This workload can be split into three sections to provide a better understanding of the problem. First section, reading sub volumes of data from the spatial database using multiple readers. The NDStore backend is scalable and is capable of upto 9GB/sec read throughput one a single node running MySQL. Usually, we run multiple nodes providing much higher read throughtput. Second section, to detect cell bodies in the data using a large compute cluster. We will talk more about this in the next section. Third section, to write the detected cell bodies as annotation back to the database. We can achieve upto 1.5GB/sec write throughput with 16 threads on a single nodes running MySQL. With high read and write throughput we avoid bottlenecks in the first and third section for large scale runs.
-</p>
-
-
 <h3>Graphs</h3>
+
 
 <h3>Matrices</h3>
 
@@ -808,7 +808,7 @@ Additionally, RagDB currently holds XXX different neurographs, ranging in specie
 
 <h2>Applications</h2>
 
-<h3>Reproducible Neurocartography</h3>
+<h3>Extensible Neurocartography</h3>
 
 
 <p>
