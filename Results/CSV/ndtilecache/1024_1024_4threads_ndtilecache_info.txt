@@ -1,6 +1,0 @@
-Dataset: kasthuri11
-Region: 1024x1024
-Number of Slices: 1850
-Threads: 4
-TOTAL TIME: 51.6479840279
-TOTAL FPS: 35.82
