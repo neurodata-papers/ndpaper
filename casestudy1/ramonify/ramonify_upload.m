@@ -66,6 +66,9 @@ for i = 1:length(y)
     Y.addDynamicMetadata('axonSynapseType',y(i).axonSynapseType);
     Y.addDynamicMetadata('presynaptic',y(i).presynaptic);
     Y.addDynamicMetadata('postsynaptic',y(i).postsynaptic);
-    
+    Y.addDynamicMetadata('centroidx_um',num2str(y(i).centroid(1)));
+    Y.addDynamicMetadata('centroidy_um',num2str(y(i).centroid(2)));
+    Y.addDynamicMetadata('centroidz_um',num2str(y(i).centroid(3)));
+    %Y.addDynamicMetadata('centroid_um',[num2str(y(i).centroid(1)),',',num2str(y(i).centroid(2)),',',num2str(y(i).centroid(3))]);
     oo.createAnnotation(Y);
 end

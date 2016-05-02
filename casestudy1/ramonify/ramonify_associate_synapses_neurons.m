@@ -99,6 +99,8 @@ for i = 1:length(synIdMap)
     y(i).presynaptic = alink;
     y(i).postsynaptic = dlink;
     
+    c = round(rp(i).Centroid);
+    y(i).centroid =  round(([c(1),c(2),c(3)]+seg.xyzOffset).*[.003*2^3,.003*2^3,.030]*100)/100;
 end
 
 % do centroid computation for synapses
