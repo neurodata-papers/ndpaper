@@ -82,15 +82,16 @@ p1r <- ggplot(data=datRead,aes(x=size,y=values,group=ind,color=threads)) +
     geom_line(size=0.8) + 
     geom_point(color='black', size=0.75) + 
     scale_colour_manual(values=cbPalette) + 
-    ylab("Throughput (GB/sec)") + 
-    #xlab("MB/thread") + 
+    ylab("Throughput (GB/s)") + 
+    xlab("MB/thread") + 
     ggtitle("Image Reading") + 
     tt +
    # theme(axis.ticks.x=element_blank(),
    #       axis.text.x=element_blank(),
    #       axis.title.x=element_blank()) +
     theme(legend.justification=c(1,0), 
-          legend.position=c(0.345,0.5)) 
+          legend.position=c(0.345,0.5),
+          axis.text=element_text(size=ts-8)) 
    #     annotation_custom(
    #         grob=textGrob(plotLabels[1],gp=gpar(cex=2)),
    #         ymin=10.5, ymax=10.5,
@@ -111,11 +112,12 @@ p1w <- ggplot(data=datWrite,aes(x=size,y=values,group=ind,color=threads)) +
     geom_line(size=0.8) + 
     geom_point(color='black', size=0.75) + 
     scale_colour_manual(values=cbPalette) + 
-    ylab("Throughput (GB/sec)") + 
-    #xlab("MB/thread") + 
+    ylab("Throughput (GB/s)") + 
+    xlab("MB/thread") + 
     ggtitle("Image Writing") + 
     tt +
-    theme(legend.position='none') 
+    theme(legend.position='none',
+          axis.text=element_text(size=ts-8)) 
    # theme(axis.ticks.x=element_blank(),
    #       axis.text.x=element_blank(),
    #       axis.title.x=element_blank()) +
@@ -176,7 +178,7 @@ p2 <-ggplot(data=NDB,
                 y=values,
                 group=group,
                 colour=group)) + 
-     ylab("Throughput (GB/second)") +
+     ylab("Throughput (GB/s)") +
      ggtitle("Annotation speed") +
      scale_colour_manual(values=cbPalette) +
      geom_line(size=1.5, alpha=1) + 
@@ -224,7 +226,7 @@ p3 <- ggplot(data=tileDat,aes(x=Tile,y=Time)) +
         scale_y_log10() + 
         #scale_x_continuous(
         # breaks=c(1,seq(600,max(tileDat$Tile),by=(2*620))))+
-        ylab("Speed (ms)") + 
+        ylab("Time (ms)") + 
         xlab("Slice") +
         ggtitle("Reading Image Tiles") + 
         #annotation_custom(
@@ -282,7 +284,7 @@ p4 <- ggplot(df3, aes(x=dsf,y=time,color=activity)) +
         scale_color_manual(values=cbPalette[c(6,3)]) +
         ggtitle("MR-GRUTEDB Spatial Downsample") +
         xlab('Downsample Factor') + 
-        ylab("seconds") +
+        ylab("Time (s)") +
         tt +
         theme(legend.title=element_blank()) + 
         theme(legend.justification=c(1,0), 
