@@ -37,9 +37,9 @@ fg <- read.csv('../gkiar/code/ocp/ndpaper2016/analysis/data/FG_speed.csv')
 fg <- melt(t(as.data.frame(fg)))
 fg <- fg[-c(6,7,13,14),] # Removes non-reproducible columns
 colnames(fg) <- c("Tool", "Graph", "seconds")
-labs <- c("Giraph","GraphX", "PowerGraph", "FG-IM (i2.xlarge)", "FG-IM (i2.8xlarge)")
+labs <- c("Giraph","GraphX", "PowerGraph", "FG-SEM (i2.xlarge)", "FG-SEM (i2.8xlarge)")
 fgp1 <- ggplot(fg, aes(x=Tool, y=seconds, group=Graph, fill=Tool)) + tt2 + geom_bar(stat='identity', position = position_dodge()) +
-        facet_grid(.~Graph, switch="x") + scale_fill_manual(values=cbPal1, labels=labs) + ggtitle('Large Graph Operations With Multiple Engines') +
+        facet_grid(.~Graph, switch="x") + scale_fill_manual(values=cbPal1, labels=labs) + ggtitle('Graph (V=42E6, E=1.5E9) Operations') +
         theme(legend.justification=c(1,0), legend.position=c(0.94,0.787)) + ylab('Computation Time (s)')
 fgp1
 
@@ -54,7 +54,7 @@ colnames(fm1) <- c("Tool", "Stat", "seconds")
 labs <- c("Spark", "FM-SEM","FM-IM")
 fmp1 <- ggplot(fm1, aes(x=Tool, y=seconds, group=Stat, fill=Tool)) + tt2 + geom_bar(stat='identity', position = position_dodge()) +
         facet_grid(.~Stat, switch="x") + scale_fill_manual(values=cbPal2, labels=labs) + scale_y_log10() +
-        ggtitle('Matrix (N=1E9, p=32) Operations With Multiple Engines') + theme(legend.justification=c(1,0), legend.position=c(0.817,0.85)) + ylab('')
+        ggtitle('Matrix (N=1E9, p=32) Operations') + theme(legend.justification=c(1,0), legend.position=c(0.817,0.85)) + ylab('')
 fmp1
 
 # Plot 3: FlashMatrix Performance 2
