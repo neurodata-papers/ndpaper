@@ -12,7 +12,7 @@ library(reshape2)
 ts <- 22
 
 cbPal1 <- c("#000000", "#56B4E9", "#470778", "#00B800", "#006940")
-cbPal2 <- c("#E69F00", "#00B800", "#006940")
+cbPal2 <- c("#FFF000", "#00B800", "#006940")
 cbPal3 <- c("#0072D0", "#00B800", "#006940")
 
 tt <- theme(plot.title=element_text(size=ts+1),
