@@ -64,7 +64,7 @@ colnames(fm2) <- c("Tool", "Graph", "seconds")
 labs <- c("Trilinos","FM-SEM", "FM-IM")
 fmp2 <- ggplot(fm2, aes(x=Tool, y=seconds, group=Graph, fill=Tool)) + tt2 + geom_bar(stat='identity', position = position_dodge()) +
         facet_grid(.~Graph, switch="x") + scale_fill_manual(values=cbPal3, labels=labs) + ylab('') +
-        ggtitle('Eigen Solver on Large Graphs') + theme(legend.justification=c(1,0), legend.position=c(0.736,0.85))
+        ggtitle('Eigensolver on Large Graphs') + theme(legend.justification=c(1,0), legend.position=c(0.736,0.85))
 fmp2
 
 # Combine plots
