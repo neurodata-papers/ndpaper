@@ -37,11 +37,15 @@ tt <- theme(plot.title=element_text(size=ts),
 baseread<-"../../store/data/read/"
     #"https://raw.githubusercontent.com/neurodata/ndpaper2016/gh-pages/Results/CSV/ndstore/read/"
 
+basewrite<-"../../store/data/write/"
+    #"https://raw.githubusercontent.com/neurodata/ndpaper2016/gh-pages/Results/CSV/ndstore/read/"
+
 Threads <- c(1,2,4,8,16,32)
 size <- c(0.5,2^c(0:11))
 
 #### File names
 readFiles <- paste0(baseread,"read_",Threads,"_threads.csv")
+writeFiles <- paste0(basewrite,"write_",Threads,"_threads.csv")
 
 datRead <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   tmp <- read.csv(readFiles[i],header=FALSE)  
@@ -58,20 +62,35 @@ datRead$size <- as.factor(datRead$size)
 datRead$ind <- as.factor(datRead$ind)
 datRead$type <- "Read"
 
+datWrite <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
+  tmp <- read.csv(writeFiles[i],header=FALSE)  
+  colnames(tmp) <- c("Size", paste0("test",1:(ncol(tmp)-1),"_",Threads[i]))
+
+  st <- stack(tmp[,-1])
+  st$values <- (Threads[i]*size/1024)/st$values # Converted to GB
+  th<-data.frame(size=size,threads=Threads[i],st)
+}
+
+datWrite$threads <- as.factor(datWrite$threads)
+datWrite$size <- as.factor(datWrite$size)
+datWrite$ind <- as.factor(datWrite$ind)
+datWrite$type <- "Write"
+
+datIO <- rbind(datRead, datWrite)
 #### Read throughput figure
-p1 <- ggplot(data=datRead,aes(x=size,y=values,group=ind,color=threads)) + 
+p1r <- ggplot(data=datRead,aes(x=size,y=values,group=ind,color=threads)) + 
     geom_line(size=0.8) + 
     geom_point(color='black', size=0.75) + 
     scale_colour_manual(values=cbPalette) + 
-    ylab("GB/second") + 
+    ylab("Throughput (GB/sec)") + 
     #xlab("MB/thread") + 
-    ggtitle("Read throughput") + 
+    ggtitle("Image Reading") + 
     tt +
    # theme(axis.ticks.x=element_blank(),
    #       axis.text.x=element_blank(),
    #       axis.title.x=element_blank()) +
     theme(legend.justification=c(1,0), 
-          legend.position=c(0.22,0.3)) 
+          legend.position=c(0.345,0.5)) 
    #     annotation_custom(
    #         grob=textGrob(plotLabels[1],gp=gpar(cex=2)),
    #         ymin=10.5, ymax=10.5,
@@ -79,14 +98,69 @@ p1 <- ggplot(data=datRead,aes(x=size,y=values,group=ind,color=threads)) +
    #         )
 
 pdf("../figs/store_a.pdf", height=4.5,width=10)
-print(p1)
+print(p1r)
 dev.off()
 
 png("../figs/store_a.png", height=620, width=1200, res=120)
-print(p1)
+print(p1r)
 dev.off()
 
 
+#### Read throughput figure
+p1w <- ggplot(data=datWrite,aes(x=size,y=values,group=ind,color=threads)) + 
+    geom_line(size=0.8) + 
+    geom_point(color='black', size=0.75) + 
+    scale_colour_manual(values=cbPalette) + 
+    ylab("Throughput (GB/sec)") + 
+    #xlab("MB/thread") + 
+    ggtitle("Image Writing") + 
+    tt +
+    theme(legend.position='none') 
+   # theme(axis.ticks.x=element_blank(),
+   #       axis.text.x=element_blank(),
+   #       axis.title.x=element_blank()) +
+   #     annotation_custom(
+   #         grob=textGrob(plotLabels[1],gp=gpar(cex=2)),
+   #         ymin=10.5, ymax=10.5,
+   #         xmin=0.65, xmax=0.65
+   #         )
+
+pdf("../figs/store_b.pdf", height=4.5,width=10)
+print(p1w)
+dev.off()
+
+png("../figs/store_b.png", height=620, width=1200, res=120)
+print(p1w)
+dev.off()
+
+#p1 <- ggplot(data=datIO,aes(x=size,y=values,group=ind,color=threads)) + 
+#    geom_line(size=0.8) + 
+#    geom_point(color='black', size=0.75) + 
+#    scale_colour_manual(values=cbPalette) + 
+#    ylab("GB/second") + 
+#    #xlab("MB/thread") + 
+#    ggtitle("Input/Output") + 
+#    facet_grid( ~ type, scales='free_y') + 
+#    tt +
+#   # theme(axis.ticks.x=element_blank(),
+#   #       axis.text.x=element_blank(),
+#   #       axis.title.x=element_blank()) +
+#    theme(legend.justification=c(1,0), 
+#          legend.position=c(0.95,0.5),
+#          axis.text=element_text(size=ts-8)) 
+#   #     annotation_custom(
+#   #         grob=textGrob(plotLabels[1],gp=gpar(cex=2)),
+#   #         ymin=10.5, ymax=10.5,
+#   #         xmin=0.65, xmax=0.65
+#   #         )
+#
+#pdf("../figs/store_a.pdf", height=4.5,width=10)
+#print(p1)
+#dev.off()
+#
+#png("../figs/store_a.png", height=620, width=1200, res=120)
+#print(p1)
+#dev.off()
 
 #### NDBlaze data
 ndblaze <- read.csv('../../store/data/write/data.csv')
@@ -95,33 +169,36 @@ ndblaze <- read.csv('../../store/data/write/data.csv')
 
 NDB <- data.frame(stack(ndblaze[,-1]),Threads=ndblaze[,1])
 colnames(NDB) <- c("values", "group", "Threads")
+NDB$values <- NDB$values/1000
 
 p2 <-ggplot(data=NDB,
             aes(x=Threads,
                 y=values,
                 group=group,
                 colour=group)) + 
-     ylab("MB/second") +
-     ggtitle("Write throughput") +
+     ylab("Throughput (GB/second)") +
+     ggtitle("Annotation speed") +
      scale_colour_manual(values=cbPalette) +
+     geom_line(size=1.5, alpha=1) + 
      geom_point(size=2,colour='black') +
-     geom_line(size=1.5, alpha=0.8) + 
      scale_x_continuous(breaks=c(1,2,4,8,16)) +
-     theme(legend.justification=c(1,0), 
-           legend.position=c(0.965,0.35)) +
+     guides(fill=guide_legend(title=NULL)) + 
+     tt + 
+     theme(legend.title=element_blank(),
+           legend.justification=c(1,0), 
+           legend.position=c(0.965,0.35))
      #annotation_custom(
      #   grob=textGrob(plotLabels[2],gp=gpar(cex=2)),
      #   ymin=102500,ymax=102500,
      #   xmin=1,xmax=1
      #   ) + 
-     tt
 
         
-pdf("../figs/store_b.pdf", height=5,width=8)
+pdf("../figs/store_c.pdf", height=5,width=8)
 print(p2)
 dev.off()
 
-png("../figs/store_b.png", height=620, width=960,res=120)
+png("../figs/store_c.png", height=620, width=960,res=120)
 print(p2)
 dev.off()
 
@@ -145,11 +222,11 @@ tileDat <- data.frame(Tile,Time=tileDat*1e3)
 p3 <- ggplot(data=tileDat,aes(x=Tile,y=Time)) + 
         geom_line() + 
         scale_y_log10() + 
-        scale_x_continuous(
-         breaks=c(1,seq(600,max(tileDat$Tile),by=(2*620)))) +
-        ylab("Milliseconds") + 
+        #scale_x_continuous(
+        # breaks=c(1,seq(600,max(tileDat$Tile),by=(2*620))))+
+        ylab("Speed (ms)") + 
         xlab("Slice") +
-        ggtitle("Tile Read Speed") + 
+        ggtitle("Reading Image Tiles") + 
         #annotation_custom(
         #    grob=textGrob(plotLabels[3],gp=gpar(cex=2)),
         #    ymin=4, ymax=4,
@@ -157,11 +234,11 @@ p3 <- ggplot(data=tileDat,aes(x=Tile,y=Time)) +
         #    ) + 
         tt
         
-pdf("../figs/store_c.pdf", height=4,width=8)
+pdf("../figs/store_d.pdf", height=4,width=8)
 print(p3)
 dev.off()
 
-png("../figs/store_c.png", height=480, width=960, res=120)
+png("../figs/store_d.png", height=480, width=960, res=120)
 print(p3)
 dev.off()
 
@@ -206,35 +283,35 @@ p4 <- ggplot(df3, aes(x=dsf,y=time,color=activity)) +
         ggtitle("MR-GRUTEDB Spatial Downsample") +
         xlab('Downsample Factor') + 
         ylab("seconds") +
+        tt +
         theme(legend.title=element_blank()) + 
         theme(legend.justification=c(1,0), 
-              legend.position=c(0.95,0.275)) +
+              legend.position=c(0.95,0.325))
         #annotation_custom(
         #    grob=textGrob(plotLabels[4],gp=gpar(cex=2)),
         #    ymin=360,ymax=360,
         #    xmin=1,xmax=1
         #    ) + 
-        tt  
 
-pdf("../figs/store_d.pdf", height=6,width=10)
+pdf("../figs/store_e.pdf", height=6,width=10)
 print(p4)
 dev.off()
 
-png("../figs/store_d.png", height=620, width=1200, res=120)
+png("../figs/store_e.png", height=620, width=1200, res=120)
 print(p4)
 dev.off()
 
 
-layoutStore <- rbind(c(1,1,1,2,2),
-                     c(3,3,3,4,4))
+layoutStore <- rbind(c(1,1,2,2,3,3),
+                     c(4,4,4,4,5,5))
 
 pdf("../figs/store01.pdf",w=20,h=12)
-grid.arrange(p1,p2,p3,p4,layout_matrix=layoutStore)
+grid.arrange(p1r,p1w,p2,p3,p4,layout_matrix=layoutStore)
 dev.off()
 
 
 png("../figs/store01.png",w=1900,h=1200,res=100)
-grid.arrange(p1,p2,p3,p4,layout_matrix=layoutStore)
+grid.arrange(p1r,p1w,p2,p3,p4,layout_matrix=layoutStore)
 dev.off()
 
 
