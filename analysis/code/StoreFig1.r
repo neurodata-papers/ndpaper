@@ -20,8 +20,9 @@ require(foreach)
 plotLabels <- letters[1:4]
 
 #### JLP messed with the colors
-cbPalette <- c("#000000", "#56B4E9", "#E69F00","#0072D8", "#FFF000","#470778", "#CC79A7")
-
+#cbPalette <- c("#000000", "#56B4E9", "#E69F00","#0072D8", "#FFF000","#470778", "#CC79A7")
+#### GK messed with colors
+cbPalette <- c("#000000", "#56B4E9", "#E69F00","#0072D0", "#FFF000","#470778", "#CC79A7", "#00B800", "#006940","#005f5b", "#006352")
 #### Theme options for ggplot
 ts <- 20
 tt <- theme(plot.title=element_text(size=ts),
@@ -79,11 +80,11 @@ datWrite$type <- "Write"
 datIO <- rbind(datRead, datWrite)
 #### Read throughput figure
 p1r <- ggplot(data=datRead,aes(x=size,y=values,group=ind,color=threads)) + 
-    geom_line(size=0.8) + 
+    geom_line(size=1) + 
     geom_point(color='black', size=0.75) + 
     scale_colour_manual(values=cbPalette) + 
     ylab("Throughput (GB/s)") + 
-    xlab("MB/thread") + 
+    xlab("Size (MB/thread)") + 
     ggtitle("Image Reading") + 
     tt +
    # theme(axis.ticks.x=element_blank(),
@@ -109,11 +110,11 @@ dev.off()
 
 #### Read throughput figure
 p1w <- ggplot(data=datWrite,aes(x=size,y=values,group=ind,color=threads)) + 
-    geom_line(size=0.8) + 
+    geom_line(size=1) + 
     geom_point(color='black', size=0.75) + 
     scale_colour_manual(values=cbPalette) + 
     ylab("Throughput (GB/s)") + 
-    xlab("MB/thread") + 
+    xlab("Size (MB/thread)") + 
     ggtitle("Image Writing") + 
     tt +
     theme(legend.position='none',
@@ -179,8 +180,8 @@ p2 <-ggplot(data=NDB,
                 group=group,
                 colour=group)) + 
      ylab("Throughput (GB/s)") +
-     ggtitle("Annotation speed") +
-     scale_colour_manual(values=cbPalette) +
+     ggtitle("Annotation Writing") +
+     scale_colour_manual(values=cbPalette[c(8,7,9)]) +
      geom_line(size=1.5, alpha=1) + 
      geom_point(size=2,colour='black') +
      scale_x_continuous(breaks=c(1,2,4,8,16)) +
@@ -281,14 +282,15 @@ p4 <- ggplot(df3, aes(x=dsf,y=time,color=activity)) +
         geom_point(size=2) + 
         geom_errorbar(aes(ymin=time-se,ymax=time+se), 
                       width=.1) +
-        scale_color_manual(values=cbPalette[c(6,3)]) +
+        #scale_color_manual(values=cbPalette[c(6,3)]) +
         ggtitle("MR-GRUTEDB Spatial Downsample") +
         xlab('Downsample Factor') + 
         ylab("Time (s)") +
         tt +
         theme(legend.title=element_blank()) + 
         theme(legend.justification=c(1,0), 
-              legend.position=c(0.95,0.325))
+              legend.position=c(0.95,0.325)) + 
+        guides(linetype=guide_legend(keywidth=4,keyheight=1))
         #annotation_custom(
         #    grob=textGrob(plotLabels[4],gp=gpar(cex=2)),
         #    ymin=360,ymax=360,
