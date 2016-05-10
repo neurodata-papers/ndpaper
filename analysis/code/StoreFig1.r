@@ -42,7 +42,7 @@ basewrite<-"../../store/data/write/"
     #"https://raw.githubusercontent.com/neurodata/ndpaper2016/gh-pages/Results/CSV/ndstore/read/"
 
 Threads <- c(1,2,4,8,16,32)
-size <- c(0.5,2^c(0:11))
+#size <- c(0.5,2^c(0:11))
 
 #### File names
 readFiles <- paste0(baseread,"read_",Threads,"_threads.csv")
@@ -52,6 +52,7 @@ datRead <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   tmp <- read.csv(readFiles[i],header=FALSE)  
   colnames(tmp) <- c("Size",paste0("test",1:(ncol(tmp)-1),"_",Threads[i]))
 
+     
   st <- stack(tmp[,-1])
   st$values <- (Threads[i]*size/1024)/st$values # Converted to GB
   th<-data.frame(size=size,threads=Threads[i],st)
@@ -78,26 +79,21 @@ datWrite$ind <- as.factor(datWrite$ind)
 datWrite$type <- "Write"
 
 datIO <- rbind(datRead, datWrite)
+lab1 <- as.character(c(0.5,2^c(0:12)))
+lab1[seq(2,12,by=2)] <- ""
+
 #### Read throughput figure
 p1r <- ggplot(data=datRead,aes(x=size,y=values,group=ind,color=threads)) + 
     geom_line(size=1) + 
     geom_point(color='black', size=0.75) + 
     scale_colour_manual(values=cbPalette) + 
+    scale_x_discrete(labels=lab1) + 
     ylab("Throughput (GB/s)") + 
     xlab("Size (MB/thread)") + 
     ggtitle("Image Reading") + 
     tt +
-   # theme(axis.ticks.x=element_blank(),
-   #       axis.text.x=element_blank(),
-   #       axis.title.x=element_blank()) +
     theme(legend.justification=c(1,0), 
-          legend.position=c(0.345,0.5),
-          axis.text=element_text(size=ts-8)) 
-   #     annotation_custom(
-   #         grob=textGrob(plotLabels[1],gp=gpar(cex=2)),
-   #         ymin=10.5, ymax=10.5,
-   #         xmin=0.65, xmax=0.65
-   #         )
+          legend.position=c(0.345,0.5))
 
 pdf("../figs/store_a.pdf", height=4.5,width=10)
 print(p1r)
@@ -115,10 +111,10 @@ p1w <- ggplot(data=datWrite,aes(x=size,y=values,group=ind,color=threads)) +
     scale_colour_manual(values=cbPalette) + 
     ylab("Throughput (GB/s)") + 
     xlab("Size (MB/thread)") + 
+    scale_x_discrete(labels=lab1) + 
     ggtitle("Image Writing") + 
     tt +
-    theme(legend.position='none',
-          axis.text=element_text(size=ts-8)) 
+    theme(legend.position='none')
    # theme(axis.ticks.x=element_blank(),
    #       axis.text.x=element_blank(),
    #       axis.title.x=element_blank()) +
@@ -165,6 +161,102 @@ dev.off()
 #print(p1)
 #dev.off()
 
+
+datReadSE <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
+  tmp <- read.csv(readFiles[i],header=FALSE)  
+  colnames(tmp) <- c("Size",paste0("test",1:(ncol(tmp)-1),"_",Threads[i]))
+
+  size <- tmp$Size
+  tmp[,-1]<-(Threads[i]*size/1024)/tmp[,-1] # Converted to GB
+  avg <- apply(tmp[,-1],1,mean)
+  sel <- avg-apply(tmp[,-1],1,function(x){sd(x)/sqrt(dim(tmp[,-1])[2])})
+  seu <- avg +apply(tmp[,-1],1,function(x){sd(x)/sqrt(dim(tmp[,-1])[2])}) 
+
+  data.frame(Size=size,
+             Threads=Threads[i],
+             avg=avg,
+             sel=sel,
+             seu=seu
+             )
+}
+
+
+datReadSE$Threads <- as.factor(datReadSE$Threads)
+datReadSE$Size <- as.factor(datReadSE$Size)
+datReadSE$type <- "Read"
+
+
+datWriteSE <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
+  tmp <- read.csv(writeFiles[i],header=FALSE)  
+  colnames(tmp) <- c("Size",paste0("test",1:(ncol(tmp)-1),"_",Threads[i]))
+
+  size <- tmp$Size
+  tmp[,-1]<-(Threads[i]*size/1024)/tmp[,-1] # Converted to GB
+  avg <- apply(tmp[,-1],1,mean)
+  sel <- avg-apply(tmp[,-1],1,function(x){sd(x)/sqrt(dim(tmp[,-1])[2])})
+  seu <- avg +apply(tmp[,-1],1,function(x){sd(x)/sqrt(dim(tmp[,-1])[2])}) 
+
+  data.frame(Size=size,
+             Threads=Threads[i],
+             avg=avg,
+             sel=sel,
+             seu=seu
+             )
+}
+
+
+datWriteSE$Threads <- as.factor(datWriteSE$Threads)
+datWriteSE$Size <- as.factor(datWriteSE$Size)
+datWriteSE$type <- "Write"
+
+
+p1rse <- ggplot(data=datReadSE,aes(x=Size,y=avg,group=Threads,color=Threads)) + 
+    geom_line(size=1) + 
+    geom_errorbar(aes(ymin=sel, ymax=seu),
+        width=0.25,size=1.2) + 
+    geom_point(color='black', size=1) + 
+    scale_colour_manual(values=cbPalette) + 
+    scale_x_discrete(labels=lab1) + 
+    ylab("Average Throughput (GB/s)") + 
+    xlab("Size (MB/thread)") + 
+    ggtitle("Image Reading") + 
+    tt +
+    theme(legend.justification=c(1,0), 
+          legend.position=c(0.345,0.5))
+
+#pdf("../figs/store_a.pdf", height=4.5,width=10)
+#print(p1rse)
+#dev.off()
+#
+#png("../figs/store_a.png", height=620, width=1200, res=120)
+#print(p1rse)
+#dev.off()
+
+
+p1wse <- ggplot(data=datWriteSE,aes(x=Size,y=avg,group=Threads,color=Threads)) + 
+    geom_line(size=1) + 
+    geom_errorbar(aes(ymin=sel, ymax=seu),
+        width=0.25,size=1.2) + 
+    geom_point(color='black', size=0.75) + 
+    scale_colour_manual(values=cbPalette) + 
+    ylab("Throughput (GB/s)") + 
+    xlab("Size (MB/thread)") + 
+    scale_x_discrete(labels=lab1) + 
+    ggtitle("Image Writing") + 
+    tt +
+    theme(legend.position='none')
+
+#pdf("../figs/store_b.pdf", height=4.5,width=10)
+#print(p1wse)
+#dev.off()
+#
+#png("../figs/store_b.png", height=620, width=1200, res=120)
+#print(p1wse)
+#dev.off()
+
+
+
+
 #### NDBlaze data
 ndblaze <- read.csv('../../store/data/write/data.csv')
                     #url("https://raw.githubusercontent.com/neurodata/ndpaper2016/0cc4e9a2adc80fc30e9091a4b6158f8823666249/store/data/write/data.csv")
@@ -173,6 +265,7 @@ ndblaze <- read.csv('../../store/data/write/data.csv')
 NDB <- data.frame(stack(ndblaze[,-1]),Threads=ndblaze[,1])
 colnames(NDB) <- c("values", "group", "Threads")
 NDB$values <- NDB$values/1000
+NDB$Threads <- as.factor(NDB$Threads)
 
 p2 <-ggplot(data=NDB,
             aes(x=Threads,
@@ -181,10 +274,14 @@ p2 <-ggplot(data=NDB,
                 colour=group)) + 
      ylab("Throughput (GB/s)") +
      ggtitle("Annotation Writing") +
-     scale_colour_manual(values=cbPalette[c(8,7,9)]) +
+     scale_colour_manual(values=cbPalette[c(8,7,9)],
+            labels=
+            c('After Blaze', 'Before Blaze','Perceived')) +
      geom_line(size=1.5, alpha=1) + 
      geom_point(size=2,colour='black') +
-     scale_x_continuous(breaks=c(1,2,4,8,16)) +
+#     scale_x_continuous(trans='log2',
+#                        labels=c(1:4)) + 
+#     scale_x_continuous(breaks=c(1,2,4,8,16)) +
      guides(fill=guide_legend(title=NULL)) + 
      tt + 
      theme(legend.title=element_blank(),
@@ -225,11 +322,9 @@ tileDat <- data.frame(Tile,Time=tileDat*1e3)
 p3 <- ggplot(data=tileDat,aes(x=Tile,y=Time)) + 
         geom_line() + 
         scale_y_log10() + 
-        #scale_x_continuous(
-        # breaks=c(1,seq(600,max(tileDat$Tile),by=(2*620))))+
         ylab("Time (ms)") + 
         xlab("Slice") +
-        ggtitle("Reading Image Tiles") + 
+        ggtitle("Reading 512 X 512 Image Tiles") + 
         #annotation_custom(
         #    grob=textGrob(plotLabels[3],gp=gpar(cex=2)),
         #    ymin=4, ymax=4,
@@ -279,9 +374,9 @@ colnames(df3) <- c('dsf', 'activity', 'time', 'se')
 #### Downsample figure
 p4 <- ggplot(df3, aes(x=dsf,y=time,color=activity)) +  
         geom_line(size=1.5) + 
-        geom_point(size=2) + 
         geom_errorbar(aes(ymin=time-se,ymax=time+se), 
                       width=.1) +
+        geom_point(size=2, colour='black') + 
         #scale_color_manual(values=cbPalette[c(6,3)]) +
         ggtitle("MR-GRUTEDB Spatial Downsample") +
         xlab('Downsample Factor') + 
@@ -306,20 +401,34 @@ print(p4)
 dev.off()
 
 
-layoutStore <- rbind(c(1,1,2,2,3,3),
+layoutStore1 <- rbind(c(1,1,2,2,3,3),
                      c(4,4,4,4,5,5))
 
-pdf("../figs/store01.pdf",w=20,h=12)
-grid.arrange(p1r,p1w,p2,p3,p4,layout_matrix=layoutStore)
+layoutStore2 <- rbind(c(1,1,2,2),
+                     c(3,3,4,4))
+
+
+
+##### W/O SE
+#pdf("../figs/store01.pdf",w=15,h=12)
+#grid.arrange(p1r,p1w,p2,p3,p4,layout_matrix=layoutStore)
+#dev.off()
+#
+#png("../figs/store01.png",w=1900,h=1200,res=100)
+#grid.arrange(p1r,p1w,p2,p3,p4,layout_matrix=layoutStore)
+#dev.off()
+
+
+#### With SE
+pdf("../figs/store01.pdf",w=12,h=12)
+grid.arrange(p1rse,p2,p3,p4,layout_matrix=layoutStore2)
 dev.off()
 
-
-png("../figs/store01.png",w=1900,h=1200,res=100)
-grid.arrange(p1r,p1w,p2,p3,p4,layout_matrix=layoutStore)
+png("../figs/store01.png",w=1200,h=1200,res=100)
+grid.arrange(p1rse,p2,p3,p4,layout_matrix=layoutStore2)
 dev.off()
 
-
-#   Time: a few days worth
+#   Time: 3-4 days worth with many edits
 ##  Working status: Works!
 ### Comments: 
 ####Soli Deo Gloria
