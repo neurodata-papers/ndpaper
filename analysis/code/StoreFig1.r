@@ -95,7 +95,7 @@ p1r <- ggplot(data=datRead,aes(x=size,y=values,group=ind,color=threads)) +
     scale_x_discrete(labels=labR) + 
     ylab("Throughput (GB/s)") + 
     xlab("Size (MB/thread)") + 
-    ggtitle("Image Reading") + 
+    ggtitle("Image Volume Reading") + 
     tt +
     guides(color=guide_legend(
             keywidth=1.5,keyheight=1.25)) + 
@@ -119,7 +119,7 @@ p1w <- ggplot(data=datWrite,aes(x=size,y=values,group=ind,color=threads)) +
     ylab("Throughput (GB/s)") + 
     xlab("Size (MB/thread)") + 
     scale_x_discrete(labels=labW) + 
-    ggtitle("Image Writing") + 
+    ggtitle("Image Volume Writing") + 
     tt +
     theme(legend.position='none')
    # theme(axis.ticks.x=element_blank(),
@@ -226,7 +226,7 @@ p1rse <- ggplot(data=datReadSE,aes(x=Size,y=avg,group=Threads,color=Threads)) +
     scale_x_discrete(labels=labR) + 
     ylab("Throughput (GB/s)") + 
     xlab("Size (MB/thread)") + 
-    ggtitle("Image Reading") + 
+    ggtitle("Image Volume Reading") + 
     tt +
     guides(colour=guide_legend(keywidth=2,keyheight=1.7)) + 
     theme(legend.justification=c(1,0), 
@@ -250,7 +250,7 @@ p1wse <- ggplot(data=datWriteSE,aes(x=Size,y=avg,group=Threads,color=Threads)) +
     #ylab("Throughput (GB/s)") + 
     xlab("Size (MB/thread)") + 
     scale_x_discrete(labels=labW) + 
-    ggtitle("Image Writing") + 
+    ggtitle("Image Volume Writing") + 
     tt +
     theme(legend.position='none',
           axis.title.y=element_blank())
@@ -282,7 +282,7 @@ p2 <-ggplot(data=NDB,
                 group=group,
                 colour=group)) + 
      #ylab("Throughput (GB/s)") +
-     ggtitle("Annotation Writing") +
+     ggtitle("Annotation Volume Writing") +
      scale_colour_manual(values=cbPalette[c(8,7,9)],
             labels=
             c('After Blaze', 'Before Blaze','Perceived')) +
@@ -337,7 +337,7 @@ p3 <- ggplot(data=tileDat,aes(x=Tile,y=Time)) +
         scale_y_log10() + 
         ylab("Time (ms)") + 
         xlab("Slice") +
-        ggtitle("Reading 512 X 512 Image Tiles") + 
+        ggtitle("Reading 512 x 512 Image Tiles") + 
         #annotation_custom(
         #    grob=textGrob(plotLabels[3],gp=gpar(cex=2)),
         #    ymin=4, ymax=4,
