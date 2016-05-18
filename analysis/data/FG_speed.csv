@@ -1,0 +1,4 @@
+ Giraph, GraphX, PowerGraph, FG (i2.xlarge), FG (i2.8xlarge), FG (HW1), FG (HW2)
+PageRank, 596, 419, 249, 317.066, 50.7579, 36.28, 22.532
+WCC, 200, 251, 244, 58.897, 9.23978, 7.91, 5.02927
+
