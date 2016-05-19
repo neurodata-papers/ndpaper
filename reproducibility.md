@@ -1,1 +1,0 @@
-- [Table tab:images](https://github.com/openconnectome/ocp-journal-paper/blob/gh-pages/Code/Tables/Table1/table1.py) and total number of public voxels.
