@@ -1,6 +1,6 @@
 #! /usr/bin/Rscript
 ###
-### Image creation script for fig:store1 (a-d)
+### Image creation script for fig:store1
 ###
 ### Jesse Leigh Patsolic 
 ### 2016 <jesse@cis.jhu.edu>
@@ -16,13 +16,13 @@ require(reshape)
 require(foreach)
 
 
-#### Set up letters for labels
-plotLabels <- letters[1:4]
-
 #### JLP messed with the colors
-#cbPalette <- c("#000000", "#56B4E9", "#E69F00","#0072D8", "#FFF000","#470778", "#CC79A7")
 #### GK messed with colors
 cbPalette <- c("#000000", "#56B4E9", "#E69F00","#0072D0", "#FFF000","#470778", "#CC79A7", "#00B800", "#006940","#005f5b", "#006352")
+col1 <- c('#e66101','#fdb863','#f0f0f0','#b2abd2','#5e3c99')
+col2 <- c('#1b9e77','#d95f02','#7570b3','#e7298a','#66a61e')
+col3 <- c('#000000','#999999')
+
 #### Theme options for ggplot
 ts <- 32
 tt <- theme(plot.title=element_text(size=ts),
@@ -31,23 +31,25 @@ tt <- theme(plot.title=element_text(size=ts),
           legend.title=element_text(size=ts),
           legend.text=element_text(size=ts-2),
           strip.text=element_text(size=ts),
-          #plot.margin=unit(c(2,3,2,2),'lines'),
+          plot.margin=unit(1.00*c(1,1,1,1),'lines'),
           axis.text=element_text(size=ts-4))
 
+outputDir <- '../figs/'
+
+
+########################################################################
 ### Setting up url's for data read/write data
 baseread<-"../../store/data/read/"
-    #"https://raw.githubusercontent.com/neurodata/ndpaper2016/gh-pages/Results/CSV/ndstore/read/"
-
 basewrite<-"../../store/data/write/"
-    #"https://raw.githubusercontent.com/neurodata/ndpaper2016/gh-pages/Results/CSV/ndstore/read/"
 
 Threads <- c(1,2,4,8,16,32)
-#size <- c(0.5,2^c(0:11))
 
 #### File names
 readFiles <- paste0(baseread,"read_",Threads,"_threads.csv")
 writeFiles <- paste0(basewrite,"write_",Threads,"_threads.csv")
 
+
+#### Reading in data
 datRead <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   tmp <- read.csv(readFiles[i],header=FALSE)  
   colnames(tmp) <- c("Size",paste0("test",1:(ncol(tmp)-1),"_",Threads[i]))
@@ -58,12 +60,13 @@ datRead <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   th<-data.frame(size=size,threads=Threads[i],st)
 }
 
-
+#### Cleaning data types
 datRead$threads <- as.factor(datRead$threads)
 datRead$size <- as.factor(datRead$size)
 datRead$ind <- as.factor(datRead$ind)
 datRead$type <- "Read"
 
+#### Reading in data
 datWrite <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   tmp <- read.csv(writeFiles[i],header=FALSE)  
   colnames(tmp) <- c("Size", paste0("test",1:(ncol(tmp)-1),"_",Threads[i]))
@@ -74,6 +77,7 @@ datWrite <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   th<-data.frame(size=size,threads=Threads[i],st)
 }
 
+#### Cleaning data types
 datWrite$threads <- as.factor(datWrite$threads)
 datWrite$size <- as.factor(datWrite$size)
 datWrite$ind <- as.factor(datWrite$ind)
@@ -102,15 +106,6 @@ p1r <- ggplot(data=datRead,aes(x=size,y=values,group=ind,color=threads)) +
     theme(legend.justification=c(1,0), 
           legend.position=c(0.345,0.5))
 
-#pdf("../figs/store_a.pdf", height=6,width=8)
-#print(p1r)
-#dev.off()
-#
-#png("../figs/store_a.png", height=620, width=1200, res=120)
-#print(p1r)
-#dev.off()
-
-
 #### Read throughput figure
 p1w <- ggplot(data=datWrite,aes(x=size,y=values,group=ind,color=threads)) + 
     geom_line(size=1) + 
@@ -122,53 +117,8 @@ p1w <- ggplot(data=datWrite,aes(x=size,y=values,group=ind,color=threads)) +
     ggtitle("Image Volume Writing") + 
     tt +
     theme(legend.position='none')
-   # theme(axis.ticks.x=element_blank(),
-   #       axis.text.x=element_blank(),
-   #       axis.title.x=element_blank()) +
-   #     annotation_custom(
-   #         grob=textGrob(plotLabels[1],gp=gpar(cex=2)),
-   #         ymin=10.5, ymax=10.5,
-   #         xmin=0.65, xmax=0.65
-   #         )
 
-#pdf("../figs/store_b.pdf", height=4.5,width=10)
-#print(p1w)
-#dev.off()
-#
-#png("../figs/store_b.png", height=620, width=1200, res=120)
-#print(p1w)
-#dev.off()
-
-#p1 <- ggplot(data=datIO,aes(x=size,y=values,group=ind,color=threads)) + 
-#    geom_line(size=0.8) + 
-#    geom_point(color='black', size=0.75) + 
-#    scale_colour_manual(values=cbPalette) + 
-#    ylab("GB/second") + 
-#    #xlab("MB/thread") + 
-#    ggtitle("Input/Output") + 
-#    facet_grid( ~ type, scales='free_y') + 
-#    tt +
-#   # theme(axis.ticks.x=element_blank(),
-#   #       axis.text.x=element_blank(),
-#   #       axis.title.x=element_blank()) +
-#    theme(legend.justification=c(1,0), 
-#          legend.position=c(0.95,0.5),
-#          axis.text=element_text(size=ts-8)) 
-#   #     annotation_custom(
-#   #         grob=textGrob(plotLabels[1],gp=gpar(cex=2)),
-#   #         ymin=10.5, ymax=10.5,
-#   #         xmin=0.65, xmax=0.65
-#   #         )
-#
-#pdf("../figs/store_a.pdf", height=4.5,width=10)
-#print(p1)
-#dev.off()
-#
-#png("../figs/store_a.png", height=620, width=1200, res=120)
-#print(p1)
-#dev.off()
-
-
+#### With SE
 datReadSE <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   tmp <- read.csv(readFiles[i],header=FALSE)  
   colnames(tmp) <- c("Size",paste0("test",1:(ncol(tmp)-1),"_",Threads[i]))
@@ -187,12 +137,13 @@ datReadSE <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
              )
 }
 
-
+#### Cleaning data types
 datReadSE$Threads <- as.factor(datReadSE$Threads)
 datReadSE$Size <- as.factor(datReadSE$Size)
 datReadSE$type <- "Read"
 
 
+#### With SE
 datWriteSE <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
   tmp <- read.csv(writeFiles[i],header=FALSE)  
   colnames(tmp) <- c("Size",paste0("test",1:(ncol(tmp)-1),"_",Threads[i]))
@@ -212,6 +163,7 @@ datWriteSE <- foreach(i = 1:length(Threads),.combine='rbind') %do% {
 }
 
 
+#### Cleaning data types
 datWriteSE$Threads <- as.factor(datWriteSE$Threads)
 datWriteSE$Size <- as.factor(datWriteSE$Size)
 datWriteSE$type <- "Write"
@@ -232,11 +184,11 @@ p1rse <- ggplot(data=datReadSE,aes(x=Size,y=avg,group=Threads,color=Threads)) +
     theme(legend.justification=c(1,0), 
           legend.position=c(0.345,0.375))
 
-pdf("../figs/store_a.pdf", height=6,width=7)
+pdf(paste0(outputDir,"/store_a.pdf"),height=6,width=7)
 print(p1rse)
 dev.off()
 
-png("../figs/store_a.png", height=800, width=934, res=120)
+png(paste0(outputDir,"/store_a.png"),height=800, width=934, res=120)
 print(p1rse)
 dev.off()
 
@@ -255,11 +207,11 @@ p1wse <- ggplot(data=datWriteSE,aes(x=Size,y=avg,group=Threads,color=Threads)) +
     theme(legend.position='none',
           axis.title.y=element_blank())
 
-pdf("../figs/store_b.pdf", height=6,width=7)
+pdf(paste0(outputDir,"/store_b.pdf"), height=6,width=7)
 print(p1wse)
 dev.off()
 
-png("../figs/store_b.png", height=800, width=934, res=120)
+png(paste0(outputDir,"/store_b.png"), height=800, width=934, res=120)
 print(p1wse)
 dev.off()
 
@@ -288,9 +240,6 @@ p2 <-ggplot(data=NDB,
             c('After Blaze', 'Before Blaze','Perceived')) +
      geom_line(size=1.5, alpha=1) + 
      geom_point(size=2,colour='black') +
-#     scale_x_continuous(trans='log2',
-#                        labels=c(1:4)) + 
-#     scale_x_continuous(breaks=c(1,2,4,8,16)) +
      guides(colour=guide_legend(title=NULL, 
                     keywidth=2,
                     keyheight=1.6), 
@@ -300,56 +249,71 @@ p2 <-ggplot(data=NDB,
            legend.justification=c(1,0), 
            legend.position=c(0.965,0.3),
            axis.title.y=element_blank()) + 
-     #annotation_custom(
-     #   grob=textGrob(plotLabels[2],gp=gpar(cex=2)),
-     #   ymin=102500,ymax=102500,
-     #   xmin=1,xmax=1
-     #   ) + 
-
         
-pdf("../figs/store_c.pdf", height=5,width=8)
+pdf(paste0(outputDir,"/store_c.pdf"), height=5,width=8)
 print(p2)
 dev.off()
 
-png("../figs/store_c.png", height=620, width=960,res=120)
+png(paste0(outputDir,"/store_c.png"), height=620, width=960,res=120)
 print(p2)
 dev.off()
 
-#### Tile Read data from github csv file
-tileDat <- read.csv('../../store/data/tilecache/1024_1024_4threads_ndtilecache.csv',
-                    head=FALSE, 
-                    stringsAsFactors=FALSE)
-#"https://raw.githubusercontent.com/neurodata/ndpaper2016/gh-pages/Results/CSV/ndtilecache/1024_1024_4threads_ndtilecache.csv"
+#### Tilecache data from csv files
+dir1 <- '../../store/data/tilecache'
+tileDatFiles <- dir(dir1,full.names=TRUE)[grep('csv',dir(dir1,))]
 
-#### Fix some errors 
-tileDat[488,] <- NA #0.624686002731
-tileDat[1216,] <- NA #0.210937023163
+tiledat <- foreach(i = tileDatFiles)%do%{
+    read.csv(i, head=FALSE,stringsAsFactors=FALSE)
+    }
 
-tileDat <- tileDat[,1]
-tileDat <- as.numeric(tileDat)
-Tile<- 1:length(tileDat)
+datBU <- tiledat
+o1 <- list()
+o2 <- list()
 
-tileDat <- data.frame(Tile,Time=tileDat*1e3)
+### Replacing errors in csv with NAs
+### And casting form strings to floats
+print("Replacing non numeric entries and entries <= 0 with NAs")
+for(i in 1:length(tiledat)){
+    o1[[i]] <- grep('[0-9]\\.[0-9]{1,}\\.',tiledat[[i]][,1])
+    o2[[i]] <- grep("^[0-9]{2,}",tiledat[[i]][,1])
 
-#### Tile read figure
-p3 <- ggplot(data=tileDat,aes(x=Tile,y=Time)) + 
-        geom_line() + 
+    tiledat[[i]]$tile <- as.integer(rownames(tiledat[[i]]))
+
+    tiledat[[i]][c(o1[[i]],o2[[i]]),] <- NA
+    tiledat[[i]]$trial <- as.integer(i)
+    tiledat[[i]][,1] <- as.numeric(tiledat[[i]][,1])
+    tiledat[[i]][which(tiledat[[i]] <= 0),] <- NA
+    tiledat[[i]] <- tiledat[[i]][complete.cases(tiledat[[i]]),]
+    }
+
+tot <- length(c(Reduce('c',o1),Reduce('c',o2)))
+sprintf("Number of errors totals %d",tot) 
+datL <- Reduce('rbind', tiledat)
+datL$V1 <- datL$V1*1000 #Convert to miliseconds
+datL$trial <- as.factor(datL$trial)
+#levels(datL$trial) <- paste("Trial", 1:length(tiledat))
+
+datL <- datL[datL$trial %in% c(1),]
+p3 <-  ggplot(data=datL,aes(x=tile,y=V1,group=trial,colour=trial)) + 
+        geom_line(alpha=.8) + 
+        scale_colour_manual(values=col3) +
         scale_y_log10() + 
+        xlab('Tile') + 
         ylab("Time (ms)") + 
-        xlab("Slice") +
-        ggtitle("Reading 512 x 512 Image Tiles") + 
-        #annotation_custom(
-        #    grob=textGrob(plotLabels[3],gp=gpar(cex=2)),
-        #    ymin=4, ymax=4,
-        #    xmin=-250,xmax=-250
-        #    ) + 
-        tt
+        ggtitle("Image Tile Reading (1024 x 1024 tiles)") + 
+        tt + 
+        theme(legend.position='none')
+        #facet_grid(. ~ trial) + 
+        #guides(colour=guide_legend(override.aes=list(linewidth=4))) + 
+        #theme(legend.justification=c(1,0), 
+        #      legend.position=c(0.97,0.75))
+
         
-pdf("../figs/store_d.pdf", height=4,width=8)
+pdf(paste0(outputDir,"/store_d.pdf"), height=4,width=8)
 print(p3)
 dev.off()
 
-png("../figs/store_d.png", height=480, width=960, res=120)
+png(paste0(outputDir,"/store_d.png"), height=480, width=960, res=120)
 print(p3)
 dev.off()
 
@@ -408,11 +372,11 @@ p4 <- ggplot(df3, aes(x=dsf,y=time,color=activity)) +
         #    xmin=1,xmax=1
         #    ) + 
 
-pdf("../figs/store_e.pdf", height=6,width=10)
+pdf(paste0(outputDir,"/store_e.pdf"), height=6,width=10)
 print(p4)
 dev.off()
 
-png("../figs/store_e.png", height=620, width=1200, res=120)
+png(paste0(outputDir,"/store_e.png"), height=620, width=1200, res=120)
 print(p4)
 dev.off()
 
@@ -422,17 +386,17 @@ layoutStore1 <- rbind(c(1,1,2,2,3,3),
 
 
 #### With SE
-pdf("../figs/store01.pdf",w=20,h=12)
+pdf(paste0(outputDir,"/store01.pdf"),w=20,h=12)
 grid.arrange(p1rse,p1wse,p2,p3,p4,layout_matrix=layoutStore1)
 #grid.arrange(p1r,p1w,p2,p3,p4,layout_matrix=layoutStore1)
 dev.off()
 
-png("../figs/store01.png",w=1900,h=1140, res=96)
+png(paste0(outputDir,"/store01.png"),w=1900,h=1140, res=96)
 grid.arrange(p1rse,p1wse,p2,p3,p4,layout_matrix=layoutStore1)
 #grid.arrange(p1r,p1w,p2,p3,p4,layout_matrix=layoutStore1)
 dev.off()
 
-#   Time: 4-5 days worth with many edits.
+#   Time: 7+ days worth, with many small edits.
 #   Working status: I think it's good to go.
 ### Comments: To run, `Rscript StoreFig1.r`
 ####Soli Deo Gloria
