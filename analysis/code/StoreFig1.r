@@ -294,11 +294,13 @@ datL$trial <- as.factor(datL$trial)
 #levels(datL$trial) <- paste("Trial", 1:length(tiledat))
 
 datL <- datL[datL$trial %in% c(1),]
-p3 <-  ggplot(data=datL,aes(x=tile,y=V1,group=trial,colour=trial)) + 
-        geom_line(alpha=.8) + 
+p3 <-  ggplot(data=datL[1:600,],aes(x=tile,y=V1,group=trial,colour=trial)) + 
+        geom_line(alpha=.75) + 
+        #geom_rug(col="black",alpha=.1, sides='r') +
         scale_colour_manual(values=col3) +
+        #scale_y_log10(limits=c(4,1e3),breaks=10^c(-3:3)) + 
         scale_y_log10() + 
-        xlab('Tile') + 
+        xlab('Slice') + 
         ylab("Time (ms)") + 
         ggtitle("Image Tile Reading (1024 x 1024 tiles)") + 
         tt + 
@@ -308,7 +310,13 @@ p3 <-  ggplot(data=datL,aes(x=tile,y=V1,group=trial,colour=trial)) +
         #theme(legend.justification=c(1,0), 
         #      legend.position=c(0.97,0.75))
 
-        
+p33 <- ggplot(data=datL,aes(x=tile,y=V1,group=trial,colour=trial)) + 
+        geom_violin() + 
+        theme(text=element_blank(), 
+              axis.ticks=element_blank(),
+              legend.position='none')
+p33
+
 pdf(paste0(outputDir,"/store_d.pdf"), height=4,width=8)
 print(p3)
 dev.off()
@@ -384,6 +392,8 @@ dev.off()
 layoutStore1 <- rbind(c(1,1,2,2,3,3),
                      c(4,4,4,5,5,5))
 
+layoutStore2 <- rbind(c(1,1,2,2,3,3),
+                     c(4,4,4,5,6,6))
 
 #### With SE
 pdf(paste0(outputDir,"/store01.pdf"),w=20,h=12)
