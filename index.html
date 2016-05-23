@@ -64,6 +64,8 @@
               <a class="navbar-brand" href="http://neurodata.io">Parse</a>
               <a class="navbar-brand" href="http://neurodata.io">Data</a>
               <a class="navbar-brand" href="http://neurodata.io">Analyze</a>
+              <a class="navbar-brand" href="http://neurodata.io">Case Study 1</a>
+              <a class="navbar-brand" href="http://neurodata.io">Case Study 2</a>
             </div>
             <!-- <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
@@ -157,9 +159,8 @@
           Store <span class="caret"></span>
         </button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="http://neurodata.io/">stuff</a><br>
-          <a class="dropdown-item" href="http://neurodata.io/">stuff</a><br>
-          <a class="dropdown-item" href="http://neurodata.io/">stuff</a><br>
+          <a class="dropdown-item" href="http://neurodata.io/">Images</a><br>
+          <a class="dropdown-item" href="http://neurodata.io/">Annotations</a><br>
           <!-- <div class="dropdown-divider"></div> -->
           <a class="dropdown-item" href="#"></a>
         </div>
@@ -170,9 +171,8 @@
           Explore <span class="caret"></span>
         </button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="">VAST</a><br>
-          <a class="dropdown-item" href="http://neurodata.io/">stuff</a><br>
-          <a class="dropdown-item" href="http://neurodata.io/">stuff</a><br>
+          <a class="dropdown-item" href="http://neurodata.io/">Images</a><br>
+          <a class="dropdown-item" href="http://neurodata.io/">Annotations</a><br>
           <a class="dropdown-item" href="http://neurodata.io/">stuff API</a><br>
         </div>
       </div>
@@ -187,7 +187,8 @@
       <div class="row featurette">
         <div class="col-md-7">
           <h2 class="featurette-heading"> </h2>
-          <p class="text-center">
+          <h2> Reproduciblity Guidelines </h2>
+          <p class="text-left">
             All of the scientific discovery and infrastructure presented
             in the associated paper are executed in accordance with open
             and reproducible science guidelines.  Therefore, all of our
@@ -195,6 +196,35 @@
             allow scientists to verify and expand on these results.
             This website contains content for reproduciblity of the
             content in the paper.
+          </p>
+
+          <h2 class="featurette-heading"> </h2>
+          <h2> Infrastructure  </h2>
+          <p class="text-left">
+            Without a terascale infrastructure, neuroscientists have to 
+            build custom hardware and software to load sub-<i>cubes</i> 
+            of data into RAM (for example, in MATLAB or Python), because 
+            the amount of RAM on a single laptop, workstation or compute 
+            note is typically orders of magnitude smaller than the overall 
+            size of the dataset.  This is a departure from a typical big 
+            data paradigm where the processing demand is for many images or 
+            files, each of which easily fits into RAM (e.g., a 2D image).
+          </p>
+
+          <h2 class="featurette-heading"> </h2>
+          <h2> Store </h2>
+          <h3> Images </h3>
+          <p class="text-left">
+            You can reproduce our Read/Write throughput and the tilecache 
+            benchmarks using AWS EC2 instances.  The software stack can 
+            be installed on the EC2 instance using an install scripts.  
+            After installing the back-end, you can run the benchmarks in 
+            the paper using the benchmark scripts provided.  The benchmark 
+            scripts are configurable to run the benchmark tests for 
+            different test configurations, for example running the 
+            benckmark for 32 threads.  The results of these benchmarks 
+            are stored in CSV files and you can use provided R scripts to 
+            generate the figures as shown in the paper.
           </p>
         </div>
         <!-- <div class="col-md-5">
@@ -218,7 +248,6 @@
 
 
       <hr class="featurette-divider">
-
 
       </div>
       </div>
