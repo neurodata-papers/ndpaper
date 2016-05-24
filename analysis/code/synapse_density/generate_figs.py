@@ -8,7 +8,7 @@
 Pipe the CSV file through standard-in. Figures are generated in the current
 working directory.
 
-    ./generate_figs.py < synapses.csv
+    ./generate_figs.py < ../../data/synapses.csv
 
 """
 
