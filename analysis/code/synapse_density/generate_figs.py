@@ -20,6 +20,8 @@ import os
 import sys
 import csv
 
+SAVEDIR =       "synapse_density_figs"
+
 TITLE =         "Figure 2"
 TITLESIZE =     18
 XLABEL =        "x"
@@ -40,11 +42,11 @@ def main():
     rows = csv_to_list(sys.stdin.readlines())
 
     try:
-        os.makedirs('synapse_density_figs')
+        os.makedirs(SAVEDIR)
     except:
         pass # the directory already exists
 
-    fig = plt.figure()
+    fig = plt.figure('perspective')
     ax = fig.add_subplot(111, projection='3d')
 
     xs = []; ys = []; zs = []; rs = []
@@ -67,6 +69,6 @@ def main():
     ax.set_zlabel(ZLABEL)
 
     plt.suptitle(TITLE, fontsize=TITLESIZE)
-    plt.show()
+    plt.savefig('{}/perspective.png'.format(SAVEDIR))
 
 main()
