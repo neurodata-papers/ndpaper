@@ -21,10 +21,7 @@ import sys
 import csv
 
 SAVEDIR =       "synapse_density_figs"
-GENERATE_FIGS = [
-    'perspective',
-    'xy', 'yz', 'xz'
-]
+GENERATE_FIGS = ['perspective', 'xy', 'yz', 'xz']
 
 XLABEL =        "x"
 YLABEL =        "y"
