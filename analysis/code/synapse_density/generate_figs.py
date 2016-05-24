@@ -20,16 +20,21 @@ import os
 import sys
 import csv
 
-SAVEDIR =       "synapse_density_figs"
-GENERATE_FIGS = ['perspective', 'xy', 'yz', 'xz']
+SAVEDIR =       "synapse_density_figs"              # Directory to save to
+GENERATE_FIGS = ['perspective', 'xy', 'yz', 'xz']   # Names of figs to generate.
+                                                    # Remove items from array
+                                                    # to prevent regen.
 
-XLABEL =        "x"
-YLABEL =        "y"
-ZLABEL =        "z"
-THRESHOLD =     280
+XLABEL =        "x"                                 # What to call the x axis
+YLABEL =        "y"                                 # ...
+ZLABEL =        "z"                                 # ...
+THRESHOLD =     280                                 # Don't include values under
 
 
 def csv_to_list(data):
+    """
+    Converts CSV text (from stdin) to a list of lists.
+    """
     fieldnames = ['x', 'y', 'z', 'unmasked', 'synapses']
     reader = csv.reader(data)
     next(reader)
@@ -38,6 +43,9 @@ def csv_to_list(data):
 
 
 def _perspective(xs, ys, zs, rs):
+    """
+    generates the perspective graph
+    """
     fig = plt.figure('perspective')
     ax = fig.add_subplot(111, projection='3d')
 
@@ -64,6 +72,11 @@ def _xz(xs, ys, zs, rs):
     _2d(xs, zs, rs, 'xz')
 
 def _2d(xs, ys, rs, name):
+    """
+    Generates an arbitrary 2D projection. Specify which axis you want on the x,
+    y axes, and give a radius list (if desired... otherwise, pass an integer).
+    `name` is the `XY` pair to show as X and Y labels.
+    """
     fig = plt.figure(name)
     ax = fig.add_subplot(111)
 
@@ -85,11 +98,11 @@ figure_generators = {
     'xz': _xz
 }
 
-
 def main():
     rows = csv_to_list(sys.stdin.readlines())
     xs = []; ys = []; zs = []; rs = []
 
+    # Generate the x, y, and z arrays
     for r in rows:
         if r[-1] > THRESHOLD:
             xs.append(r[0])
@@ -97,11 +110,13 @@ def main():
             zs.append(r[2])
             rs.append(r[4]/8)
 
+    # Try to make the directory...
     try:
         os.makedirs(SAVEDIR)
     except:
         pass # the directory already exists
 
+    # Generate every figure that was requested in GENERATE_FIGS
     for figname in GENERATE_FIGS:
         figure_generators[figname](xs, ys, zs, rs)
 
