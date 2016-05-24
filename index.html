@@ -59,13 +59,6 @@
                 <span class="icon-bar"></span>
               </button>
               <a class="navbar-brand" href="http://neurodata.io">NeuroData</a>
-              <a class="navbar-brand" href="http://neurodata.io">Store</a>
-              <a class="navbar-brand" href="http://neurodata.io">Explore</a>
-              <a class="navbar-brand" href="http://neurodata.io">Parse</a>
-              <a class="navbar-brand" href="http://neurodata.io">Data</a>
-              <a class="navbar-brand" href="http://neurodata.io">Analyze</a>
-              <a class="navbar-brand" href="http://neurodata.io">Case Study 1</a>
-              <a class="navbar-brand" href="http://neurodata.io">Case Study 2</a>
             </div>
             <!-- <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
@@ -156,11 +149,13 @@
       <!-- Single button -->
       <div class="btn-group">
         <button type="button" class="btn btn-lg btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          ndpaper <span class="caret"></span>
+          Overview  <span class="caret"></span>
         </button>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="http://neurodata.io/">Abstract</a><br>
           <a class="dropdown-item" href="http://neurodata.io/">Full PDF</a><br>
+          <a class="dropdown-item" href="http://neurodata.io/">Code</a><br>
+          <a class="dropdown-item" href="http://neurodata.io/">Docs</a><br>
           <!-- <div class="dropdown-divider"></div> -->
           <a class="dropdown-item" href="#"></a>
         </div>
@@ -194,6 +189,8 @@
       <a class="btn btn-lg btn-primary" href="http://neurodata.io/" role="button">Parse</a>
       <a class="btn btn-lg btn-primary" href="http://neurodata.io/" role="button">Data</a>
       <a class="btn btn-lg btn-primary" href="http://neurodata.io/" role="button">Analyze</a>
+      <a class="btn btn-lg btn-primary" href="http://neurodata.io/" role="button">Neurocartography</a>
+      <a class="btn btn-lg btn-primary" href="http://neurodata.io/" role="button">Spatial Synapses</a>
 
 
 
@@ -202,45 +199,48 @@
       <div class="row featurette">
         <div class="col-md-7">
           <h2 class="featurette-heading"> </h2>
-          <h2> Reproduciblity Guidelines </h2>
+          <h2> Abstract </h2>
           <p class="text-left">
-            All of the scientific discovery and infrastructure presented
-            in the associated paper are executed in accordance with open
-            and reproducible science guidelines.  Therefore, all of our
-            code and figures are able to be generated automatically to
-            allow scientists to verify and expand on these results.
-            This website contains content for reproduciblity of the
-            content in the paper.
+            Recent technical progress allows neuroexperimentalists to collect ever
+            more detailed and informative anatomical and physiological data from
+            brains of all sizes.  These datasets span experimentally accessible
+            spatiotemporal scales, ranging from nanometer to meter, and millisecond
+            to monthly sampling rates.  In classical neuroscientific experimental
+            paradigms, it was feasible for neuroscientists to draw their results on
+            paper. In contrast, many modern neuroscientific experimental paradigms
+            break the classic data analysis workflow.  In particular, these large
+            datasets create significant challenges for our community at every step
+            of the data analysis pipeline: (1) storing, (2) exploring, (3) parsing,
+            and (4)  analyzing. <i> NeuroData</i> has been developed to lower the
+            barrier to entry into big data neuroscience. We have designed and built
+            a comprehensive ecosystem towards enabling petascale neuroscience.  This
+            includes our flagship project,  the <i>NeuroData Connectome Project</i> 
+            (previously called the Open Connectome Project). Our
+            infrastructure enables anyone in the world with internet access to
+            visualize, download, analyze, upload, and interact with a large number
+            of public datasets.  Moreover, all the results obtained using the
+            NeuroData infrastructure are fundamentally reproducible and extensible.
+            We demonstrate the utility of these tools via two serial electron
+            microscopy case studies.  First, we have reproduced many of the
+            quantitative results from a recent landmark EM paper that included a
+            saturated annotation of a region of cortex. Second, we have tested a 
+            novel hypothesis about the distribution of synapse locations in cortex 
+            on a larger, complementary dataset. Via the <i>NeuroData</i> 
+            infrastructure, the answers given by these tools are both fully 
+            reproducible, and extensible for analysis on other datasets 
+            that hold knowledge about these questions. NeuroData
+            democratizes the scientific process, enabling anyone, regardless of
+            their background, computational resources, and expertise to study
+            neuroscience at scale.  We are in the process of scaling up the number
+            of datasets, the range of experimental modalities, and the Web-services
+            we enable. Work underway will provide pre-packaged cluster
+            environments—--easily deployable on local or commercial cloud computing
+            infrastructures—--so that others can replicate and modify our services
+            internally. All of our code and data are available online at <a
+            href="http://ndpaper.neurodata.io">ndpaper.neurodata.io</a>, in
+            accordance with open science standards.
           </p>
 
-          <h2 class="featurette-heading"> </h2>
-          <h2> Infrastructure  </h2>
-          <p class="text-left">
-            Without a terascale infrastructure, neuroscientists have to 
-            build custom hardware and software to load sub-<i>cubes</i> 
-            of data into RAM (for example, in MATLAB or Python), because 
-            the amount of RAM on a single laptop, workstation or compute 
-            note is typically orders of magnitude smaller than the overall 
-            size of the dataset.  This is a departure from a typical big 
-            data paradigm where the processing demand is for many images or 
-            files, each of which easily fits into RAM (e.g., a 2D image).
-          </p>
-
-          <h2 class="featurette-heading"> </h2>
-          <h2> Store </h2>
-          <h3> Images </h3>
-          <p class="text-left">
-            You can reproduce our Read/Write throughput and the tilecache 
-            benchmarks using AWS EC2 instances.  The software stack can 
-            be installed on the EC2 instance using an install scripts.  
-            After installing the back-end, you can run the benchmarks in 
-            the paper using the benchmark scripts provided.  The benchmark 
-            scripts are configurable to run the benchmark tests for 
-            different test configurations, for example running the 
-            benckmark for 32 threads.  The results of these benchmarks 
-            are stored in CSV files and you can use provided R scripts to 
-            generate the figures as shown in the paper.
-          </p>
         </div>
         <!-- <div class="col-md-5">
           <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
