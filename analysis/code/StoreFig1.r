@@ -182,13 +182,13 @@ p1rse <- ggplot(data=datReadSE,aes(x=Size,y=avg,group=Threads,color=Threads)) +
     tt +
     guides(colour=guide_legend(keywidth=2,keyheight=1.7)) + 
     theme(legend.justification=c(1,0), 
-          legend.position=c(0.345,0.375))
+          legend.position=c(0.25,0.35))
 
-pdf(paste0(outputDir,"/store_a.pdf"),height=6,width=7)
+pdf(paste0(outputDir,"/ndpaper-fig1a.pdf"),height=6,width=10)
 print(p1rse)
 dev.off()
 
-png(paste0(outputDir,"/store_a.png"),height=800, width=934, res=120)
+png(paste0(outputDir,"/ndpaper-fig1a.png"),height=800, width=1200, res=120)
 print(p1rse)
 dev.off()
 
@@ -199,19 +199,19 @@ p1wse <- ggplot(data=datWriteSE,aes(x=Size,y=avg,group=Threads,color=Threads)) +
         width=0.25,size=1.2) + 
     geom_point(color='black', size=2) + 
     scale_colour_manual(values=cbPalette) + 
-    #ylab("Throughput (GB/s)") + 
+    ylab("Throughput (GB/s)") + 
     xlab("Size (MB/thread)") + 
     scale_x_discrete(labels=labW) + 
     ggtitle("Image Volume Writing") + 
     tt +
-    theme(legend.position='none',
-          axis.title.y=element_blank())
+    theme(legend.position='none')
+          #axis.title.y=element_blank())
 
-pdf(paste0(outputDir,"/store_b.pdf"), height=6,width=7)
+pdf(paste0(outputDir,"/ndpaper-fig1c.pdf"), height=6,width=7)
 print(p1wse)
 dev.off()
 
-png(paste0(outputDir,"/store_b.png"), height=800, width=934, res=120)
+png(paste0(outputDir,"/ndpaper-fig1c.png"), height=800, width=934, res=120)
 print(p1wse)
 dev.off()
 
@@ -233,7 +233,7 @@ p2 <-ggplot(data=NDB,
                 y=values,
                 group=group,
                 colour=group)) + 
-     #ylab("Throughput (GB/s)") +
+     ylab("Throughput (GB/s)") +
      ggtitle("Annotation Volume Writing") +
      scale_colour_manual(values=cbPalette[c(8,7,9)],
             labels=
@@ -247,14 +247,14 @@ p2 <-ggplot(data=NDB,
      tt + 
      theme(legend.title=element_blank(),
            legend.justification=c(1,0), 
-           legend.position=c(0.965,0.3),
-           axis.title.y=element_blank()) + 
+           legend.position=c(0.965,0.3))
+           #axis.title.y=element_blank())
         
-pdf(paste0(outputDir,"/store_c.pdf"), height=5,width=8)
+pdf(paste0(outputDir,"/ndpaper-fig1d.pdf"), height=5,width=8)
 print(p2)
 dev.off()
 
-png(paste0(outputDir,"/store_c.png"), height=620, width=960,res=120)
+png(paste0(outputDir,"/ndpaper-fig1d.png"), height=620, width=960,res=120)
 print(p2)
 dev.off()
 
@@ -317,11 +317,11 @@ p33 <- ggplot(data=datL,aes(x=tile,y=V1,group=trial,colour=trial)) +
               legend.position='none')
 p33
 
-pdf(paste0(outputDir,"/store_d.pdf"), height=4,width=8)
+pdf(paste0(outputDir,"/ndpaper-fig1b.pdf"), height=4,width=10)
 print(p3)
 dev.off()
 
-png(paste0(outputDir,"/store_d.png"), height=480, width=960, res=120)
+png(paste0(outputDir,"/ndpaper-fig1b.png"), height=480, width=1200, res=120)
 print(p3)
 dev.off()
 
@@ -380,11 +380,11 @@ p4 <- ggplot(df3, aes(x=dsf,y=time,color=activity)) +
         #    xmin=1,xmax=1
         #    ) + 
 
-pdf(paste0(outputDir,"/store_e.pdf"), height=6,width=10)
+pdf(paste0(outputDir,"/ndpaper-fig1e.pdf"), height=6,width=10)
 print(p4)
 dev.off()
 
-png(paste0(outputDir,"/store_e.png"), height=620, width=1200, res=120)
+png(paste0(outputDir,"/ndpaper-fig1e.png"), height=620, width=1200, res=120)
 print(p4)
 dev.off()
 
@@ -395,18 +395,18 @@ layoutStore1 <- rbind(c(1,1,2,2,3,3),
 layoutStore2 <- rbind(c(1,1,2,2,3,3),
                      c(4,4,4,5,6,6))
 
+layoutStore3 <- rbind(c(1,1,2,2),
+                     c(3,3,4,4))
 #### With SE
-pdf(paste0(outputDir,"/store01.pdf"),w=20,h=12)
-grid.arrange(p1rse,p1wse,p2,p3,p4,layout_matrix=layoutStore1)
-#grid.arrange(p1r,p1w,p2,p3,p4,layout_matrix=layoutStore1)
+pdf(paste0(outputDir,"/ndpaper-fig1.pdf"),w=20,h=12)
+grid.arrange(p1rse,p3,p1wse,p2,layout_matrix=layoutStore3)
 dev.off()
 
-png(paste0(outputDir,"/store01.png"),w=1900,h=1140, res=96)
-grid.arrange(p1rse,p1wse,p2,p3,p4,layout_matrix=layoutStore1)
-#grid.arrange(p1r,p1w,p2,p3,p4,layout_matrix=layoutStore1)
+png(paste0(outputDir,"/ndpaper-fig1.png"),w=1900,h=1140, res=96)
+grid.arrange(p1rse,p3,p1wse,p2,layout_matrix=layoutStore3)
 dev.off()
 
-#   Time: 7+ days worth, with many small edits.
+#   Time: 10+ days worth, with many small edits.
 #   Working status: I think it's good to go.
 ### Comments: To run, `Rscript StoreFig1.r`
 ####Soli Deo Gloria
