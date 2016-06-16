@@ -5,8 +5,8 @@ markdown: kramdown
 highlighter: rouge
 permalink: /:index.html
 
-baseurl: /ndpaper
-url: http://docs.neurodata.io
+baseurl: /
+url: http://docs.neurodata.io/ndpaper
 
 # Use the following plug-ins
 gems:
