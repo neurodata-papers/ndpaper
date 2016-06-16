@@ -24,6 +24,6 @@ exclude:
 defaults:
   -
     scope:
-      path: "" # empty string for all files
+      path: "ndpaper" # empty string for all files
     values:
       layout: "default"
