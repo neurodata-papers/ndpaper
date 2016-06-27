@@ -34,12 +34,15 @@ token_synapse = 'MP4merged'
 channel_synapse = 'annotation'
 
 token_mask = 'bock11_mask_v1'
-channel_mask = 'mask'
+channel_mask = 'mask' #'mask23'
 
-nd = neurodata(chunk_threshold=2e9,suppress_warnings=True)
+nd = neurodata(hostname='dsp061.pha.jhu.edu',chunk_threshold=2e9,check_tokens=False,suppress_warnings=True)
 
-im_size = nd.get_image_size(token_synapse,res)
-im_offset = nd.get_image_offset(token_synapse,res)
+
+im_size = [4232, 3744, 4156] #TODO this is hardcoded for now #nd.get_image_size(token_synapse,res)
+im_offset = [0, 0, 2917]#nd.get_image_offset(token_synapse,res)
+#im_size = nd.get_image_size(token_synapse,res)
+#im_offset = nd.get_image_offset(token_synapse,res)
 
 # custom chunking - only whole blocks
 
@@ -97,7 +100,7 @@ with open('mask_frag_'+str(result.idx).zfill(6)+'.csv', 'w') as csvfile:
 					synList.add(u)		
 
 			# intersect mask with synapses in chunk
-
+			synAll = len(synList)
 			maskList = np.unique(syn_core[mask_core > 0])
 			maskList = maskList[maskList > 0]
 			maskList = set(maskList)
@@ -122,9 +125,9 @@ with open('mask_frag_'+str(result.idx).zfill(6)+'.csv', 'w') as csvfile:
 			xc = np.round(1.0*(xstop+xstart)/2 * 2**4) # rounded - it's ok
 			yc = np.round(1.0*(ystop+ystart)/2 * 2**4)
 			zc = np.round(1.0*(zstop+zstart)/2)
-			# x1, y1, z1, x2, y2, z2, res, mask size, non-mask size, number of synapses, density, xc, yc, zc, resc
+			# x1, y1, z1, x2, y2, z2, res, mask size, non-mask size, number of synapses, density, raw synapses, xc, yc, zc, resc
 			# Save file in CSV format for word, excel, etc.
-			row = [xstart, ystart, zstart, xstop, ystop, zstop, res, total_pix, mask_core_pix, str(mask_fraction), syn_count, str(density), int(xc), int(yc), int(zc), 1]
+			row = [xstart, ystart, zstart, xstop, ystop, zstop, res, total_pix, mask_core_pix, str(mask_fraction), syn_count, str(density), synAll, int(xc), int(yc), int(zc), 1]
 			csvwriter.writerow(row)   
 
 print 'Completed processing!'

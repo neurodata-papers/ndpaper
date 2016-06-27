@@ -16,7 +16,7 @@
 16399 type axon
 16401 type axon
 16402 type axon
-16403 type axon
+16387 type axon
 20 type spine
 21 4745 {'weight': 1}
 21 type spine
@@ -417,7 +417,8 @@
 16696 type axon
 16699 type axon
 16700 type axon
-13706 type axon
+5514 5643 {'weight': 1}
+5514 type spine
 16706 type axon
 13707 type axon
 327 type spine
@@ -448,7 +449,8 @@
 16449 type axon
 13719 type axon
 13720 type axon
-13721 type axon
+5529 type spine
+5529 5293 {'weight': 1}
 13722 type axon
 419 4688 {'weight': 1}
 419 type spine
@@ -532,7 +534,8 @@
 5555 4083 {'weight': 1}
 5555 type spine
 13749 type axon
-13750 type axon
+5558 type spine
+5558 4157 {'weight': 1}
 5559 4412 {'weight': 1}
 5559 type spine
 13752 type axon
@@ -541,13 +544,11 @@
 5562 type spine
 5562 3965 {'weight': 1}
 16485 type axon
-16387 type axon
 16486 type axon
 6387 1030 {'weight': 1}
 16487 type axon
 16488 type axon
-5566 type spine
-5566 5287 {'weight': 1}
+13758 type axon
 631 3876 {'weight': 1}
 631 type spine
 632 type spine
@@ -925,8 +926,8 @@
 1085 3897 {'weight': 1}
 1085 type spine
 16565 type axon
+16403 type axon
 5643 5409 {'weight': 1}
-5643 5514 {'weight': 1}
 16566 type axon
 16567 type axon
 5645 5988 {'weight': 1}
@@ -1238,13 +1239,13 @@
 14078 type axon
 13724 type axon
 5893 5181 {'weight': 1}
-14086 type axon
 14087 type axon
 5900 5382 {'weight': 1}
 2634 type spine
 2634 5285 {'weight': 1}
 2639 5345 {'weight': 1}
 2639 type spine
+13727 type axon
 2653 type spine
 2655 type spine
 2655 3838 {'weight': 1}
@@ -2153,7 +2154,6 @@
 3707 5618 {'weight': 1}
 16491 type axon
 3732 4482 {'weight': 1}
-5535 type spine
 3759 5412 {'weight': 1}
 3766 5443 {'weight': 1}
 3766 5549 {'weight': 1}
@@ -2254,7 +2254,6 @@
 4154 4724 {'weight': 1}
 4154 4593 {'weight': 1}
 16558 type axon
-4157 5558 {'weight': 1}
 5570 5510 {'weight': 1}
 4179 5185 {'weight': 1}
 4180 5600 {'weight': 1}
@@ -2414,6 +2413,7 @@
 16527 type axon
 4815 type spine
 16530 type axon
+14108 type axon
 4922 type spine
 4923 type spine
 4923 5269 {'weight': 1}
@@ -2563,7 +2563,7 @@
 5278 5594 {'weight': 1}
 5281 5355 {'weight': 1}
 5285 5591 {'weight': 1}
-5293 5529 {'weight': 1}
+5287 5566 {'weight': 1}
 5296 5624 {'weight': 1}
 5297 5485 {'weight': 1}
 5300 5602 {'weight': 1}
@@ -2713,7 +2713,7 @@
 13703 type axon
 5512 type spine
 5513 type spine
-5514 type spine
+13706 type axon
 5515 type spine
 13708 type axon
 13709 type axon
@@ -2729,13 +2729,13 @@
 5527 type spine
 5528 type spine
 5528 5989 {'weight': 1}
-5529 type spine
+13721 type axon
 5530 type spine
 5531 type spine
 5532 type spine
 13725 type axon
 13726 type axon
-13727 type axon
+5535 type spine
 13728 type axon
 13729 type axon
 5538 type spine
@@ -2758,7 +2758,7 @@
 13747 type axon
 13748 type axon
 5557 type spine
-5558 type spine
+13750 type axon
 13751 type axon
 5560 type spine
 13753 type axon
@@ -2766,7 +2766,7 @@
 13755 type axon
 13756 type axon
 13757 type axon
-13758 type axon
+5566 type spine
 13759 type axon
 13760 type axon
 13761 type axon
@@ -3079,7 +3079,7 @@
 14083 type axon
 14084 type axon
 14085 type axon
-14108 type axon
+14086 type axon
 5895 type spine
 14088 type axon
 14089 type axon
