@@ -1,2 +1,4 @@
 _site/
+spatialsynapses/samples/
+*.zip
 spatialsynapses/.ipynb_checkpoints/*
