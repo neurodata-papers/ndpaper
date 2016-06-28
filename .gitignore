@@ -1,4 +1,5 @@
 _site/
 spatialsynapses/samples/
 *.zip
+neurocartography/claims/.ipynb*
 spatialsynapses/.ipynb_checkpoints/*
