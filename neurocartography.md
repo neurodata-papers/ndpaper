@@ -5,7 +5,7 @@ layout: default
 
 # Reproducible Scalable Science
 
-Currently, scientific research groups produce data in a variety of data formats and different conventions, making it difficult to share information across labs and reproduce results. 
+Currently, scientific research groups produce data in a variety of data formats and different conventions, making it difficult to share information across labs and reproduce results.
 
 We propose a foundational, flexible data standard for large-scale neuroscience data called RAMON (Reusable Annotation Markup for Open Neuroscience).  This serves as a key enabling technology for communication and data democratization.
 
@@ -13,7 +13,7 @@ We propose a foundational, flexible data standard for large-scale neuroscience d
 
 ### Ingest Template
 
-For ingesting data, we provide a simple csv format, organized as kv pairs by RAMONType.  For each RAMON Object, a number of standard fields are available to aid in standardization and efficient queries.  However, from an ingest perspective, 
+For ingesting data, we provide a simple csv format, organized as kv pairs by RAMONType.  For each RAMON Object, a number of standard fields are available to aid in standardization and efficient queries.  However, from an ingest perspective,
 
 #### Input data
 
@@ -49,7 +49,7 @@ From the spreadsheet, several important pieces of metadata were gleaned:
 - PSD size
 - Single synapse spine
 - Cylinder locations and masks
-- Linkages between paint 
+- Linkages between paint
 
 #### From VAST Metadata Export
 - Object IDs
@@ -59,7 +59,7 @@ From the spreadsheet, several important pieces of metadata were gleaned:
 #### From spreadsheet, but could be from data
 *further development will compute these from data*
 
-- Vesicle count 
+- Vesicle count
 - Number of mitochondria in axon bouton
 - Multi synaptic axon bouton
 - Axon skeleton length
@@ -77,16 +77,15 @@ From the spreadsheet, several important pieces of metadata were gleaned:
 - Object metadata is then assigned using a combination of pre-determined standard fields and extensible key-value pairs
 
 All of this information is stored in NeuroData databases - we choose to store the data in four channels within a single unifying project (neurons, synapses, mitochondria, vesicles).  The original raw data are also available for provenance and to allow others to parse this data in other ways.
-	
+
 ## Queries
 
 Once all of the data is parsed, we are able to do reproducible, scalable scientific discovery!  To retrieve the parsed data from the databases, we offer solutions in MATLAB, Python, and via RESTful endpoint.  To illustrate the diversity of queries and to provide reproducible results from the Kasthuri paper, we have created ipython notebooks for each claim.  We use [ndio](https://github.com/openconnectome/ndio) to facilitate getting data.
 
-A full list of claims will be provided with a more detailed explaination.  For now, the claims may be viewed [here](https://github.com/neurodata/kasthuri2015/tree/master/claims), and are under active development. 
+A full list of claims will be provided with a more detailed explaination.  For now, the claims may be viewed [here](https://github.com/neurodata/kasthuri2015/tree/master/claims), and are under active development.
 
 **NeuroData now offers the capabilities to crete RAMON objects during the process of manual or automatic discovery and annotation.  Please contact us for details on how to organize your data so that your claims are reproducible and available to the community as part of your publication process.**
 
-
-### Things that are easy and things that are hard
-
-### Next steps
+The data views that are in the paper may be viewed at these links:
+http://viz.neurodata.io/kasthuri2015_ramon_v4/
+http://viz.neurodata.io/dataview/mouseS1
